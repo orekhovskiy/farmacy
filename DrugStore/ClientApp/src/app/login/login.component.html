@@ -1,3 +1,18 @@
+<header>
+    <nav class="navbar navbar-dark fixed-top bg-dark">
+        <div class="navbar-brand">Аптека</div>
+        <div class="float-rigth" *ngIf="router.url != '/'">
+            <div class="row" >
+                <form class="form-inline mt-2 mt-md-0">
+                <input class="form-control mr-sm-2 col" type="text" placeholder="Поиск" aria-label="Search">
+                <button class="btn btn-outline-success col" type="submit">Поиск</button>
+                </form>
+                <a class="btn btn-outline-danger col btn-exit" href="">Выйти</a>
+            </div>
+        </div>
+    </nav>
+</header>
+  
 <form class="login-form">
     <h1>Войдите в систему</h1>
     <div>
