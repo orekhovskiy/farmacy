@@ -8,6 +8,9 @@ input, button {
     margin: 5px;    
 }
 
-.btn-exit {
-    margin: 5px;
+.signout-btn {
+    margin-right: 20px;
+}
+body {
+    overflow-x: hidden;
 }

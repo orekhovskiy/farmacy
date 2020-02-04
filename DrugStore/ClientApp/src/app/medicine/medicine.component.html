@@ -1,49 +1,64 @@
 <header>
-  <nav class="navbar navbar-dark fixed-top bg-dark">
+  <nav class="navbar navbar-dark  bg-dark">
       <div class="navbar-brand">Аптека</div>
-      <div class="float-rigth" *ngIf="router.url != '/'">
+      <div class="float-rigth toolbar">
           <div class="row" >
-              <form class="form-inline mt-2 mt-md-0">
-              <input class="form-control mr-sm-2 col" type="text" placeholder="Поиск" aria-label="Search">
-              <button class="btn btn-outline-success col" type="submit">Поиск</button>
-              </form>
-              <a class="btn btn-outline-danger col btn-exit" href="">Выйти</a>
+            <button class = "btn btn-outline-primary" (click)="showFilter();" id="filterBtn"> Y Фильтр</button>
+            <form class="form-inline ">
+            <input class="form-control  col" type="text" placeholder="Поиск" aria-label="Search" id="searchInput">
+            <button class="btn btn-outline-success col" type="submit" id="searchBtn">Поиск</button>
+            </form>
+            <form class="signout-btn">
+              <button class="btn btn-outline-danger col signout-btn" id="signoutBtn">Выйти</button>
+            </form>
           </div>
       </div>
   </nav>
 </header>
 
-<div class="container med-container">
+<div class="filter" id="filter">
+  <form>
     <div class="row">
-      <div class="medicine col">
-        <h2>Аспирин</h2>
-        <b>Производитель: </b> <a href="">Bayer Consumer Care</a><br/>
-        <b>Тип: </b> Анальгетик, Жаропонижающее <br/>
-        <b>Форма: </b> Таблетки <br/>
-        <b>Состав: </b> Ацетилсилациловая кислота <br/>
-        <b>Доступно: </b> 45
-      </div>
-      <div class="medicine col">
-        <h2>Аспирин</h2>
-        <b>Производитель: </b> Bayer Consumer Care<br/>
-        <b>Тип: </b> Анальгетик, Жаропонижающее <br/>
-        <b>Форма: </b> Таблетки <br/>
-        <b>Состав: </b> Ацетилсилациловая кислота <br/>
-        <b>Доступно: </b> 45
-      </div>
-      <div class="medicine col">
-        <h2>Аспирин</h2>
-        <b>Производитель: </b> Bayer Consumer Care<br/>
-        <b>Тип: </b> Анальгетик, Жаропонижающее <br/>
-        <b>Форма: </b> Таблетки <br/>
-        <b>Состав: </b> Ацетилсилациловая кислота <br/>
-        <b>Доступно: </b> 45
-      </div>
+      
+        <div class = "col-md-6 col-sm-12 col-xs-12">
+          <h3>Производитель</h3>
+          checkboxes
+        </div>
+        <div class = "col-md-6 col-sm-12 col-xs-12">
+          <h3>Тип</h3>
+          checkboxes
+        </div>
+        <div class = "col-md-6 col-sm-12 col-xs-12">
+          <h3>Форма</h3>
+          checkboxes
+        </div>
+        <div class = "col-md-6 col-sm-12 col-xs-12">
+          <h3>Доступность</h3>
+          checkboxes
+        </div>
+        <div class = "col-md-6 col-sm-12 col-xs-12">
+          <h3>Состав</h3>
+          checkboxes
+        </div>
     </div>
+    <button class="btn btn-outline-primary" (click)="hideFilter();">Выбрать</button>
+  </form>
+</div>
 
-    
-    <div class="paginator container fixed-bottom">
-        <div class="float-left arrow-left"> <- </div>
-        <div class="float-right arrow-right"> -> </div>
-    </div>
+
+<div class="container med-container">
+  <div class="row">
+    <div class="medicine col-md-4 col-sm-6 col-xs-12"> <!--*ngFor="let medicine of medicines">-->
+      <h2></h2>
+      <b>Производитель: </b> Bayer Consumer Care<br/>
+      <b>Тип: </b> Анальгетик, Жаропонижающее <br/>
+      <b>Форма: </b> Таблетки <br/>
+      <b>Состав: </b> Ацетилсилациловая кислота <br/>
+      <b>Доступно: </b> 45
+    </div>      
+  </div>
+  <div class="paginator container " id="paginator">
+      <div class="float-left arrow-left"> <- </div>
+      <div class="float-right arrow-right"> -> </div>
+  </div>
 </div>
