@@ -3,6 +3,10 @@
     padding-top: 15px ;
     padding-bottom: 15px;
     background-color: lightgrey;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .medicine {
@@ -30,4 +34,8 @@
 
 h5 {
     padding-top: 3px;
+}
+
+input[type=text] {
+    margin: 5px;
 }

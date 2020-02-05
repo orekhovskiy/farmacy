@@ -1,9 +1,5 @@
-<!--
-  #TODO Проверить нейминги на чекбоксах!!
--->
-
 <div class="row">
-  <div class="col-md-3 col-sm-12 col-xs-12 filter">
+  <div class="filter col-md-3 col-sm-12 col-xs-12">
     <div class="row">
         <form class="form-inline">
           <input class="form-control" type="text" placeholder="Поиск">
@@ -11,62 +7,97 @@
         </form>
     </div>
     <form>
-      <div class="row">
-        <button class="btn btn-secondary btn-sm">V</button>
-        <h5>Производитель</h5>
+      <!--Producer-->
+      <div>
+        <div class="row">
+          <button data-toggle="collapse" data-target="#producer-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
+          <h5>Производитель</h5>
+        </div>
+        <div class="collapse" id="producer-check">
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="producer-check" value="Bayer"> Bayer
+          </div>
+        </div>
       </div>
-      <div class="form-check check" id="producer-check">
-        <input class="form-check-input" type="checkbox" name="producer-check" value="Bayer"> Bayer
+      <!--Type-->
+      <div>
+        <div class="row">
+          <button data-toggle="collapse" data-target="#type-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
+          <h5>Тип</h5>
+        </div>
+        <div class="collapse" id="type-check">
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="type-check" value="Анальгетик"> Анальгетик
+          </div>
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="type-check" value="Жаропонижающее"> Жаропонижающее
+          </div>
+        </div>
       </div>
-
-      <div class="row">
-        <button class="btn btn-secondary btn-sm">V</button>
-        <h5>Тип</h5>
+      <!--Form-->
+      <div>
+        <div class="row">
+          <button data-toggle="collapse" data-target="#form-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
+          <h5>Форма</h5>
+        </div>
+        <div class="collapse" id="form-check">
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="form-check" value="Таблетки"> Таблетки
+          </div>
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="form-check" value="Жидкое фещество"> Жидкое вещество
+          </div>
+        </div>
       </div>
-      <div class="form-check check" id="type-check">
-        <input class="form-check-input" type="checkbox" name="type-check" value="Анальгетик"> Анальгетик
+      <!--Composition-->
+      <div>
+        <div class="row">
+          <button data-toggle="collapse" data-target="#composition-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
+          <h5>Состав</h5>
+        </div>
+        <div class="collapse" id="composition-check">
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="composition-check" value="Ацетилсилациловая кислота"> Ацетилсилациловая кислота
+          </div>
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="composition-check" value="Вода"> Вода
+          </div>
+        </div>
       </div>
-
-      <div class="row">
-        <button class="btn btn-secondary btn-sm">V</button>
-        <h5>Форма</h5>
+      <!--Shelf Time-->
+      <div>
+        <div class="row">
+          <button data-toggle="collapse" data-target="#shelf-time-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
+          <h5>Срок годности</h5>
+        </div>
+        <div class="collapse" id="shelf-time-check">
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="shelf-time-check" value="18"> 18 мес.
+          </div>
+        </div>
       </div>
-      <div class="form-check check" id="form-check">
-        <input class="form-check-input" type="checkbox" name="form-check" value="Таблетки"> Таблетки
+      <!--Available-->
+      <div>
+        <div class="row">
+          <button data-toggle="collapse" data-target="#available-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
+          <h5>Доступно</h5>
+        </div>
+        <div class="collapse" id="available-check">
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="available-check" value="Да"> Да
+          </div>
+          <div class="form-check check">
+            <input class="form-check-input" type="checkbox" name="available-check" value="Нет"> Нет
+          </div>
+        </div>
       </div>
-
-      <div class="row">
-        <button class="btn btn-secondary btn-sm">V</button>
-        <h5>Состав</h5>
-      </div>
-      <div class="form-check check" id="composition-check">
-        <input class="form-check-input" type="checkbox" name="composition-check" value="Ацетилсилациловая кислота "> Ацетилсилациловая кислота 
-      </div>
-
-      <div class="row">
-        <button class="btn btn-secondary btn-sm">V</button>
-        <h5>Срок годности</h5>
-      </div>
-      <div class="form-check check" id="shelf-life-check">
-        <input class="form-check-input" type="checkbox" name="shilf-life-check" value="Анальгетик"> Анальгетик
-      </div>
-
-      <div class="row">
-        <button class="btn btn-secondary btn-sm">V</button>
-        <h5>Дуступно</h5>
-      </div>
-      <div class="form-check check" id="available-check">
-        <input class="form-check-input" type="checkbox" name="available-check" value="Да"> Да
-      </div>
-      <div class="form-check check" id="available-check">
-        <input class="form-check-input" type="checkbox" name="available-check" value="Нет"> Нет
-      </div>
-        <button class="btn btn-outline-primary float-right">Применить</button>
+      <button class="btn btn-outline-primary float-right">Применить</button>
     </form>
 </div>
   <div class="med-container col">
     <div class="row">
       <div class="medicine col-lg-3 col-md-4 col-sm-6 col-xs-12">
+        <h3>Аспирин</h3>
         <b>Производитель: </b> Bayer Consumer Care<br/>
         <b>Тип: </b> Анальгетик, Жаропонижающее <br/>
         <b>Форма: </b> Таблетки <br/>
@@ -74,8 +105,8 @@
         <b>Доступно: </b> 45
       </div>  
       <div class="paginator container" id="paginator">
-        <div class="float-left arrow-left"> Previous </div>
-        <div class="float-right arrow-right"> Next </div>
+        <div class="float-left arrow-left"> ❮ Previous </div>
+        <div class="float-right arrow-right"> Next ❯ </div>
     </div>
   </div>
 </div>

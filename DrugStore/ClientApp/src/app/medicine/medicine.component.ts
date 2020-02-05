@@ -51,5 +51,5 @@ interface Medicine {
   form: string;
   available: number;
   composition: string[];
-  shelftine: number;
+  shelftime: number;
 }
