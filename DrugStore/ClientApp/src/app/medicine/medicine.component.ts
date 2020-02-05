@@ -14,7 +14,6 @@ export class MedicineComponent implements OnInit {
   ngOnInit() {
     if ($(document).height() <= $(window).height()) { 
       $("#footer").addClass("fixed-bottom");
-      $("#paginator").addClass("fixed-bottom");
     }
   }
 

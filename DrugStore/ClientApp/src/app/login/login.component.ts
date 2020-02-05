@@ -15,5 +15,4 @@ export class LoginComponent implements OnInit {
       $("#paginator").addClass("fixed-bottom");
     }    
   }
-
 }

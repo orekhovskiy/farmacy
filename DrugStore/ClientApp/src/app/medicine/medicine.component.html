@@ -1,22 +1,69 @@
+<!--
+  #TODO Проверить нейминги на чекбоксах!!
+-->
+
 <div class="row">
   <div class="col-md-3 col-sm-12 col-xs-12 filter">
     <div class="row">
-      <button class="btn btn-secondary btn-sm">v</button>
-      <h5>Производитель</h5>
+        <form class="form-inline">
+          <input class="form-control" type="text" placeholder="Поиск">
+          <button class="btn btn-outline-success" type="submit">Поиск</button>
+        </form>
     </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="Bayer"> Bayer
-    </div>
+    <form>
+      <div class="row">
+        <button class="btn btn-secondary btn-sm">V</button>
+        <h5>Производитель</h5>
+      </div>
+      <div class="form-check check" id="producer-check">
+        <input class="form-check-input" type="checkbox" name="producer-check" value="Bayer"> Bayer
+      </div>
 
-    <div class="row">
-      <button class="btn btn-secondary btn-sm">v</button>
-      <h5>Тип</h5>
-    </div>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="Анальгетик"> Анальгетик
-    </div>
+      <div class="row">
+        <button class="btn btn-secondary btn-sm">V</button>
+        <h5>Тип</h5>
+      </div>
+      <div class="form-check check" id="type-check">
+        <input class="form-check-input" type="checkbox" name="type-check" value="Анальгетик"> Анальгетик
+      </div>
 
-  </div>
+      <div class="row">
+        <button class="btn btn-secondary btn-sm">V</button>
+        <h5>Форма</h5>
+      </div>
+      <div class="form-check check" id="form-check">
+        <input class="form-check-input" type="checkbox" name="form-check" value="Таблетки"> Таблетки
+      </div>
+
+      <div class="row">
+        <button class="btn btn-secondary btn-sm">V</button>
+        <h5>Состав</h5>
+      </div>
+      <div class="form-check check" id="composition-check">
+        <input class="form-check-input" type="checkbox" name="composition-check" value="Ацетилсилациловая кислота "> Ацетилсилациловая кислота 
+      </div>
+
+      <div class="row">
+        <button class="btn btn-secondary btn-sm">V</button>
+        <h5>Срок годности</h5>
+      </div>
+      <div class="form-check check" id="shelf-life-check">
+        <input class="form-check-input" type="checkbox" name="shilf-life-check" value="Анальгетик"> Анальгетик
+      </div>
+
+      <div class="row">
+        <button class="btn btn-secondary btn-sm">V</button>
+        <h5>Дуступно</h5>
+      </div>
+      <div class="form-check check" id="available-check">
+        <input class="form-check-input" type="checkbox" name="available-check" value="Да"> Да
+      </div>
+      <div class="form-check check" id="available-check">
+        <input class="form-check-input" type="checkbox" name="available-check" value="Нет"> Нет
+      </div>
+        <button class="btn btn-outline-primary float-right">Применить</button>
+    </form>
+</div>
   <div class="med-container col">
     <div class="row">
       <div class="medicine col-lg-3 col-md-4 col-sm-6 col-xs-12">
@@ -26,7 +73,7 @@
         <b>Состав: </b> Ацетилсилациловая кислота <br/>
         <b>Доступно: </b> 45
       </div>  
-      <div class="paginator container " id="paginator">
+      <div class="paginator container" id="paginator">
         <div class="float-left arrow-left"> Previous </div>
         <div class="float-right arrow-right"> Next </div>
     </div>

@@ -12,33 +12,22 @@
 }
 
 .paginator {
-    margin-bottom: 40px;
-    background-color: white;
-    padding-bottom: 10px;
 }
 
-.cbs {
+.check {
     padding-left: 30px;
 }
 
-/*
-.close {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    right: 0%;
-    transform: translate(0%, -50%);;
-  }
+.btn-sm {
+    margin: 8px;
+    padding: 2px;
+    padding-bottom: 15px;
+    padding-left: 4px;
+    padding-right: 4px;
+    height: 15px;
+    font-size: 9px;
+}
 
-.filter {
-    visibility: hidden;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    border: 1px solid black;
-    border-radius: 3px;
-    padding: 10px;
-    background-color: white;
-    z-index: 9;
-}*/
+h5 {
+    padding-top: 3px;
+}
