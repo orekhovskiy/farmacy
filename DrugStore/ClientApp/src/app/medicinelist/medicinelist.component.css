@@ -1,0 +1,63 @@
+.filter {
+    padding-left: 50px;
+    padding-top: 15px ;
+    padding-bottom: 15px;
+    background-color: lightgrey;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.medicine {
+    margin: 10px;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.paginator {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.page-numbers {
+    text-align: center;
+}
+
+.check {
+    padding-left: 30px;
+}
+
+.btn-sm {
+    margin: 8px;
+    padding: 2px;
+    padding-right: 4px;
+    padding-left: 4px;
+    font-size: 9px;
+
+}
+
+h5 {
+    padding-top: 3px;
+}
+
+input[type=text] {
+    margin: 10px;
+}
+
+a {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+h3 {
+    padding-left: 15px;    
+}
+.alter {
+    margin-top: 10px;
+}
+
+.dotdot:hover {
+    cursor: default;
+}

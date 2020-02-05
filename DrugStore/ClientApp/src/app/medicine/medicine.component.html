@@ -1,113 +1,38 @@
 <div class="row">
-  <div class="filter col-md-3 col-sm-12 col-xs-12">
-    <div class="row">
-        <form class="form-inline">
-          <input class="form-control" type="text" placeholder="Поиск">
-          <button class="btn btn-outline-success" type="submit">Поиск</button>
-        </form>
+    <div class="col"></div>
+    <div class="col">
+        <div class="medecine">
+            <h1>Изменение лекарства</h1>
+            <form>
+                <div class="form-inline"><h5>Название</h5>
+                    <input class="form-control" type="text" placeholder="Название">
+                </div>
+                <div class="form-inline"><h5>Производитель</h5>
+                    <input class="form-control" type="text" placeholder="Производитель">
+                </div>
+                <div class="form-inline"><h5>Форма</h5>
+                    <input class="form-control" type="text" placeholder="Форма">
+                </div>
+                <div class="form-inline"><h5>Срок годности</h5>
+                    <input class="form-control" type="text" placeholder="Срок годности">
+                </div>
+                <div class="froup-alter">
+                    <h5>Тип</h5>
+                    <button class="btn btn-sm btn-outline-danger">X</button>
+                    <input class="form-control" list="type">
+                    <datalist id="type">
+                        <option value="Таблетки"></option>
+                        <option value="Жидкое вещество"></option>
+                    </datalist>
+                    <button class="btn btn-sm btn-outline-success">+</button>
+                </div>
+                <div class="group-alter">
+                    <h5>Состав</h5>
+                    <button class="btn btn-sm btn-outline-danger">Тест X</button>
+                    <button class="btn btn-sm btn-outline-success">+</button>
+                </div>
+                <button class="btn btn-success float-right">Сохранить</button>
+            </form>
+        </div>
     </div>
-    <form>
-      <!--Producer-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#producer-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
-          <h5>Производитель</h5>
-        </div>
-        <div class="collapse" id="producer-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="producer-check" value="Bayer"> Bayer
-          </div>
-        </div>
-      </div>
-      <!--Type-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#type-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
-          <h5>Тип</h5>
-        </div>
-        <div class="collapse" id="type-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="type-check" value="Анальгетик"> Анальгетик
-          </div>
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="type-check" value="Жаропонижающее"> Жаропонижающее
-          </div>
-        </div>
-      </div>
-      <!--Form-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#form-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
-          <h5>Форма</h5>
-        </div>
-        <div class="collapse" id="form-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="form-check" value="Таблетки"> Таблетки
-          </div>
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="form-check" value="Жидкое фещество"> Жидкое вещество
-          </div>
-        </div>
-      </div>
-      <!--Composition-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#composition-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
-          <h5>Состав</h5>
-        </div>
-        <div class="collapse" id="composition-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="composition-check" value="Ацетилсилациловая кислота"> Ацетилсилациловая кислота
-          </div>
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="composition-check" value="Вода"> Вода
-          </div>
-        </div>
-      </div>
-      <!--Shelf Time-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#shelf-time-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
-          <h5>Срок годности</h5>
-        </div>
-        <div class="collapse" id="shelf-time-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="shelf-time-check" value="18"> 18 мес.
-          </div>
-        </div>
-      </div>
-      <!--Available-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#available-check" class="btn btn-secondary btn-sm" onclick="return false;">V</button>
-          <h5>Доступно</h5>
-        </div>
-        <div class="collapse" id="available-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="available-check" value="Да"> Да
-          </div>
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="available-check" value="Нет"> Нет
-          </div>
-        </div>
-      </div>
-      <button class="btn btn-outline-primary float-right">Применить</button>
-    </form>
-</div>
-  <div class="med-container col">
-    <div class="row">
-      <div class="medicine col-lg-3 col-md-4 col-sm-6 col-xs-12">
-        <h3>Аспирин</h3>
-        <b>Производитель: </b> Bayer Consumer Care<br/>
-        <b>Тип: </b> Анальгетик, Жаропонижающее <br/>
-        <b>Форма: </b> Таблетки <br/>
-        <b>Состав: </b> Ацетилсилациловая кислота <br/>
-        <b>Доступно: </b> 45
-      </div>  
-      <div class="paginator container" id="paginator">
-        <div class="float-left arrow-left"> ❮ Previous </div>
-        <div class="float-right arrow-right"> Next ❯ </div>
-    </div>
-  </div>
-</div>
-
+    <div class="col"></div>
