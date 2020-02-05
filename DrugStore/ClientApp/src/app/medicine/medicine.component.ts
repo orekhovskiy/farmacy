@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-medicine',
@@ -10,7 +9,7 @@ export class MedicineComponent implements OnInit {
   public aspirine: Medicine;
   public medicines: Medicine[];
 
-  constructor(public router: Router) { }
+  constructor() { }
 
   ngOnInit() {
     if ($(document).height() <= $(window).height()) { 
@@ -18,6 +17,7 @@ export class MedicineComponent implements OnInit {
       $("#paginator").addClass("fixed-bottom");
     }
   }
+
 
   showFilter() {
     document.getElementById("filter").style.visibility = 'visible';
@@ -32,7 +32,6 @@ export class MedicineComponent implements OnInit {
   }
 
   hideFilter() {
-    alert(1);
     document.getElementById("filter").style.visibility = 'hidden';
     document.getElementById("signoutBtn").disabled = false;
     document.getElementById("filterBtn").disabled = false;
@@ -42,7 +41,6 @@ export class MedicineComponent implements OnInit {
     $('body,html').css("background-color","white");
     $('#paginator').css("background-color","white");
     $('#footer').css("background-color","white");
-  }
   }
 
 }

@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
     if ($(document).height() <= $(window).height()) { 
       $("#footer").addClass("fixed-bottom");
       $("#paginator").addClass("fixed-bottom");
-    }
+    }    
   }
 
 }

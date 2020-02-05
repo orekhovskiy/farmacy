@@ -1,16 +1,9 @@
 .footer {
     height: 43px;
     border-top: 2px solid grey;
-    background-color: white;
+    background-color: #ededed;
 }
 
-input, button {
-    margin: 5px;    
-}
-
-.signout-btn {
-    margin-right: 20px;
-}
 body {
     overflow-x: hidden;
 }
