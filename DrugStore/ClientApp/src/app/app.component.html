@@ -1,8 +1,15 @@
 <header>
-    <nav class="navbar navbar-dark  bg-dark">
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark">
       <div class="navbar-brand">Аптека</div>
-      <a class="nav-item mr-auto" routerLink="/medicine-list" routerLinkActive="active">Лекарства</a>
-      <a class="nav-item mr-auto" routerLink="/medicine" routerLinkActive="active">Новое лекарство</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/medicine-list" routerLinkActive="active">Лекарства</a>
+        </li>
+        <li class="nav-tem">
+          <a class="nav-link" routerLink="/medicine/new" routerLinkActive="active">Новое лекарство</a>
+        </li>
+      </ul>
+      
       <form class="signout-btn">
         <button class="btn btn-outline-danger" id="signout-btn">Выйти</button>
       </form>

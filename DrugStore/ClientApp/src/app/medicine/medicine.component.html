@@ -2,34 +2,80 @@
     <div class="col"></div>
     <div class="col">
         <div class="medecine">
-            <h1>Изменение лекарства</h1>
+            <h1 *ngIf="id==='new'">Новое лекарство</h1>
+            <h1 *ngIf="id!='new'">Изменение лекарства</h1>
             <form>
-                <div class="form-inline"><h5>Название</h5>
-                    <input class="form-control" type="text" placeholder="Название">
+                <div class="form-inline">
+                    <h5>Название</h5>
+                    <div *ngIf="name">
+                        <input class="form-control" type="text"value="{{name}}">
+                    </div>
+                    <div *ngIf="!name">
+                        <input class="form-control" type="text" placeholder="Название">
+                    </div>
                 </div>
-                <div class="form-inline"><h5>Производитель</h5>
-                    <input class="form-control" type="text" placeholder="Производитель">
+                <div class="form-inline">
+                    <h5>Производитель</h5>
+                    <div *ngIf="producer">
+                        <input class="form-control" type="text"value="{{producer}}">
+                    </div>
+                    <div *ngIf="!producer">
+                        <input class="form-control" type="text" placeholder="Производитель">
+                    </div>
                 </div>
-                <div class="form-inline"><h5>Форма</h5>
-                    <input class="form-control" type="text" placeholder="Форма">
+                <div class="form-inline">
+                    <h5>Форма</h5>
+                    <div *ngIf="form">
+                        <input class="form-control" type="text"value="{{form}}">
+                    </div>
+                    <div *ngIf="!form">
+                        <input class="form-control" type="text" placeholder="Форма">
+                    </div>
                 </div>
-                <div class="form-inline"><h5>Срок годности</h5>
-                    <input class="form-control" type="text" placeholder="Срок годности">
+                <div class="form-inline">
+                    <h5>Срок годности (в месяцах)</h5>
+                    <div *ngIf="shelfTime">
+                        <input class="form-control" type="number"value="{{shelfTime}}" min="1">
+                    </div>
+                    <div *ngIf="!shelfTime">
+                        <input class="form-control" type="number" placeholder="Срок годности" min="1">
+                    </div>
                 </div>
-                <div class="froup-alter">
+                <div class="form-inline">
+                    <h5>Доступно</h5>
+                    <div *ngIf="available">
+                        <input class="form-control" type="number"value="{{available}}" min="1">
+                    </div>
+                    <div *ngIf="!available">
+                        <input class="form-control" type="number" placeholder="Доступно" min="1">
+                    </div>
+                </div>
+                <div class="group-alter">
                     <h5>Тип</h5>
-                    <button class="btn btn-sm btn-outline-danger">X</button>
-                    <input class="form-control" list="type">
-                    <datalist id="type">
-                        <option value="Таблетки"></option>
-                        <option value="Жидкое вещество"></option>
-                    </datalist>
-                    <button class="btn btn-sm btn-outline-success">+</button>
+                    <div class="row">
+                        <button class="btn btn-outline-danger" *ngFor="let type of currentTypes" (click)="removeType(type)" id="{{type}}-btn" onclick="return false;">{{type}} X</button>
+                    </div>
+                    <div class="row form-inline">
+                        <select class="form-control" id="availableTypes">
+                            <option  *ngFor="let type of availableTypes" value="{{type}}" id="{{type}}-opt">{{type}}</option>
+                        </select>
+                        <button class="btn btn-sm btn-outline-success" (click)="addType()" onclick="return false;">+</button>
+                    </div>
+                    
                 </div>
                 <div class="group-alter">
                     <h5>Состав</h5>
-                    <button class="btn btn-sm btn-outline-danger">Тест X</button>
-                    <button class="btn btn-sm btn-outline-success">+</button>
+                    <div class="row">
+                        <div *ngFor="let comp of currentCompositions">
+                            <button class="btn btn-outline-danger" *ngIf="comp != ''" (click)="removeComp(comp)" id="{{comp}}-btn" onclick="return false;">{{comp}} X</button>
+                        </div>
+                    </div>
+                    <div class="row form-inline">
+                        <select class="form-control" id="availableCompositions">
+                            <option  *ngFor="let comp of availableCompositions" value="{{comp}}" id="{{comp}}-opt">{{comp}}</option>
+                        </select>
+                        <button class="btn btn-sm btn-outline-success" (click)="addComp()" onclick="return false;">+</button>
+                    </div>
                 </div>
                 <button class="btn btn-success float-right">Сохранить</button>
             </form>

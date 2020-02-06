@@ -8,7 +8,7 @@ import { MedicinelistComponent } from './medicinelist/medicinelist.component';
 const routes: Routes = [
   { path:'', component: LoginComponent },
   { path:'medicine-list', component: MedicinelistComponent },
-  { path:'medicine', component: MedicineComponent}
+  { path:'medicine/:id', component: MedicineComponent}
 ];
 
 @NgModule({
