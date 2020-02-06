@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row medicine-list">
   <div class="filter col-md-3 col-sm-12 col-xs-12">
     <div class="row">
         <form class="form-inline">
@@ -93,10 +93,11 @@
       </div>
       <button class="btn btn-outline-primary float-right">Применить</button>
     </form>
-</div>
+  </div>
   <div class="med-container col">
     <table class="med-table table table-striped">
       <thead class="thead-light">
+        <th></th>
         <th>Название</th>
         <th>Производитель</th>
         <th>Тип</th>
@@ -107,6 +108,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let medicine of medicines">
+          <td>
+            <button class="btn btn-sm btn-warning">Редактировать</button>
+          </td>
           <td>{{medicine.name}}</td>
           <td>{{medicine.producer}}</td>
           <td>

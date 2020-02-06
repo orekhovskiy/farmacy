@@ -55,7 +55,7 @@
                     <div class="row">
                         <button class="btn btn-outline-danger" *ngFor="let type of currentTypes" (click)="removeType(type)" id="{{type}}-btn" onclick="return false;">{{type}} X</button>
                     </div>
-                    <div class="row form-inline">
+                    <div class="row form-inline" *ngIf="availableTypes.length > 0">
                         <select class="form-control" id="availableTypes">
                             <option  *ngFor="let type of availableTypes" value="{{type}}" id="{{type}}-opt">{{type}}</option>
                         </select>
@@ -70,7 +70,7 @@
                             <button class="btn btn-outline-danger" *ngIf="comp != ''" (click)="removeComp(comp)" id="{{comp}}-btn" onclick="return false;">{{comp}} X</button>
                         </div>
                     </div>
-                    <div class="row form-inline">
+                    <div class="row form-inline" *ngIf="availableCompositions.length > 0">
                         <select class="form-control" id="availableCompositions">
                             <option  *ngFor="let comp of availableCompositions" value="{{comp}}" id="{{comp}}-opt">{{comp}}</option>
                         </select>

@@ -30,7 +30,7 @@ export class MedicinelistComponent implements OnInit {
   }
   
   //down chevrone - &#8964;
-  //right triangle bracket - $gt;
+  //right triangle bracket - &gt;
   changeArrow(id: string) {
     
     var obj = document.getElementById(id);
