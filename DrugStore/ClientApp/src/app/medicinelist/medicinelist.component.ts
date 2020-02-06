@@ -12,9 +12,8 @@ export class MedicinelistComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if ($(document).height() <= $(window).height()) { 
+    if ($(document).height() <= $(window).height())
       $("#footer").addClass("fixed-bottom");
-    }
   }
 
 }
