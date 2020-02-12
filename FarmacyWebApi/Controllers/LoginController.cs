@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FarmacyWebApi.Data;
-//using FarmacyWebApi.Models;
+using FarmacyWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +18,7 @@ namespace FarmacyWebApi.Controllers
             db = context;
         }
 
-        /*[Route("GetUsers")]
+        [Route("GetUsers")]
         public IEnumerable<User> GetEmployees()
         {
             return db.User.ToList();
@@ -38,14 +37,14 @@ namespace FarmacyWebApi.Controllers
         {
             var u = new User
             {
-                login = login,
-                password = Hasher.GetHash(password),
-                firstname = firstname,
-                lastname = lastname,
-                position = position
+                Login = login,
+                Password = Hasher.GetHash(password),
+                Firstname = firstname,
+                Lastname = lastname,
+                Position = position
             };
             db.User.Add(u);
             db.SaveChanges();
-        }*/
+        }
     }
 }
