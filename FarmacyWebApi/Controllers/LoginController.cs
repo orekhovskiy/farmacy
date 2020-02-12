@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FarmacyWebApi.Data;
-using FarmacyWebApi.Models;
+//using FarmacyWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,7 @@ namespace FarmacyWebApi.Controllers
             db = context;
         }
 
-        [Route("GetUsers")]
+        /*[Route("GetUsers")]
         public IEnumerable<User> GetEmployees()
         {
             return db.User.ToList();
@@ -32,7 +32,7 @@ namespace FarmacyWebApi.Controllers
         }
 
         [HttpPost]
-        [ActionName("AddEmployee")]
+        [ActionName("AddUser")]
         public void Post([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
             [FromForm] string lastname, [FromForm] int position)
         {
@@ -46,6 +46,6 @@ namespace FarmacyWebApi.Controllers
             };
             db.User.Add(u);
             db.SaveChanges();
-        }
+        }*/
     }
 }

@@ -1,26 +1,24 @@
 <div *ngFor="let we of weatherList">
-    <p>
-        {{we.date}}
-    </p>
-    <p>
-        {{we.summary}}
-    </p>
+  <p>
+    {{we.date}}
+  </p>
+  <p>
+    {{we.summary}}
+  </p>
 </div>
-<form class="login-form">
+<!--<form class="login-form">
     <h1>Войдите в систему</h1>
     <div>
-        <form>
             <input class="form-control" type="text" placeholder="Логин">
             <input class="form-control" type="password" placeholder="Пароль">
             <button class="btn btn-outline-success float-right login-btn" type="submit">Войти</button>
-        </form>
     </div>
-  </form>
-<!--<form action="/api/home/AddEmployee" method="POST" class="login-form">
-    <input type="text" name="login" id="login" placeholder="login">
-    <input type="text" name="password" id="password" placeholder="password">
-    <input type="text" name="firstname" id="firstname" placeholder="firstname">
-    <input type="text" name="lastname" id="lastname" placeholder="lastname">
-    <input type="number" name="position" id="position" placeholder="position">
-    <input type="submit" value="Add">
-</form>-->
+  </form>-->
+<form action="/api/login/AddUser" method="POST" class="login-form">
+  <input type="text" name="login" id="login" placeholder="login">
+  <input type="text" name="password" id="password" placeholder="password">
+  <input type="text" name="firstname" id="firstname" placeholder="firstname">
+  <input type="text" name="lastname" id="lastname" placeholder="lastname">
+  <input type="number" name="position" id="position" placeholder="position">
+  <input type="submit" value="Add">
+</form>

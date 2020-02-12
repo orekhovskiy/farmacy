@@ -1,4 +1,4 @@
-﻿using FarmacyWebApi.Models;
+﻿//using FarmacyWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,6 +13,6 @@ namespace FarmacyWebApi.Data
         {
            Database.EnsureCreated();
         }
-        public DbSet<User> User { get; set; }
+        //public DbSet<User> User { get; set; }
     }
 }

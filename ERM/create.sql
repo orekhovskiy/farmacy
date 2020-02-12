@@ -28,7 +28,7 @@ create table Position
 	name nchar(10) not null
 );
 
-create table Employee
+create table [User]
 (
 	id int primary key identity(1,1),
 	login nchar(10) not null,
@@ -52,7 +52,7 @@ create table Medicine
 create table Change
 (
 	id int primary key identity(1,1),
-	userId int references Employee(id),
+	userId int references [User](id),
 	medicineId int references Medicine(id),
 	operation int not null,
 	changeDate date not null 
