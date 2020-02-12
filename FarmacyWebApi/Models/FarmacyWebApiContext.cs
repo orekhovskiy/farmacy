@@ -39,7 +39,7 @@ namespace FarmacyWebApi.Models
             modelBuilder.Entity<Category>(entity =>
             {
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__Category__72E12F1BB2606EC0")
+                    .HasName("UQ__Category__72E12F1BF307AB04")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -68,18 +68,20 @@ namespace FarmacyWebApi.Models
                 entity.HasOne(d => d.Medicine)
                     .WithMany(p => p.Change)
                     .HasForeignKey(d => d.MedicineId)
-                    .HasConstraintName("FK__Change__medicine__45BE5BA9");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Change__medicine__0880433F");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Change)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Change__userId__44CA3770");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Change__userId__078C1F06");
             });
 
             modelBuilder.Entity<Component>(entity =>
             {
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__Componen__72E12F1B700E7D99")
+                    .HasName("UQ__Componen__72E12F1B508A7CB8")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -94,7 +96,7 @@ namespace FarmacyWebApi.Models
             modelBuilder.Entity<Form>(entity =>
             {
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__Form__72E12F1B907A4A10")
+                    .HasName("UQ__Form__72E12F1B0D450EE8")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -109,7 +111,7 @@ namespace FarmacyWebApi.Models
             modelBuilder.Entity<Medicine>(entity =>
             {
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__Medicine__72E12F1B56A06D83")
+                    .HasName("UQ__Medicine__72E12F1BA3771A93")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -128,26 +130,31 @@ namespace FarmacyWebApi.Models
 
                 entity.Property(e => e.ProducerId).HasColumnName("producerId");
 
+                entity.Property(e => e.ShelfTime).HasColumnName("shelfTime");
+
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Medicine)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Medicine__catego__3B40CD36");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Medicine__catego__7E02B4CC");
 
                 entity.HasOne(d => d.Form)
                     .WithMany(p => p.Medicine)
                     .HasForeignKey(d => d.FormId)
-                    .HasConstraintName("FK__Medicine__formId__3C34F16F");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Medicine__formId__7EF6D905");
 
                 entity.HasOne(d => d.Producer)
                     .WithMany(p => p.Medicine)
                     .HasForeignKey(d => d.ProducerId)
-                    .HasConstraintName("FK__Medicine__produc__3A4CA8FD");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Medicine__produc__7D0E9093");
             });
 
             modelBuilder.Entity<MedicineComposition>(entity =>
             {
                 entity.HasIndex(e => new { e.MedicineId, e.ComponentId })
-                    .HasName("UQ__Medicine__CCF9C9C31D084847")
+                    .HasName("UQ__Medicine__CCF9C9C3C795DBFA")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -159,18 +166,20 @@ namespace FarmacyWebApi.Models
                 entity.HasOne(d => d.Component)
                     .WithMany(p => p.MedicineComposition)
                     .HasForeignKey(d => d.ComponentId)
-                    .HasConstraintName("FK__MedicineC__compo__41EDCAC5");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__MedicineC__compo__04AFB25B");
 
                 entity.HasOne(d => d.Medicine)
                     .WithMany(p => p.MedicineComposition)
                     .HasForeignKey(d => d.MedicineId)
-                    .HasConstraintName("FK__MedicineC__medic__40F9A68C");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__MedicineC__medic__03BB8E22");
             });
 
             modelBuilder.Entity<Position>(entity =>
             {
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__Position__72E12F1BA4E9FAE2")
+                    .HasName("UQ__Position__72E12F1BBFFA7A0B")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -185,7 +194,7 @@ namespace FarmacyWebApi.Models
             modelBuilder.Entity<Producer>(entity =>
             {
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__Producer__72E12F1B17FC9A67")
+                    .HasName("UQ__Producer__72E12F1B314E1880")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -200,7 +209,7 @@ namespace FarmacyWebApi.Models
             modelBuilder.Entity<User>(entity =>
             {
                 entity.HasIndex(e => e.Login)
-                    .HasName("UQ__User__7838F27278809C44")
+                    .HasName("UQ__User__7838F2721B942848")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -234,7 +243,8 @@ namespace FarmacyWebApi.Models
                 entity.HasOne(d => d.PositionNavigation)
                     .WithMany(p => p.User)
                     .HasForeignKey(d => d.Position)
-                    .HasConstraintName("FK__User__position__367C1819");
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__User__position__793DFFAF");
             });
 
             OnModelCreatingPartial(modelBuilder);

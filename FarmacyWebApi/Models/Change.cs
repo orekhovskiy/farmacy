@@ -6,8 +6,8 @@ namespace FarmacyWebApi.Models
     public partial class Change
     {
         public int Id { get; set; }
-        public int? UserId { get; set; }
-        public int? MedicineId { get; set; }
+        public int UserId { get; set; }
+        public int MedicineId { get; set; }
         public int Operation { get; set; }
         public DateTime ChangeDate { get; set; }
 
