@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace DrugStore
+namespace FarmacyWebApi
 {
     public class Hasher
     {
-        static string GetHash (string input)
+        public static string GetHash(string input)
         {
             using (MD5 md5Hash = MD5.Create())
             {
@@ -20,7 +23,7 @@ namespace DrugStore
             }
         }
 
-        static bool VerifyHash(string input, string hash)
+        public static bool VerifyHash(string input, string hash)
         {
             string hashOfInput = GetHash(input);
             StringComparer comparer = StringComparer.OrdinalIgnoreCase;

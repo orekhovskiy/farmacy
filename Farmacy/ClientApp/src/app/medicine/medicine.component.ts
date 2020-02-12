@@ -27,17 +27,17 @@ export class MedicineComponent implements OnInit {
 
   constructor(private route: ActivatedRoute) { 
     this.routeSubscription = route.params.subscribe(params => this.id = params['id']);
+  }
+
+  ngOnInit() {
+    if ($(document).height() <= $(window).height())
+      $("#footer").addClass("fixed-bottom");
     this.allTypes = ["Анальгетик", "Жаропонижающее"];
     this.allCompositions = ["Ацетилсилациловая кислота", "Вода"];
     this.availableCompositions = this.allCompositions;
     this.availableTypes = this.allTypes;
     this.currentTypes = [];
     this.currentCompositions = [];
-  }
-
-  ngOnInit() {
-    if ($(document).height() <= $(window).height())
-      $("#footer").addClass("fixed-bottom");
   }
 
   addType() {

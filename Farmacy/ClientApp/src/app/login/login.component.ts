@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     if ($(document).height() <= $(window).height())
       $("#footer").addClass("fixed-bottom");
-    this.http.get('/api/WeatherForecast')
+    this.http.get('/api/weatherforecast')
       .subscribe((data:Weather) => this.weatherList=data);
   }
 }
