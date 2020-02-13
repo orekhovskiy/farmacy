@@ -7,7 +7,7 @@ namespace FarmacyWebApi.Models
     {
         public User()
         {
-            Change = new HashSet<Change>();
+            Purchase = new HashSet<Purchase>();
         }
 
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace FarmacyWebApi.Models
         public int Position { get; set; }
 
         public virtual Position PositionNavigation { get; set; }
-        public virtual ICollection<Change> Change { get; set; }
+        public virtual ICollection<Purchase> Purchase { get; set; }
     }
 }

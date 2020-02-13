@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   async login() {
     var login = $("#login").val();
     var password = $("#password").val();
-    var isValide;
+    //var isValide;
     this.http.get('/api/User/ValidateUser?login=' + login + "&password=" + password)
       .subscribe( (data: boolean) => alert(data));
   }

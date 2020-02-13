@@ -17,6 +17,16 @@ namespace FarmacyWebApi.Controllers
         public UserController(FarmacyWebApiContext context)
         {
             db = context;
+            /*var u = new User
+            {
+                Login ="admin",
+                Password = Hasher.GetHash("admin"),
+                Firstname = "admin",
+                Lastname = "admin",
+                Position = 1
+            };
+            db.User.Add(u);
+            db.SaveChanges();*/
         }
 
         [Route("GetUser")]
@@ -41,7 +51,7 @@ namespace FarmacyWebApi.Controllers
            return db.User.Where(u => u.Login == login).FirstOrDefault().Position;
         }
 
-        #region
+                #region
         [Route("GetUsers")]
         public IEnumerable<User> GetEmployees()
         {
@@ -70,6 +80,6 @@ namespace FarmacyWebApi.Controllers
             db.User.Add(u);
             db.SaveChanges();
         }
-        #endregion
+                #endregion
     }
 }

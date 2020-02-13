@@ -7,8 +7,8 @@ namespace FarmacyWebApi.Models
     {
         public Medicine()
         {
-            Change = new HashSet<Change>();
             MedicineComposition = new HashSet<MedicineComposition>();
+            Purchase = new HashSet<Purchase>();
         }
 
         public int Id { get; set; }
@@ -22,7 +22,7 @@ namespace FarmacyWebApi.Models
         public virtual Category Category { get; set; }
         public virtual Form Form { get; set; }
         public virtual Producer Producer { get; set; }
-        public virtual ICollection<Change> Change { get; set; }
         public virtual ICollection<MedicineComposition> MedicineComposition { get; set; }
+        public virtual ICollection<Purchase> Purchase { get; set; }
     }
 }
