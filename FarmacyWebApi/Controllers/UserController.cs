@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FarmacyWebApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -29,44 +29,28 @@ namespace FarmacyWebApi.Controllers
             db.SaveChanges();*/
         }
 
-        [Route("GetUser")]
-        [HttpGet]
         public User GetUser([FromQuery] string login, [FromQuery] string password)
         {
             return db.User.Where(u => u.Login == login && Hasher.GetHash(password) == u.Password).FirstOrDefault();
         }
 
-        [Route("ValidateUser")]
-        [HttpGet]
-        public bool ValidateUSer([FromQuery] string login, [FromQuery] string password) 
+        public bool ValidateUser([FromQuery] string login, [FromQuery] string password) 
         {
             List<User> res = db.User.Where(u => u.Login == login && Hasher.GetHash(password) == u.Password).ToList();
             return res.Count > 0;
         }
 
-        [Route("GetUserPosition")]
-        [HttpGet]
         public int GetUserPosition([FromQuery] string login)
         {
            return db.User.Where(u => u.Login == login).FirstOrDefault().Position;
         }
 
-                #region
-        [Route("GetUsers")]
-        public IEnumerable<User> GetEmployees()
+        public IEnumerable<User> GetAllUsers()
         {
             return db.User.ToList();
         }
 
-        [Route("GetUser")]
-        public User GetFirstEmployee()
-        {
-            return db.User.First();
-        }
-
-        [HttpPost]
-        [ActionName("AddUser")]
-        public void Post([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
+        public void AddUser([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
             [FromForm] string lastname, [FromForm] int position)
         {
             var u = new User
@@ -80,6 +64,5 @@ namespace FarmacyWebApi.Controllers
             db.User.Add(u);
             db.SaveChanges();
         }
-                #endregion
     }
 }

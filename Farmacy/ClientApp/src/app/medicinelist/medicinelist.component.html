@@ -14,23 +14,20 @@
           <h5>Производитель</h5>
         </div>
         <div class="collapse" id="producer-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="type-check" value="Bayer"> Bayer
+          <div *ngFor="let producer of allProducers" class="form-check check">
+            <input class="form-check-input" type="checkbox" name="producer-check" value="{{producer}}"> {{producer}}
           </div>
         </div>
       </div>
-      <!--Type-->
+      <!--Category-->
       <div>
         <div class="row">
-          <button data-toggle="collapse" data-target="#type-check" class="btn arrow" id="type-arrow" (click)="changeArrow('type-arrow');" onclick="return false;">></button>
-          <h5>Тип</h5>
+          <button data-toggle="collapse" data-target="#category-check" class="btn arrow" id="category-arrow" (click)="changeArrow('category-arrow');" onclick="return false;">></button>
+          <h5>Категория</h5>
         </div>
-        <div class="collapse" id="type-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="type-check" value="Анальгетик"> Анальгетик
-          </div>
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="type-check" value="Жаропонижающее"> Жаропонижающее
+        <div class="collapse" id="category-check">
+          <div *ngFor="let category of allCategories" class="form-check check">
+            <input class="form-check-input" type="checkbox" name="category-check" value="{{category}}"> {{category}}
           </div>
         </div>
       </div>
@@ -40,12 +37,9 @@
           <button data-toggle="collapse" data-target="#form-check" class="btn arrow" id="form-arrow" (click)="changeArrow('form-arrow');" onclick="return false;">></button>
           <h5>Форма</h5>
         </div>
-        <div class="collapse" id="form-check">
+        <div *ngFor="let form of allForms" class="collapse" id="form-check">
           <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="form-check" value="Таблетки"> Таблетки
-          </div>
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="form-check" value="Жидкое фещество"> Жидкое вещество
+            <input class="form-check-input" type="checkbox" name="form-check" value="{{form}}"> {{form}}
           </div>
         </div>
       </div>
@@ -56,11 +50,8 @@
           <h5>Состав</h5>
         </div>
         <div class="collapse" id="composition-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="composition-check" value="Ацетилсилациловая кислота"> Ацетилсилациловая кислота
-          </div>
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="composition-check" value="Вода"> Вода
+          <div *ngFor="let component of allComponents" class="form-check check">
+            <input class="form-check-input" type="checkbox" name="composition-check" value="{{component}}"> {{component}}
           </div>
         </div>
       </div>
@@ -71,8 +62,8 @@
           <h5>Срок годности</h5>
         </div>
         <div class="collapse" id="shelf-time-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="shelf-time-check" value="18"> 18 мес.
+          <div *ngFor="let shelfTime of allShelfTimes" class="form-check check">
+            <input class="form-check-input" type="checkbox" name="shelf-time-check" value="{{shelfTime}}"> {{shelfTime}} мес.
           </div>
         </div>
       </div>
@@ -100,7 +91,7 @@
         <th></th>
         <th>Название</th>
         <th>Производитель</th>
-        <th>Тип</th>
+        <th>Категория</th>
         <th>Форма</th>
         <th>Состав</th>
         <th>Срок годности</th>
@@ -114,9 +105,7 @@
           <td>{{medicine.name}}</td>
           <td>{{medicine.producer}}</td>
           <td>
-            <div class="type-table" *ngFor="let type of medicine.type" >
-              {{type}}
-            </div>
+              {{medicine.category}}
           </td>
           <td>{{medicine.form}}</td>
           <td>

@@ -14,7 +14,7 @@ namespace FarmacyWebApi.Controllers
     [ApiController]
     public class MedicineController : ControllerBase
     {
-        private FarmacyWebApiContext db;
+        private readonly FarmacyWebApiContext db;
         public MedicineController(FarmacyWebApiContext context)
         {
             db = context;
@@ -37,6 +37,7 @@ namespace FarmacyWebApi.Controllers
         }
 
         //Уродский метод #1
+        //automapper
         public IEnumerable<Medicine> GetAllMedicines()
         {
             var result = from medicine in db.Medicine
@@ -76,7 +77,7 @@ namespace FarmacyWebApi.Controllers
         public IEnumerable<Medicine> GetFilteredMedicines([FromQuery] string[] producer, [FromQuery] string[] category, 
             [FromQuery] string[] form, [FromQuery] string[] component, [FromQuery] int[] shelfTime, [FromQuery] bool[] available)
         {
-            return GetAllMedicines().Where ( m =>    producer.Contains(m.Producer.Name) &&
+            return GetAllMedicines().Where ( m =>   producer.Contains(m.Producer.Name) &&
                                                     category.Contains(m.Category.Name) &&
                                                     form.Contains(m.Form.Name) &&
                                                     component.Intersect(m.MedicineComposition.Select(mc => mc.Component.Name)).Any() &&
@@ -117,14 +118,13 @@ namespace FarmacyWebApi.Controllers
                 Count = count
             };
             db.Medicine.Add(m);
-            foreach (string c in component)
-            {
-                db.MedicineComposition.Add(new MedicineComposition
-                {
-                    Medicine = m,
-                    Component = db.Component.Where(a => a.Name == c).First()
-                });
-            }
+            if (component != null)
+                foreach (string c in component)
+                    db.MedicineComposition.Add(new MedicineComposition
+                    {
+                        Medicine = m,
+                        Component = db.Component.Where(a => a.Name == c).First()
+                    });
             db.SaveChanges();
         }
 
@@ -142,14 +142,13 @@ namespace FarmacyWebApi.Controllers
             foreach (MedicineComposition mc in db.MedicineComposition.Where(mc => mc.MedicineId == id))
                 db.Remove(mc);
             db.SaveChanges();
-            foreach (string comp in component)
-            {
-                db.MedicineComposition.Add(new MedicineComposition
-                {
-                    Component = db.Component.Where(c => c.Name == comp).First(),
-                    Medicine = db.Medicine.Find(id)
-                });
-            }
+            if (component != null)
+                foreach (string comp in component)
+                    db.MedicineComposition.Add(new MedicineComposition
+                    {
+                        Component = db.Component.Where(c => c.Name == comp).First(),
+                        Medicine = db.Medicine.Find(id)
+                    });
             db.SaveChanges();
         }
 

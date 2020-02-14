@@ -1,5 +1,7 @@
 # TO DO
+## Structure refactoring
 ## Client side
+* Check statement on page loading
 * Renaming
 * Filter styling
 * Medicine-list styling
@@ -7,30 +9,4 @@
 * Medicine page styling
 ## Back side
 * Authentification
-* Controllers
 * Sessions
-
-#### Controllers
-* ~~User controller~~
-* Medicine controller
-* [OPTIONAL] Change controller
-
-##### ~~UserController~~
-* ~~UserValidate~~
-* ~~?Signout~~
-* ~~GetUserPosition~~
-##### MedicineController
-* GetAllMedicines
-* GetFilteredMedicines
-* GetMedicinesByName
-* GetMedicinesByProducer
-* GetAllMedicineNames
-* GetAllMedicineProducers
-* GetAllMedicineTypes
-* GetAllMedicineForms
-* GetAllMedicineComponents
-* GetAllMedicineShelTimes
-* GetAllMedicine
-* NewMedicine
-* AlterMedicine
-* SellMedicine

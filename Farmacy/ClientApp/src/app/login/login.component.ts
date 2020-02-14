@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Weather } from '../weather';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,8 +11,6 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class LoginComponent implements OnInit {
-
-  public weatherList: Weather;
 
   constructor(private http: HttpClient, private router: Router) { }
 
