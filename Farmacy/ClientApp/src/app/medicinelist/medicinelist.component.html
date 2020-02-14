@@ -1,12 +1,12 @@
 <div class="row medicine-list">
   <div class="filter col-md-3 col-sm-12 col-xs-12">
     <div class="row">
-        <form class="form-inline">
-          <input class="form-control" type="text" placeholder="Поиск">
-          <button class="btn btn-outline-success" type="submit">Поиск</button>
-        </form>
+        <div class="form-inline">
+          <input class="form-control" type="text" id="search" placeholder="Поиск">
+          <button class="btn btn-outline-success" type="submit" (click)="search()" onclick="return false">Поиск</button>
+        </div>
     </div>
-    <form>
+    <div>
       <!--Producer-->
       <div>
         <div class="row">
@@ -15,7 +15,7 @@
         </div>
         <div class="collapse" id="producer-check">
           <div *ngFor="let producer of allProducers" class="form-check check">
-            <input class="form-check-input" type="checkbox" name="producer-check" value="{{producer}}"> {{producer}}
+            <input class="form-check-input" type="checkbox" name="producer-check" value="{{producer}}" checked="true"> {{producer}}
           </div>
         </div>
       </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="collapse" id="category-check">
           <div *ngFor="let category of allCategories" class="form-check check">
-            <input class="form-check-input" type="checkbox" name="category-check" value="{{category}}"> {{category}}
+            <input class="form-check-input" type="checkbox" name="category-check" value="{{category}}" checked="true"> {{category}}
           </div>
         </div>
       </div>
@@ -39,19 +39,19 @@
         </div>
         <div *ngFor="let form of allForms" class="collapse" id="form-check">
           <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="form-check" value="{{form}}"> {{form}}
+            <input class="form-check-input" type="checkbox" name="form-check" value="{{form}}" checked="true"> {{form}}
           </div>
         </div>
       </div>
-      <!--Composition-->
+      <!--Component-->
       <div>
         <div class="row">
-          <button data-toggle="collapse" data-target="#composition-check" class="btn arrow" id="composition-arrow" (click)="changeArrow('composition-arrow');" onclick="return false;">></button>
+          <button data-toggle="collapse" data-target="#component-check" class="btn arrow" id="component-arrow" (click)="changeArrow('component-arrow');" onclick="return false;">></button>
           <h5>Состав</h5>
         </div>
-        <div class="collapse" id="composition-check">
+        <div class="collapse" id="component-check">
           <div *ngFor="let component of allComponents" class="form-check check">
-            <input class="form-check-input" type="checkbox" name="composition-check" value="{{component}}"> {{component}}
+            <input class="form-check-input" type="checkbox" name="component-check" value="{{component}}" checked="true"> {{component}}
           </div>
         </div>
       </div>
@@ -63,7 +63,7 @@
         </div>
         <div class="collapse" id="shelf-time-check">
           <div *ngFor="let shelfTime of allShelfTimes" class="form-check check">
-            <input class="form-check-input" type="checkbox" name="shelf-time-check" value="{{shelfTime}}"> {{shelfTime}} мес.
+            <input class="form-check-input" type="checkbox" name="shelf-time-check" value="{{shelfTime}}" checked="true"> {{shelfTime}} мес.
           </div>
         </div>
       </div>
@@ -75,15 +75,15 @@
         </div>
         <div class="collapse" id="available-check">
           <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="available-check" value="Да"> Да
+            <input class="form-check-input" type="checkbox" name="available-check" value="true" checked="true"> Да
           </div>
           <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="available-check" value="Нет"> Нет
+            <input class="form-check-input" type="checkbox" name="available-check" value="false" checked="true"> Нет
           </div>
         </div>
       </div>
-      <button class="btn btn-outline-primary float-right">Применить</button>
-    </form>
+      <button class="btn btn-outline-primary float-right" (click)="getFilteredMedicines();" onclick="return false;">Применить</button>
+    </div>
   </div>
   <div class="med-container col">
     <table class="med-table table table-striped">
@@ -100,7 +100,7 @@
       <tbody>
         <tr *ngFor="let medicine of medicines">
           <td>
-            <button class="btn btn-sm btn-warning">Редактировать</button>
+            <a class="btn btn-sm btn-warning" routerLink="/medicine/{{medicine.id}}" routerLinkActive="active">Редактировать</a>
           </td>
           <td>{{medicine.name}}</td>
           <td>{{medicine.producer}}</td>
@@ -109,12 +109,12 @@
           </td>
           <td>{{medicine.form}}</td>
           <td>
-            <div class="comp-table" *ngFor="let comp of medicine.composition" >
+            <div class="comp-table" *ngFor="let comp of medicine.component" >
               {{comp}}
             </div>
           </td>
           <td>{{medicine.shelfTime}}</td>
-          <td>{{medicine.available}}</td>
+          <td>{{medicine.count}}</td>
         </tr>
       </tbody>
     </table> 

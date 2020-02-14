@@ -85,9 +85,16 @@ namespace FarmacyWebApi.Controllers
                                                     available.Contains(m.Count > 0 ? true : false));
         }
 
-        public IEnumerable<Medicine> GetMedicinesByName([FromQuery] string name) => db.Medicine.Where(m => m.Name == name);
+        //https://localhost:44388/api/medicine/GetPagesAmount?rowsOnPage=30&producer=Bayer&category=%D0%90%D0%BD%D0%B0%D0%BB%D1%8C%D0%B3%D0%B5%D1%82%D0%B8%D0%BA%D0%B8&form=%D0%A2%D0%B0%D0%B1%D0%BB%D0%B5%D1%82%D0%BA%D0%B8&component=%D0%90%D1%86%D0%B5%D1%82%D0%B8%D0%BB%D1%81%D0%B0%D0%BB%D0%B8%D1%86%D0%B8%D0%BB%D0%BE%D0%B2%D0%B0%D1%8F%20%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D1%82%D0%B0&shelfTime=60&available=true
+        public int GetPagesAmount([FromQuery] int rowsOnPage, [FromQuery] string[] producer, [FromQuery] string[] category,
+            [FromQuery] string[] form, [FromQuery] string[] component, [FromQuery] int[] shelfTime, [FromQuery] bool[] available)
+        {
+            var r = (double) GetFilteredMedicines(producer, category, form, component, shelfTime, available).Count() / rowsOnPage;
+            return (int) Math.Ceiling(r);
+        }
+        public IEnumerable<Medicine> GetMedicinesByName([FromQuery] string name) => GetAllMedicines().Where(m => m.Name == name);
 
-        public IEnumerable<Medicine> GetMedicinesByProducer([FromQuery] string producer) => db.Medicine.Where(m => m.Producer.Name == producer);
+        public IEnumerable<Medicine> GetMedicinesByProducer([FromQuery] string producer) => GetAllMedicines().Where(m => m.Producer.Name == producer);
 
         public IEnumerable<string> GetAllMedicineNames() =>db.Medicine.Select(m => m.Name);
 
