@@ -33,7 +33,7 @@ namespace FarmacyWebApi.Controllers
         private MedicineList GetPagedMedicines(IEnumerable<Medicine> medicines, int currentPage, int rowsOnPage)
         {
             int pagesAmount = GetPagesAmount(rowsOnPage, medicines.Count());
-            if (currentPage > pagesAmount || currentPage < 1) return null;
+            if (currentPage > pagesAmount || currentPage < 1) return new MedicineList { };
             return new MedicineList
             {
                 CurrentPage = currentPage,
@@ -49,18 +49,19 @@ namespace FarmacyWebApi.Controllers
             [FromQuery] string[] category, [FromQuery] string[] form, [FromQuery] string[] component, [FromQuery] int[] shelfTime, [FromQuery] bool[] available)
             => GetPagedMedicines(_medicineService.GetFilteredMedicines(producer, category, form, component, shelfTime, available), currentPage, rowsOnPage);
 
-        public  MedicineList GetMedicinesByKeyPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage ,[FromQuery] string key)
+        public  MedicineList GetMedicinesByKeyPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string key)
             => GetPagedMedicines(_medicineService.GetMedicinesByName(key).Concat(_medicineService.GetMedicinesByProducer(key)), currentPage, rowsOnPage);
 
-        public IEnumerable<string> GetAllMedicineProducers() => _medicineService.GetAllMedicineProducers();
-        
-        public IEnumerable<string> GetAllMedicineCategories() => _medicineService.GetAllMedicineCategories();
-
-        public IEnumerable<string> GetAllMedicineForms() => _medicineService.GetAllMedicineForms();
-
-        public IEnumerable<string> GetAllMedicineComponents() => _medicineService.GetAllMedicineComponents();
-
-        public IEnumerable<int> GetAllMedicineShelfTimes() => _medicineService.GetAllMedicineShelfTimes();
+        public ICollection<OptionSet> GetOptionSet()
+        {
+            var producer = new OptionSet { Key = "producer", Name = "Производитель", Options = _medicineService.GetAllMedicineProducers().ToList() };
+            var category = new OptionSet { Key = "category", Name = "Категория", Options = _medicineService.GetAllMedicineCategories().ToList() };
+            var form = new OptionSet { Key = "form", Name = "Форма", Options = _medicineService.GetAllMedicineForms().ToList() };
+            var composition = new OptionSet { Key = "component", Name = "Состав", Options = _medicineService.GetAllMedicineComponents().ToList() };
+            var shelfTime = new OptionSet { Key = "shelfTime", Name = "Срок годности", Options = _medicineService.GetAllMedicineShelfTimes().Select(s => s.ToString()).ToList() };
+            var result = new List<OptionSet>{ producer, category, form, composition, shelfTime};
+            return result;
+        }
 
         public void NewMedicine([FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
              => _medicineService.NewMedicine(name, producer, category, form, component, shelfTime, count);
@@ -69,5 +70,17 @@ namespace FarmacyWebApi.Controllers
             => _medicineService.AlterMedicine(id, name, producer, category, form, component, shelfTime, count);
 
         public void SellMedicine([FromQuery] int id, [FromQuery] int amount) => _medicineService.SellMedicine(id, amount);
+
+        public Medicine GetMedicineById([FromQuery] int id) => _medicineService.GetMedicineById(id);
+
+        public IEnumerable<string> GetMedicineComponents([FromQuery] int id) => _medicineService.GetMedicineComponents(id);
+
+        public IEnumerable<string> GetAllMedicineProducers() => _medicineService.GetAllMedicineProducers();
+
+        public IEnumerable<string> GetAllMedicineCategories() => _medicineService.GetAllMedicineCategories();
+
+        public IEnumerable<string> GetAllMedicineForms() => _medicineService.GetAllMedicineForms();
+        
+        public IEnumerable<string> GetAllMedicineComponents() => _medicineService.GetAllMedicineComponents();
     }
 }

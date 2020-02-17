@@ -7,74 +7,70 @@
             <form>
                 <div class="form-inline">
                     <h5>Название</h5>
-                    <div *ngIf="name">
-                        <input class="form-control" type="text"value="{{name}}">
+                    <div *ngIf="medicine.name">
+                        <input class="form-control" type="text"value="{{medicine.name}}">
                     </div>
-                    <div *ngIf="!name">
+                    <div *ngIf="!medicine.name">
                         <input class="form-control" type="text" placeholder="Название">
                     </div>
                 </div>
                 <div class="form-inline">
                     <h5>Производитель</h5>
-                    <div *ngIf="producer">
-                        <input class="form-control" type="text"value="{{producer}}">
+                    <div *ngIf="medicine.producer">
+                        <input class="form-control" type="text"value="{{medicine.producer}}">
                     </div>
-                    <div *ngIf="!producer">
+                    <div *ngIf="!medicine.producer">
                         <input class="form-control" type="text" placeholder="Производитель">
                     </div>
                 </div>
                 <div class="form-inline">
-                    <h5>Форма</h5>
-                    <div *ngIf="form">
-                        <input class="form-control" type="text"value="{{form}}">
+                    <h5>Категория</h5>
+                    <div *ngIf="medicine.category">
+                        <input class="form-control" type="text"value="{{medicine.category}}">
                     </div>
-                    <div *ngIf="!form">
+                    <div *ngIf="!medicine.category">
+                        <input class="form-control" type="text" placeholder="Категория">
+                    </div>
+                </div>
+                <div class="form-inline">
+                    <h5>Форма</h5>
+                    <div *ngIf="medicine.form">
+                        <input class="form-control" type="text"value="{{medicine.form}}">
+                    </div>
+                    <div *ngIf="!medicine.form">
                         <input class="form-control" type="text" placeholder="Форма">
                     </div>
                 </div>
                 <div class="form-inline">
                     <h5>Срок годности (в месяцах)</h5>
-                    <div *ngIf="shelfTime">
-                        <input class="form-control" type="number"value="{{shelfTime}}" min="1">
+                    <div *ngIf="medicine.shelfTime">
+                        <input class="form-control" type="number"value="{{medicine.shelfTime}}" min="0">
                     </div>
-                    <div *ngIf="!shelfTime">
-                        <input class="form-control" type="number" placeholder="Срок годности" min="1">
+                    <div *ngIf="!medicine.shelfTime">
+                        <input class="form-control" type="number" placeholder="Срок годности" min="0">
                     </div>
                 </div>
                 <div class="form-inline">
                     <h5>Доступно</h5>
-                    <div *ngIf="available">
-                        <input class="form-control" type="number"value="{{available}}" min="1">
+                    <div *ngIf="medicine.count">
+                        <input class="form-control" type="number"value="{{medicine.count}}" min="0">
                     </div>
-                    <div *ngIf="!available">
-                        <input class="form-control" type="number" placeholder="Доступно" min="1">
+                    <div *ngIf="!medicine.count">
+                        <input class="form-control" type="number" placeholder="Доступно" min="0">
                     </div>
-                </div>
-                <div class="group-alter">
-                    <h5>Тип</h5>
-                    <div class="row">
-                        <button class="btn btn-outline-danger" *ngFor="let type of currentTypes" (click)="removeType(type)" id="{{type}}-btn" onclick="return false;">{{type}} X</button>
-                    </div>
-                    <div class="row form-inline" *ngIf="availableTypes.length > 0">
-                        <select class="form-control" id="availableTypes">
-                            <option  *ngFor="let type of availableTypes" value="{{type}}" id="{{type}}-opt">{{type}}</option>
-                        </select>
-                        <button class="btn btn-sm btn-outline-success" (click)="addType()" onclick="return false;">+</button>
-                    </div>
-                    
                 </div>
                 <div class="group-alter">
                     <h5>Состав</h5>
                     <div class="row">
-                        <div *ngFor="let comp of currentCompositions">
-                            <button class="btn btn-outline-danger" *ngIf="comp != ''" (click)="removeComp(comp)" id="{{comp}}-btn" onclick="return false;">{{comp}} X</button>
+                        <div *ngFor="let comp of currentComponents">
+                            <button class="btn btn-outline-danger" *ngIf="comp" (click)="removeComp(comp)" id="{{comp}}-btn" onclick="return false;">{{comp}} X</button>
                         </div>
                     </div>
-                    <div class="row form-inline" *ngIf="availableCompositions.length > 0">
-                        <select class="form-control" id="availableCompositions">
-                            <option  *ngFor="let comp of availableCompositions" value="{{comp}}" id="{{comp}}-opt">{{comp}}</option>
+                    <div class="row form-inline" *ngIf="availableComponents.length">
+                        <select class="form-control" id="availableComponents">
+                            <option  *ngFor="let comp of availableComponents" value="{{comp}}" id="{{comp}}-opt">{{comp}}</option>
                         </select>
-                        <button class="btn btn-sm btn-outline-success" (click)="addComp()" onclick="return false;">+</button>
+                        <button class="btn btn-sm btn-outline-success" (click)="addComp(comp + '-opt')" onclick="return false;">+</button>
                     </div>
                 </div>
                 <button class="btn btn-success float-right">Сохранить</button>

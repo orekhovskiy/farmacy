@@ -46,8 +46,6 @@ namespace FarmacyWebApi.Services
 
         public IEnumerable<string> GetAllMedicineForms() => db.Form.Select(f => f.Name);
 
-        public IEnumerable<string> GetAllMedicineNames() => db.Medicine.Select(m => m.Name);
-
         public IEnumerable<string> GetAllMedicineProducers() => db.Producer.Select(p => p.Name);
 
         public IEnumerable<Medicine> GetAllMedicines()
@@ -82,7 +80,7 @@ namespace FarmacyWebApi.Services
                             ).ToList()
                          };
             return result;
-    }
+        }
 
         public IEnumerable<int> GetAllMedicineShelfTimes() => db.Medicine.Select(m => m.ShelfTime);
 
@@ -95,8 +93,6 @@ namespace FarmacyWebApi.Services
                                                 shelfTime.Contains(m.ShelfTime) &&
                                                 available.Contains(m.Count > 0 ? true : false));
         }
-
-        public IEnumerable<string> GetMedicineComponents(int id) => db.MedicineComposition.Where(mc => mc.MedicineId == id).Select(mc => mc.Component.Name);
 
         public IEnumerable<Medicine> GetMedicinesByProducer(string producer) => GetAllMedicines().Where(m => m.Producer.Name == producer);
 
@@ -122,6 +118,18 @@ namespace FarmacyWebApi.Services
             db.SaveChanges();
         }
 
-        public void SellMedicine(int id, int amount) => db.Medicine.Find(id).Count -= amount;
+        public void SellMedicine(int id, int amount)
+        {
+            var medicine = db.Medicine.Find(id);
+            if (medicine.Count - amount >= 0)
+            {
+                medicine.Count -= amount;
+                db.SaveChanges();
+            }
+        }
+
+        public IEnumerable<string> GetMedicineComponents(int id) => db.MedicineComposition.Where(mc => mc.MedicineId == id).Select(mc => mc.Component.Name);
+
+        public Medicine GetMedicineById(int id) => GetAllMedicines().Where(m => m.Id == id).First();
     }
 }

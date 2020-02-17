@@ -7,66 +7,18 @@
         </div>
     </div>
     <div>
-      <!--Producer-->
-      <div>
+      <div *ngFor="let opt of optionSet">
         <div class="row">
-          <button data-toggle="collapse" data-target="#producer-check" class="btn arrow" id="producer-arrow" (click)="changeArrow('producer-arrow');" onclick="return false;">></button>
-          <h5>Производитель</h5>
+          <button data-toggle="collapse" [attr.data-target]="'#' + opt.key + '-check'" class="btn arrow" id="{{opt.key}}-arrow" (click)="changeArrow(opt.key + '-arrow')" onclick="return false;">></button>
+          <h5>{{opt.name}}</h5>
         </div>
-        <div class="collapse" id="producer-check">
-          <div *ngFor="let producer of allProducers" class="form-check check">
-            <input class="form-check-input" type="checkbox" name="producer-check" value="{{producer}}" checked="true"> {{producer}}
+        <div class="collapse" id="{{opt.key}}-check">
+          <div *ngFor="let o of opt.options" class="form-check check">
+            <input class="form-check-input" type="checkbox" name="{{opt.key}}-check" value="{{o}}" checked="true"> {{o}}
           </div>
         </div>
       </div>
-      <!--Category-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#category-check" class="btn arrow" id="category-arrow" (click)="changeArrow('category-arrow');" onclick="return false;">></button>
-          <h5>Категория</h5>
-        </div>
-        <div class="collapse" id="category-check">
-          <div *ngFor="let category of allCategories" class="form-check check">
-            <input class="form-check-input" type="checkbox" name="category-check" value="{{category}}" checked="true"> {{category}}
-          </div>
-        </div>
-      </div>
-      <!--Form-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#form-check" class="btn arrow" id="form-arrow" (click)="changeArrow('form-arrow');" onclick="return false;">></button>
-          <h5>Форма</h5>
-        </div>
-        <div *ngFor="let form of allForms" class="collapse" id="form-check">
-          <div class="form-check check">
-            <input class="form-check-input" type="checkbox" name="form-check" value="{{form}}" checked="true"> {{form}}
-          </div>
-        </div>
-      </div>
-      <!--Component-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#component-check" class="btn arrow" id="component-arrow" (click)="changeArrow('component-arrow');" onclick="return false;">></button>
-          <h5>Состав</h5>
-        </div>
-        <div class="collapse" id="component-check">
-          <div *ngFor="let component of allComponents" class="form-check check">
-            <input class="form-check-input" type="checkbox" name="component-check" value="{{component}}" checked="true"> {{component}}
-          </div>
-        </div>
-      </div>
-      <!--Shelf Time-->
-      <div>
-        <div class="row">
-          <button data-toggle="collapse" data-target="#shelf-time-check" class="btn arrow" id="shelf-time-arrow" (click)="changeArrow('shelf-time-arrow');" onclick="return false;">></button>
-          <h5>Срок годности</h5>
-        </div>
-        <div class="collapse" id="shelf-time-check">
-          <div *ngFor="let shelfTime of allShelfTimes" class="form-check check">
-            <input class="form-check-input" type="checkbox" name="shelf-time-check" value="{{shelfTime}}" checked="true"> {{shelfTime}} мес.
-          </div>
-        </div>
-      </div>
+      
       <!--Available-->
       <div>
         <div class="row">
@@ -82,7 +34,7 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-outline-primary float-right" (click)="getFilteredMedicines();" onclick="return false;">Применить</button>
+      <button class="btn btn-outline-success float-right" (click)="getFilteredMedicines();" onclick="return false;">Применить</button>
     </div>
   </div>
   <div class="med-container col">

@@ -13,7 +13,6 @@ namespace FarmacyWebApi.Services
         public IEnumerable<Medicine> GetMedicinesByName(string name);
         public IEnumerable<Medicine> GetMedicinesByProducer(string producer);
         public IEnumerable<string> GetMedicineComponents(int id);
-        public IEnumerable<string> GetAllMedicineNames();
         public IEnumerable<string> GetAllMedicineProducers();
         public IEnumerable<string> GetAllMedicineCategories();
         public IEnumerable<string> GetAllMedicineForms();
@@ -22,5 +21,7 @@ namespace FarmacyWebApi.Services
         public void NewMedicine(string name, string producer, string category, string form, string[] component, int shelfTime, int count);
         public void AlterMedicine(int id, string name, string producer, string category, string form, string[] component, int shelfTime, int count);
         public void SellMedicine(int id, int amount);
+        public Medicine GetMedicineById(int id);
+
     }
 }

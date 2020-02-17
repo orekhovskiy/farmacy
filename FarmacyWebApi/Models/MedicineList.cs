@@ -7,8 +7,8 @@ namespace FarmacyWebApi.Models
 {
     public class MedicineList
     {
-        public int PagesAmount;
-        public int CurrentPage;
+        public int PagesAmount { get; set; }
+        public int CurrentPage { get; set; }
 
         public virtual ICollection<Medicine> Medicines { get; set; }
     }
