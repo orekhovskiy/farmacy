@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FarmacyWebApi.Models;
+using FarmacyWebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,7 @@ namespace FarmacyWebApi
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<FarmacyWebApiContext>(options =>
                 options.UseSqlServer(connection));
+            services.AddScoped<IMedicineService, MedicineService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
