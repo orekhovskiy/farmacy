@@ -1,4 +1,4 @@
-interface  Medicine {
+export interface  Medicine {
     id: number,
     name: string;
     producer: string;
@@ -9,14 +9,19 @@ interface  Medicine {
     shelfTime: number;
 }
   
-interface MedicineList {
+export interface MedicineList {
     currentPage: number,
     pagesAmount: number,
     medicines: Medicine[]
 }
   
-interface OptionSet {
+export interface OptionSet {
     key: string,
     name: string,
     options: string[]
+}
+
+export interface ComponentSet {
+    currentComponents: string[],
+    availableComponents: string[]
 }

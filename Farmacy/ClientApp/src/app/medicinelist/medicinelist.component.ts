@@ -2,6 +2,8 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import {Medicine, MedicineList, OptionSet} from 'src/models';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-medicinelist',
@@ -24,7 +26,7 @@ export class MedicinelistComponent implements OnInit {
     this.medicines=[];    
     if ($(document).height() <= $(window).height()) {
       $('#footer').addClass('fixed-bottom');
-      $('.medicine-list').css('margin-bottom', '40px');
+      $('.medicine').css('margin-bottom', '40px');
     }
     this.loadData();
   }

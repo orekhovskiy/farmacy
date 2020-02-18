@@ -82,5 +82,21 @@ namespace FarmacyWebApi.Controllers
         public IEnumerable<string> GetAllMedicineForms() => _medicineService.GetAllMedicineForms();
         
         public IEnumerable<string> GetAllMedicineComponents() => _medicineService.GetAllMedicineComponents();
+
+        public ComponentSet GetComponentSet([FromQuery] int id)
+        {
+            ICollection<string> allComponents = _medicineService.GetAllMedicineComponents().ToList();
+            ICollection<string> currentComponents = _medicineService.GetMedicineComponents(id).ToList();
+            ICollection<string> availableComponents = new List<string> { };
+            foreach (string component in allComponents)
+            {
+                if (!currentComponents.Contains(component)) availableComponents.Add(component);
+            }
+            return new ComponentSet
+            {
+                AvailableComponents = availableComponents,
+                CurrentComponents = currentComponents
+            };
+        }
     }
 }

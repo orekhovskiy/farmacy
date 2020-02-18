@@ -66,31 +66,3 @@ create table Purchase
 	operation int not null,
 	purchaseDate date not null 
 );
-
---DB Initializing
---Producer
-insert into Producer(name) values ('Bayer');
-insert into Producer(name) values ('Pfizer');
-insert into Producer(name) values ('Novartis');
---Category
-insert into Category(name) values ('Косметика');
-insert into Category(name) values ('Витамины');
-insert into Category(name) values ('Метаболики');
-insert into Category(name) values ('Гармоны');
-insert into Category(name) values ('Анальгетики');
---Form
-insert into Form(name) values ('Жидкое вещество');
-insert into Form(name) values ('Аэрозоль');
-insert into Form(name) values ('Спрей');
-insert into Form(name) values ('Таблетки');
---Component
-insert into Component(name) values ('Вода');
-insert into Form(name) values ('Ацетилсалициловая кислота');
---Position
-insert into Position(name) values ('admin');
-insert into Position(name) values ('manager');
-insert into Position(name) values ('seller');
---Medicine
-insert into Medicine(name, producerId, categoryId, formId, shelfTime, count) values ('Аспирин', 1, 5,4, 60, 45);
---MedicineComposition
-insert into MedicineComposition(medicineId, componentId) values (1, 2);
