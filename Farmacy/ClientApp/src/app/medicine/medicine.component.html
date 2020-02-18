@@ -5,49 +5,50 @@
             <h1 *ngIf="id==='new'">Новое лекарство</h1>
             <h1 *ngIf="id!='new'">Изменение лекарства</h1>
             <div>
-                <div class="form-inline">
+                <div class="form-inline btm-outline">
                     <h5>Название</h5>
-                    <div *ngIf="name">
-                        <input class="form-control" type="text"value="{{name}}">
-                    </div>
-                    <div *ngIf="!name">
-                        <input class="form-control" type="text" placeholder="Название">
-                    </div>
+                    <input type="text" class="form-control" id="name-input" value="{{name}}" placeholder="Название">
+                    <small id="name-help" class="text-danger"></small>   
                 </div>
-                <div class="form-inline">
+                <div class="form-inline btm-outline">
                     <h5>Производитель</h5>
-                    <input type="text" class="form-control" list="producer-list" value="{{producer}}" placeholder="Производитель">
+                    <input type="text" class="form-control" id="producer-input" list="producer-list" value="{{producer}}" placeholder="Производитель">
                     <datalist id="producer-list">
                         <option *ngFor="let element of allProducers" value="{{element}}"></option>
                     </datalist>
+                    <small id="producer-help" class="text-danger"></small>   
                 </div>
-                <div class="form-inline">
+                <div class="form-inline btm-outline">
                     <h5>Категория</h5>
-                    <input type="text" class="form-control" list="category-list" value="{{category}}" placeholder="Категория">
+                    <input type="text" class="form-control" id="category-input" list="category-list" value="{{category}}" placeholder="Категория">
                     <datalist id="category-list">
                         <option *ngFor="let element of allCategories" value="{{element}}"></option>
                     </datalist>
+                    <small id="category-help" class="text-danger"></small>
                 </div>
-                <div class="form-inline">
+                <div class="form-inline btm-outline">
                     <h5>Форма</h5>
-                    <input type="text" class="form-control" list="form-list" value="{{form}}" placeholder="Форма">
+                    <input type="text" class="form-control" id="form-input" list="form-list" value="{{form}}" placeholder="Форма">
                     <datalist id="form-list">
                         <option *ngFor="let element of allForms" value="{{element}}"></option>
                     </datalist>
+                    <small id="form-help" class="text-danger"></small>
                 </div>
-                <div class="form-inline">
+                <div class="form-inline btm-outline">
                     <h5>Срок годности (в месяцах)</h5>
-                    <input type="number" class="form-control" value="{{shelfTime}}" min="1">
+                    <input type="number" class="form-control" id="shelfTime-input" value="{{shelfTime}}">
+                    <small id="shelfTime-help" class="text-danger"></small>
                 </div>
-                <div class="form-inline">
+                <div class="form-inline btm-outline">
                     <h5>Доступно</h5>
-                    <input type="number" class="form-control" value="{{count}}" min="0">
+                    <input type="number" class="form-control" id="count-input" value="{{count}}">
+                    <small id="count-help" class="text-danger"></small>
                 </div>
                 <div class="group-alter">
                     <h5>Состав</h5>
                     <div class="row">
                         <div *ngFor="let comp of currentComponents">
-                            <button class="btn btn-outline-danger" *ngIf="comp" (click)="removeComp(comp)" id="{{comp}}-btn" onclick="return false;">{{comp}} X</button>
+                            <button class="btn btn-outline-danger" *ngIf="comp" (click)="removeComp(comp)" name="component" id="{{comp}}-btn" onclick="return false;">{{comp}} X</button>
                         </div>
                     </div>
                     <h5 *ngIf="availableComponents.length">Добавить в состав</h5>

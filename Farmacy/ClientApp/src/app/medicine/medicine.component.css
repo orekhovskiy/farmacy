@@ -1,5 +1,5 @@
 .medecine {
-    margin: 20px;
+    margin-bottom: 90px;
 }
 
 input[type="text"], input[type="number"], select{
@@ -8,4 +8,10 @@ input[type="text"], input[type="number"], select{
 
 button {
     margin: 5px;
+}
+
+.btm-outline {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-bottom: 1px solid grey;
 }

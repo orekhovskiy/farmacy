@@ -22,8 +22,6 @@ namespace FarmacyWebApi.Controllers
             _medicineService = medicineService;
         }
 
-        //automapper
-        
         private int GetPagesAmount(int rowsOnPage, int rowsAmount)
         {
             var r = (double)rowsAmount / rowsOnPage;
@@ -63,12 +61,15 @@ namespace FarmacyWebApi.Controllers
             return result;
         }
 
+        [HttpPost]
         public void NewMedicine([FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
              => _medicineService.NewMedicine(name, producer, category, form, component, shelfTime, count);
 
+        [HttpPost]
         public void AlterMedicine([FromQuery] int id, [FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
             => _medicineService.AlterMedicine(id, name, producer, category, form, component, shelfTime, count);
-
+        
+        [HttpPost]
         public void SellMedicine([FromQuery] int id, [FromQuery] int amount) => _medicineService.SellMedicine(id, amount);
 
         public Medicine GetMedicineById([FromQuery] int id) => _medicineService.GetMedicineById(id);

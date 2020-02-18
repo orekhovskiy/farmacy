@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {Medicine, ComponentSet} from 'src/models';
+import {ComponentSet} from 'src/models';
 import * as $ from 'jquery';
 
 @Component({
@@ -13,10 +12,10 @@ import * as $ from 'jquery';
 export class MedicineComponent implements OnInit {
 
   private id: any;
-  private name = "";
-  private producer= "";
-  private category = "";
-  private form = "";
+  private name = '';
+  private producer= '';
+  private category = '';
+  private form = ''
   private shelfTime = 1;
   private count = 0;
 
@@ -34,7 +33,7 @@ export class MedicineComponent implements OnInit {
 
   ngOnInit() {
     if ($(document).height() <= $(window).height()) {
-      $("#footer").addClass("fixed-bottom");
+      $('#footer').addClass('fixed-bottom');
     }
     this.loadData();
   }
@@ -73,18 +72,132 @@ export class MedicineComponent implements OnInit {
     var comp = $('select#availableComponents').children('option:selected').text();
     var index = this.availableComponents.indexOf(comp);
     this.availableComponents.splice(index, 1);
-    document.getElementById(comp + "-opt").remove();
+    document.getElementById(comp + '-opt').remove();
     this.currentComponents.splice(this.currentComponents.length,0,comp);
   }
 
   removeComp(comp: string) {
     var index = this.currentComponents.indexOf(comp);
-    document.getElementById(comp + "-btn").remove();
+    document.getElementById(comp + '-btn').remove();
     this.currentComponents.splice(index, 1);
     this.availableComponents.splice(this.availableComponents.length, 0, comp);
   }
 
+  saveChanges() {
+    if (this.validateInputs()) {
+      var query = this.getQuery();
+      console.log(query);
+      console.log(this.http.post(query, null));
+    }
+  }
 
-  //form-control is-valid
-  saveChanges() {}
+  getQuery():string {
+    var query:string='/api/Medicine/';
+    if (this.id == 'new') {
+      query += 'NewMedicine?';
+    } else {
+      query += 'AlterMedicine?id=' + this.id + '&';
+    }
+    query += 'name=' + $('#name-input').val() + '&' +
+             'producer=' + $('#producer-input').val() + '&' +
+             'category=' + $('#category-input').val() + '&' +
+             'form=' + $('#form-input').val() + '&' +
+             this.getCompositionQuery() +
+             'shelfTime=' + $('#shelfTime-input').val() + '&' +
+             'count=' + $('#count-input').val();
+    return query;
+  }
+
+  getCompositionQuery():string {
+    var query = '';
+    document.getElementsByName('component').forEach( element => {
+      query += 'component=' + element.innerText.substring(0, element.innerText.length - 2) + '&';
+    });
+    return query;
+  }
+
+  validateInputs():boolean {
+    var inputsAreValide;
+    inputsAreValide = this.validateName() &
+                      this.validateInputList('producer') &
+                      this.validateInputList('category') &
+                      this.validateInputList('form') &
+                      this.validateInputNumber('shelfTime') &
+                      this.validateInputNumber('count');
+    return <boolean> inputsAreValide;
+  }
+
+  validateName():number {
+    var name = <string> $('#name-input').val();
+    if (!name || !this.isName(name)) {
+      $('#name-help').text('Введите корректное название');
+      $('#name-input').removeClass('is-valid');
+      $('#name-input').addClass('is-invalid');
+      return 0;
+    } else if (name.length > 30) {
+      $('#name-help').text('Длина названия не может превышать 30 символов');
+      $('#name-input').removeClass('is-valid');
+      $('#name-input').addClass('is-invalid');
+      return 0;
+    } else {
+      $('#name-help').text('');
+      $('#name-input').addClass('is-valid');
+      $('#name-input').removeClass('is-invalid');
+      return 1;
+    }
+  }
+
+  validateInputList(key:string):number {
+    if (!$('#' + key + '-input').val() || this.getOptionsByKey(key).indexOf(<string> $('#' + key + '-input').val()) == -1) {
+      $('#' + key + '-help').text('Выберите значение из списка');
+      $('#' + key + '-input').removeClass('is-valid');
+      $('#' + key + '-input').addClass('is-invalid');
+      return 0;
+    } else {
+      $('#' + key + '-help').text('');
+      $('#' + key + '-input').addClass('is-valid');
+      $('#' + key + '-input').removeClass('is-invalid');
+      return 1;
+    }
+  }
+
+  validateInputNumber(key:string):number {
+    var val = <number> $('#' + key + '-input').val();
+    if ( val > 0 && this.isInteger(val)) {
+      $('#' + key + '-help').text('');
+      $('#' + key + '-input').addClass('is-valid');
+      $('#' + key + '-input').removeClass('is-invalid');
+      return 1;
+      
+    } else {
+      $('#' + key + '-help').text('Введите целое значение большее ноля');
+      $('#' + key + '-input').removeClass('is-valid');
+      $('#' + key + '-input').addClass('is-invalid');
+      return 0;
+    }
+  }
+
+  getOptionsByKey(key:string):string[] {
+    switch (key){
+      case 'producer': {
+        return this.allProducers;
+      }
+      case 'category': {
+        return this.allCategories;
+      }
+      case 'form': {
+        return this.allForms;
+      }
+    }
+  }
+
+  isInteger(v):boolean {
+    var num = /^-?[0-9]+$/;
+    return num.test(v);
+  }
+
+  isName(n):boolean {
+    var name = /^[a-zA-Zа-яА-Я]+(([',. -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
+    return name.test(n);
+  }
 }
