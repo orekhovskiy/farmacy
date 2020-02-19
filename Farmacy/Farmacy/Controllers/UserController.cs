@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Farmacy.Commons;
 using Farmacy.Models;
+using Farmacy.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,11 @@ namespace Farmacy.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private FarmacyWebApiContext db;
-        public UserController(FarmacyWebApiContext context)
+        private IUserService _userService;
+        public UserController(IUserService userService)
         {
-            db = context;
+            _userService = userService;
+            // New user initialization in a new DB
             /*var u = new User
             {
                 Login ="admin",
@@ -32,48 +34,33 @@ namespace Farmacy.Controllers
 
         [HttpGet]
         [ActionName("GetUser")]
-        public User GetUser([FromQuery] string login, [FromQuery] string password)
-        {
-            return db.User.Where(u => u.Login == login && Hasher.GetHash(password) == u.Password).FirstOrDefault();
-        }
+        public User GetUser([FromQuery] string login, [FromQuery] string password) => _userService.GetUser(login, password);
 
         [HttpGet]
         [ActionName("ValidateUser")]
         public bool ValidateUser([FromQuery] string login, [FromQuery] string password) 
         {
-            List<User> res = db.User.Where(u => u.Login == login && Hasher.GetHash(password) == u.Password).ToList();
-            return res.Count > 0;
+            return (_userService.GetUser(login, password) != null);
         }
 
         [HttpGet]
         [ActionName("GetUserPosition")]
-        public int GetUserPosition([FromQuery] string login)
-        {
-           return db.User.Where(u => u.Login == login).FirstOrDefault().Position;
-        }
+        public string GetUserPosition([FromQuery] int id) => _userService.GetUserPosition(id);
+
+        [HttpGet]
+        [ActionName("GetUserPositionId")]
+        public int GetUserPositionId([FromQuery] int id) => _userService.GetUserPositionId(id);
 
         [HttpGet]
         [ActionName("GetAllUsers")]
-        public IEnumerable<User> GetAllUsers()
-        {
-            return db.User.ToList();
-        }
+        public IEnumerable<User> GetAllUsers() => _userService.GetAllUsers();
 
         [HttpGet]
         [ActionName("AddUser")]
         public void AddUser([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
             [FromForm] string lastname, [FromForm] int position)
         {
-            var u = new User
-            {
-                Login = login,
-                Password = Hasher.GetHash(password),
-                Firstname = firstname,
-                Lastname = lastname,
-                Position = position
-            };
-            db.User.Add(u);
-            db.SaveChanges();
+            
         }
     }
 }

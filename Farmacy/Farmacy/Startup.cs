@@ -1,4 +1,4 @@
-using Farmacy.Models;
+using Farmacy.Models.Context;
 using Farmacy.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,13 +34,13 @@ namespace Farmacy
                 configuration.RootPath = "ClientApp/dist";
             });
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<FarmacyWebApiContext>(options =>
+            services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(connection));
             services.AddScoped<IMedicineService, MedicineService>();
             services.AddScoped<IUserService, UserService>();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FarmacyWebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Farmacy", Version = "v1" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
@@ -79,21 +79,22 @@ namespace Farmacy
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    // Keep uncomented only one of these
+                    // 1. To use Angular server separatly comment following line
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    // 2. To use Angular server with ASP.NET Core server at once comment following string
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("./swagger/v1/swagger.json", "FarmacyWebApi");
+                c.SwaggerEndpoint("./swagger/v1/swagger.json", "Farmacy");
                 c.RoutePrefix = string.Empty;
             });
         }

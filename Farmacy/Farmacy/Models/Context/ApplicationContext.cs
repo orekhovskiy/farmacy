@@ -2,18 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Farmacy.Models
+namespace Farmacy.Models.Context
 {
-    public partial class FarmacyWebApiContext : DbContext
+    public partial class ApplicationContext : DbContext
     {
-        public FarmacyWebApiContext()
-        {
-        }
+        public ApplicationContext() { }
 
-        public FarmacyWebApiContext(DbContextOptions<FarmacyWebApiContext> options)
-            : base(options)
-        {
-        }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options)
+            : base(options) { }
 
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Component> Component { get; set; }
@@ -25,14 +21,14 @@ namespace Farmacy.Models
         public virtual DbSet<Purchase> Purchase { get; set; }
         public virtual DbSet<User> User { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Server=spbdevsql01\\dev;Database=farmacy_db;Trusted_Connection=True;");
             }
-        }
+        }*/
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

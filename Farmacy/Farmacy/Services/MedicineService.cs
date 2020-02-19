@@ -1,4 +1,5 @@
 ﻿using Farmacy.Models;
+using Farmacy.Models.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace Farmacy.Services
 {
     public class MedicineService : IMedicineService
     {
-        private readonly FarmacyWebApiContext db;
+        private readonly ApplicationContext db;
 
-        public MedicineService(FarmacyWebApiContext context)
+        public MedicineService(ApplicationContext context)
         {
             db = context;
         }
