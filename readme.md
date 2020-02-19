@@ -14,3 +14,7 @@
 
 ### Модель используемой базы данных:
 <img src="./ERM/ERM.png" alt="ERM" width="50%" height="50%">
+
+## Параметры запуска
+* Angular + ASP - смотри Startup.cs
+* Angular
