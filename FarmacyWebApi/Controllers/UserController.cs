@@ -29,27 +29,37 @@ namespace FarmacyWebApi.Controllers
             db.SaveChanges();*/
         }
 
+        [HttpGet]
+        [ActionName("GetUser")]
         public User GetUser([FromQuery] string login, [FromQuery] string password)
         {
             return db.User.Where(u => u.Login == login && Hasher.GetHash(password) == u.Password).FirstOrDefault();
         }
 
+        [HttpGet]
+        [ActionName("ValidateUser")]
         public bool ValidateUser([FromQuery] string login, [FromQuery] string password) 
         {
             List<User> res = db.User.Where(u => u.Login == login && Hasher.GetHash(password) == u.Password).ToList();
             return res.Count > 0;
         }
 
+        [HttpGet]
+        [ActionName("GetUserPosition")]
         public int GetUserPosition([FromQuery] string login)
         {
            return db.User.Where(u => u.Login == login).FirstOrDefault().Position;
         }
 
+        [HttpGet]
+        [ActionName("GetAllUsers")]
         public IEnumerable<User> GetAllUsers()
         {
             return db.User.ToList();
         }
 
+        [HttpGet]
+        [ActionName("AddUser")]
         public void AddUser([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
             [FromForm] string lastname, [FromForm] int position)
         {

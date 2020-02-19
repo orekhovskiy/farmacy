@@ -40,16 +40,24 @@ namespace FarmacyWebApi.Controllers
             };
         }
 
+        [HttpGet]
+        [ActionName("GetAllMedicinesPaged")]
         public MedicineList GetAllMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage)
             => GetPagedMedicines(_medicineService.GetAllMedicines(), currentPage, rowsOnPage);
 
+        [HttpGet]
+        [ActionName("GetFilteredMedicinesPaged")]
         public MedicineList GetFilteredMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string[] producer,
             [FromQuery] string[] category, [FromQuery] string[] form, [FromQuery] string[] component, [FromQuery] int[] shelfTime, [FromQuery] bool[] available)
             => GetPagedMedicines(_medicineService.GetFilteredMedicines(producer, category, form, component, shelfTime, available), currentPage, rowsOnPage);
 
+        [HttpGet]
+        [ActionName("GetMedicinesByKeyPaged")]
         public  MedicineList GetMedicinesByKeyPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string key)
             => GetPagedMedicines(_medicineService.GetMedicinesByName(key).Concat(_medicineService.GetMedicinesByProducer(key)), currentPage, rowsOnPage);
 
+        [HttpGet]
+        [ActionName("GetOptionSet")]
         public ICollection<OptionSet> GetOptionSet()
         {
             var producer = new OptionSet { Key = "producer", Name = "Производитель", Options = _medicineService.GetAllMedicineProducers().ToList() };
@@ -61,29 +69,46 @@ namespace FarmacyWebApi.Controllers
             return result;
         }
 
-        [HttpPost]
+        [HttpGet]
+        [ActionName("NewMedicine")]
         public void NewMedicine([FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
              => _medicineService.NewMedicine(name, producer, category, form, component, shelfTime, count);
 
-        [HttpPost]
+        [HttpGet]
+        [ActionName("AlterMedicine")]
         public void AlterMedicine([FromQuery] int id, [FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
             => _medicineService.AlterMedicine(id, name, producer, category, form, component, shelfTime, count);
         
         [HttpPost]
+        [ActionName("SellMedicine")]
         public void SellMedicine([FromQuery] int id, [FromQuery] int amount) => _medicineService.SellMedicine(id, amount);
 
+        [HttpGet]
+        [ActionName("GetMedicineById")]
         public Medicine GetMedicineById([FromQuery] int id) => _medicineService.GetMedicineById(id);
 
+        [HttpGet]
+        [ActionName("GetMedicineComponents")]
         public IEnumerable<string> GetMedicineComponents([FromQuery] int id) => _medicineService.GetMedicineComponents(id);
 
+        [HttpGet]
+        [ActionName("GetAllMedicineProducers")]
         public IEnumerable<string> GetAllMedicineProducers() => _medicineService.GetAllMedicineProducers();
 
+        [HttpGet]
+        [ActionName("GetAllMedicineCategories")]
         public IEnumerable<string> GetAllMedicineCategories() => _medicineService.GetAllMedicineCategories();
 
+        [HttpGet]
+        [ActionName("GetAllMedicineForms")]
         public IEnumerable<string> GetAllMedicineForms() => _medicineService.GetAllMedicineForms();
-        
+
+        [HttpGet]
+        [ActionName("GetAllMedicineComponents")]
         public IEnumerable<string> GetAllMedicineComponents() => _medicineService.GetAllMedicineComponents();
 
+        [HttpGet]
+        [ActionName("GetComponentSet")]
         public ComponentSet GetComponentSet([FromQuery] int id)
         {
             ICollection<string> allComponents = _medicineService.GetAllMedicineComponents().ToList();

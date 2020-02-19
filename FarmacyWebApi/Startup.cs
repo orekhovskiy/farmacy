@@ -71,7 +71,7 @@ namespace FarmacyWebApi
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FarmacyWebApi");
+                c.SwaggerEndpoint("./swagger/v1/swagger.json", "FarmacyWebApi");
                 c.RoutePrefix = string.Empty;
             });
         }

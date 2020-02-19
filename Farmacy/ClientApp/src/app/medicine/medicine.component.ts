@@ -87,7 +87,7 @@ export class MedicineComponent implements OnInit {
     if (this.validateInputs()) {
       var query = this.getQuery();
       console.log(query);
-      console.log(this.http.post(query, null));
+      this.http.get(query).subscribe();
     }
   }
 
