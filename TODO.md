@@ -1,6 +1,6 @@
 # TO DO
-* Strucutre refactor
-* Swagger
+* ~~Strucutre refactor~~
+* ~~Swagger~~
 * AutoMapper
 * Client side services
 * Authentification
