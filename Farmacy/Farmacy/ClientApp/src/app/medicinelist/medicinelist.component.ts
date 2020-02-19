@@ -18,7 +18,7 @@ export class MedicinelistComponent implements OnInit {
   private currentPage:number = 1;
   private viewPart:string;
   private pagesAmount:number;
-  private readonly rowsOnPage:number = 30;
+  private readonly rowsOnPage:number = 10;
 
   constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) {}
 
@@ -28,16 +28,22 @@ export class MedicinelistComponent implements OnInit {
       $('#footer').addClass('fixed-bottom');
       $('.medicine').css('margin-bottom', '40px');
     }
-    this.loadData();
+    this.http.get('/api/Medicine/GetOptionSet')
+      .subscribe( (data:OptionSet[]) => this.optionSet = data);
+    this.getAllMedicines();
   }
-  //down chevrone - &#8964;
-  //right triangle bracket - &gt;
-  changeArrow(id: string) {
-    var obj = document.getElementById(id);
-    if (obj.innerHTML === '&gt;' )
-      obj.innerHTML = '&#x2304;';
-    else
-      obj.innerHTML = '>';
+
+  private getAllMedicines() {
+    this.http.get('/api/Medicine/GetAllMedicinesPaged?currentPage=' + this.currentPage + '&rowsOnPage=' + this.rowsOnPage)
+      .subscribe( (data:MedicineList) => {
+        this.currentPage = data.currentPage;
+        this.pagesAmount = data.pagesAmount;
+        data.medicines.forEach(element => {
+          this.medicines.push(this.toMedicine(element))
+        });
+        this.medicines = data.medicines;
+        this.viewPart = 'all';
+      });
   }
 
   getFilteredMedicines() {
@@ -66,6 +72,21 @@ export class MedicinelistComponent implements OnInit {
     });
   }
 
+  loadPage(pageNumber) {
+    this.currentPage = pageNumber;
+    switch (this.viewPart) {
+      case 'all':
+        this.getAllMedicines();
+        break;
+      case 'filter':
+        this.getFilteredMedicines();
+        break;
+      case 'filter':
+        this.search();
+        break;
+    }
+  }
+
   private getFilterOptions():string {
     var result:string[] = [];
     $.each($('input[name="producer-check"]:checked'), function () {result.push('producer=' + $(this).val())});
@@ -77,19 +98,14 @@ export class MedicinelistComponent implements OnInit {
     return result.join('&');
   }
 
-  private loadData() {
-    this.http.get('/api/Medicine/GetOptionSet')
-      .subscribe( (data:OptionSet[]) => this.optionSet = data);
-    this.http.get('/api/Medicine/GetAllMedicinesPaged?currentPage=' + this.currentPage + '&rowsOnPage=' + this.rowsOnPage)
-      .subscribe( (data:MedicineList) => {
-        this.currentPage = data.currentPage;
-        this.pagesAmount = data.pagesAmount;
-        data.medicines.forEach(element => {
-          this.medicines.push(this.toMedicine(element))
-        });
-        this.medicines = data.medicines;
-        this.viewPart = 'filter';
-      });
+  //down chevrone - &#8964;
+  //right triangle bracket - &gt;
+  changeArrow(id: string) {
+    var obj = document.getElementById(id);
+    if (obj.innerHTML === '&gt;' )
+      obj.innerHTML = '&#x2304;';
+    else
+      obj.innerHTML = '>';
   }
 
   private toMedicine (element:any): Medicine {

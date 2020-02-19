@@ -4,5 +4,6 @@
 * AutoMapper
 * Client side services
 * Authentification
-* Paginator
+* ~~Paginator~~
+* PageNumber, Checked options etc. saving
 * Refactoring

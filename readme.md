@@ -3,7 +3,7 @@
 * Angular + ASP - опция 1 в Startup.cs
 * Angular отдельно от ASP - опция 2 в Startup.cs
 * https://localhost:44301/
-* При необходимости поменять строку подключения к БД в файле [appsettings.json](./Farmacy/Farmacy/appsettings.json)
+* При необходимости поменять строку подключения ("ConnectionStrings") к БД в файле [appsettings.json](./Farmacy/Farmacy/appsettings.json)
 ## Функциональность:
 1.  Вход с авторизацией по логину-паролю;
 1.  Просмотр списка лекарств аптеки с пагинацией;
@@ -18,5 +18,5 @@
 1.  Фильтрация по полю «тип лекарства»
 
 ## Модель используемой базы данных:
-<img src="./ERM/ERM.png" alt="ERM" width="50%" height="50%">
+<img src="./ERM/ERM.png" alt="ERM" width="66%" height="66%">
 

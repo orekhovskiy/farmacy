@@ -64,8 +64,12 @@ h3 {
     margin-top: 10px;
 }
 
-.dotdot:hover {
-    cursor: default;
+.btn {
+    margin:5px;
+}
+
+.page-number {
+    box-shadow: none;
 }
 
 .table {

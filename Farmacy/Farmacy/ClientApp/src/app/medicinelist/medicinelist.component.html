@@ -71,17 +71,16 @@
       </tbody>
     </table> 
     <div class="paginator container" id="paginator">
-      <button class="btn btn-outline-primary float-left"> ❮ Назад </button>
-      <button class="btn btn-outline-primary float-right"> Вперед ❯ </button>
-      <div class="page-numbers"> 
-        <a class="btn btn-outline-primary" routerLink="/medicine-list/page/1" routerLinkActive="active">1</a>
-        <div class="btn dotdot">..</div>
-        <a class="btn btn-outline-primary" routerLink="/medicine-list/page/10" routerLinkActive="active">4</a>
-        <a class="btn btn-primary" routerLink="/medicine-list/page/5" routerLinkActive="active">5</a>
-        <a class="btn btn-outline-primary" routerLink="/medicine/page/10" routerLinkActive="active">6</a>
-        <div class="btn dotdot">..</div>
-        <a class="btn btn-outline-primary" routerLink="/medicine-list/page/10" routerLinkActive="active">10</a>
+      <button *ngIf="currentPage > 1" class="btn btn-outline-primary float-left" (click)="loadPage(currentPage - 1)" onclick="return false;"> ❮ Назад </button>
+      <button *ngIf="currentPage < pagesAmount" class="btn btn-outline-primary float-right" (click)="loadPage(currentPage + 1)" onclick="return false;"> Вперед ❯ </button>
+      <div class="page-numbers">
+        <button *ngIf="currentPage != 1" class="btn btn-outline-primary page-number" (click)="loadPage(1)" onclick="return false;">1</button>
+        <button *ngIf="currentPage  > 3" class="btn btn-ouline-primary page-number" (click)="loadPage(currentPage - 2)" onclick="return false;">..</button>
+        <button *ngIf="currentPage > 2" class="btn btn-outline-primary page-number" (click)="loadPage(currentPage - 1)" onclick="return false;">{{currentPage - 1}}</button>
+        <button *ngIf="pagesAmount != 1" class="btn btn-primary page-number" disabled>{{currentPage}}</button>
+        <button *ngIf="pagesAmount - currentPage > 1" class="btn btn-outline-primary page-number" (click)="loadPage(currentPage + 1)" onclick="return false;">{{currentPage + 1}}</button>
+        <button *ngIf="pagesAmount - currentPage > 2" class="btn btn-ouline-primary page-number" (click)="loadPage(pagesAmount - 1)" onclick="return false;">..</button>
+        <button *ngIf="currentPage != pagesAmount" class="btn btn-outline-primary page-number" (click)="loadPage(pagesAmount)" onclick="return false;">{{pagesAmount}}</button>
       </div>
-    </div>
   </div>
 </div>
