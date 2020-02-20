@@ -19,4 +19,5 @@
 
 ## Модель используемой базы данных:
 <img src="./ERM/ERM.png" alt="ERM" width="66%" height="66%">
+![Entity Relational Model](./ERM/ERM.png =66%x66%)
 

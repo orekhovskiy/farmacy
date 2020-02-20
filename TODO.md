@@ -1,9 +1,9 @@
 # TO DO
-* ~~Strucutre refactor~~
-* ~~Swagger~~
-* AutoMapper
-* ~~Client side services~~
-* Authentification
-* ~~Paginator~~
-* PageNumber, Checked options etc. saving
-* Refactoring
+- [x] Strucutre refactor
+- [x] Swagger
+- [x] AutoMapper
+- [x] ClientSideServices
+- [ ] Authentification
+- [x] Paginator
+- [ ] PageNumber, Checked options etc. saving
+- [ ] Refactoring
