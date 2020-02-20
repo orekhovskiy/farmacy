@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class LoginComponent implements OnInit {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
     if ($(document).height() <= $(window).height())
@@ -21,10 +22,10 @@ export class LoginComponent implements OnInit {
 
 
   async login() {
-    var login = $("#login").val();
-    var password = $("#password").val();
+    var login = <string > $("#login").val();
+    var password = <string> $("#password").val();
     //var isValide;
-    this.http.get('/api/User/ValidateUser?login=' + login + "&password=" + password)
+    this.loginService.validateUser(login, password)
       .subscribe( (data: boolean) => alert(data));
   }
 }

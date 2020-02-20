@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import {ComponentSet} from 'src/models';
 import * as $ from 'jquery';
+
+import ComponentSet = models.ComponentSet;
+import { MedicineService } from './medicine.service';
 
 @Component({
   selector: 'app-medicine',
@@ -25,8 +27,8 @@ export class MedicineComponent implements OnInit {
   private currentComponents: string[];
   private availableComponents: string[];
 
-  constructor(private http: HttpClient, private router: Router, private activatedRoute: ActivatedRoute) { 
-    activatedRoute.params.subscribe(params => this.id = params['id']);
+  constructor(private medicineService:MedicineService){
+    medicineService.getParams().subscribe(params => this.id = params['id']);
   }
 
   ngOnInit() {
@@ -53,12 +55,12 @@ export class MedicineComponent implements OnInit {
   loadData () {
     this.resetData();
     if (this.id != 'new') {
-      this.http.get('/api/Medicine/GetComponentSet?id=' + this.id)
+      this.medicineService.getComponentSet(this.id)
         .subscribe( (data:ComponentSet) => {
           this.currentComponents = data.currentComponents;
           this.availableComponents = data.availableComponents;
         });
-      this.http.get('/api/Medicine/GetMedicineById?id=' + this.id)
+      this.medicineService.getMedicineById(this.id)
         .subscribe( (data:any) =>{
           this.name = data.name;
           this.producer = data.producer.name;
@@ -68,16 +70,16 @@ export class MedicineComponent implements OnInit {
           this.count = data.count;
         });
     } else {
-      this.http.get('/api/Medicine/GetComponentSet')
+      this.medicineService.getComponentSet()
         .subscribe( (data:ComponentSet) => {
           this.availableComponents = data.availableComponents;
         });
     }
-    this.http.get('/api/Medicine/GetAllMedicineProducers')
+    this.medicineService.getAllMedicineProducers()
       .subscribe( (data:string[]) => this.allProducers = data);
-    this.http.get('/api/Medicine/GetAllMedicineCategories')
+    this.medicineService.getAllMedicineCategories()
       .subscribe( (data:string[]) => this.allCategories = data);
-    this.http.get('/api/Medicine/GetAllMedicineForms')
+    this.medicineService.getAllMedicineForms()
       .subscribe( (data:string[]) => this.allForms = data);
   }
 
@@ -100,17 +102,12 @@ export class MedicineComponent implements OnInit {
     if (this.validateInputs()) {
       var query = this.getQuery();
       console.log(query);
-      this.http.get(query).subscribe();
+      this.medicineService.postMedicine(this.id, query).subscribe();
     }
   }
 
   getQuery():string {
-    var query:string='/api/Medicine/';
-    if (this.id == 'new') {
-      query += 'NewMedicine?';
-    } else {
-      query += 'AlterMedicine?id=' + this.id + '&';
-    }
+    var query = '';
     query += 'name=' + $('#name-input').val() + '&' +
              'producer=' + $('#producer-input').val() + '&' +
              'category=' + $('#category-input').val() + '&' +
