@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Farmacy.Models
+namespace Farmacy.ViewModels
 {
-    public class OptionSet
+    public class OptionSetViewModel
     {
         public string Key { get; set; }
         public string Name { get; set; }

@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-//using Farmacy.ViewModels;
+using AutoMapper;
+using Farmacy.ViewModels;
 using Farmacy.Models;
 using Farmacy.Services;
 using Microsoft.AspNetCore.Http;
@@ -17,10 +18,12 @@ namespace Farmacy.Controllers
     public class MedicineController : ControllerBase
     {
         private IMedicineService _medicineService;
+        private IMapper _mapper;
 
-        public MedicineController(IMedicineService medicineService)
+        public MedicineController(IMedicineService medicineService, IMapper mapper)
         {
             _medicineService = medicineService;
+            _mapper = mapper;
         }
 
         private int GetPagesAmount(int rowsOnPage, int rowsAmount)
@@ -29,44 +32,44 @@ namespace Farmacy.Controllers
             return (int) Math.Ceiling(r);
         }
 
-        private MedicineList GetPagedMedicines(IEnumerable<Medicine> medicines, int currentPage, int rowsOnPage)
+        private MedicineListViewModel GetPagedMedicines(IEnumerable<Medicine> medicines, int currentPage, int rowsOnPage)
         {
             int pagesAmount = GetPagesAmount(rowsOnPage, medicines.Count());
-            if (currentPage > pagesAmount || currentPage < 1) return new MedicineList { };
-            return new MedicineList
+            if (currentPage > pagesAmount || currentPage < 1) return new MedicineListViewModel { };
+            return new MedicineListViewModel
             {
                 CurrentPage = currentPage,
                 PagesAmount = pagesAmount,
-                Medicines = medicines.Skip((currentPage - 1) * rowsOnPage).Take(rowsOnPage).ToList(),
+                Medicines = medicines.Skip((currentPage - 1) * rowsOnPage).Take(rowsOnPage).Select(m => _mapper.Map<MedicineViewModel>(m)).ToList(),
             };
         }
 
         [HttpGet]
         [ActionName("GetAllMedicinesPaged")]
-        public MedicineList GetAllMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage)
+        public MedicineListViewModel GetAllMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage)
             => GetPagedMedicines(_medicineService.GetAllMedicines(), currentPage, rowsOnPage);
 
         [HttpGet]
         [ActionName("GetFilteredMedicinesPaged")]
-        public MedicineList GetFilteredMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string[] producer,
+        public MedicineListViewModel GetFilteredMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string[] producer,
             [FromQuery] string[] category, [FromQuery] string[] form, [FromQuery] string[] component, [FromQuery] int[] shelfTime, [FromQuery] bool[] available)
             => GetPagedMedicines(_medicineService.GetFilteredMedicines(producer, category, form, component, shelfTime, available), currentPage, rowsOnPage);
 
         [HttpGet]
         [ActionName("GetMedicinesByKeyPaged")]
-        public  MedicineList GetMedicinesByKeyPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string key)
+        public  MedicineListViewModel GetMedicinesByKeyPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string key)
             => GetPagedMedicines(_medicineService.GetMedicinesByName(key).Concat(_medicineService.GetMedicinesByProducer(key)), currentPage, rowsOnPage);
 
         [HttpGet]
         [ActionName("GetOptionSet")]
-        public ICollection<OptionSet> GetOptionSet()
+        public ICollection<OptionSetViewModel> GetOptionSet()
         {
-            var producer = new OptionSet { Key = "producer", Name = "Производитель", Options = _medicineService.GetAllMedicineProducers().ToList() };
-            var category = new OptionSet { Key = "category", Name = "Категория", Options = _medicineService.GetAllMedicineCategories().ToList() };
-            var form = new OptionSet { Key = "form", Name = "Форма", Options = _medicineService.GetAllMedicineForms().ToList() };
-            var composition = new OptionSet { Key = "component", Name = "Состав", Options = _medicineService.GetAllMedicineComponents().ToList() };
-            var shelfTime = new OptionSet { Key = "shelfTime", Name = "Срок годности", Options = _medicineService.GetAllMedicineShelfTimes().Select(s => s.ToString()).ToList() };
-            var result = new List<OptionSet>{ producer, category, form, composition, shelfTime};
+            var producer = new OptionSetViewModel { Key = "producer", Name = "Производитель", Options = _medicineService.GetAllMedicineProducers().ToList() };
+            var category = new OptionSetViewModel { Key = "category", Name = "Категория", Options = _medicineService.GetAllMedicineCategories().ToList() };
+            var form = new OptionSetViewModel { Key = "form", Name = "Форма", Options = _medicineService.GetAllMedicineForms().ToList() };
+            var composition = new OptionSetViewModel { Key = "component", Name = "Состав", Options = _medicineService.GetAllMedicineComponents().ToList() };
+            var shelfTime = new OptionSetViewModel { Key = "shelfTime", Name = "Срок годности", Options = _medicineService.GetAllMedicineShelfTimes().Select(s => s.ToString()).ToList() };
+            var result = new List<OptionSetViewModel> { producer, category, form, composition, shelfTime};
             return result;
         }
 
@@ -86,7 +89,7 @@ namespace Farmacy.Controllers
 
         [HttpGet]
         [ActionName("GetMedicineById")]
-        public Medicine GetMedicineById([FromQuery] int id) => _medicineService.GetMedicineById(id);
+        public MedicineViewModel GetMedicineById([FromQuery] int id) => _mapper.Map<MedicineViewModel>(_medicineService.GetMedicineById(id));
 
         [HttpGet]
         [ActionName("GetMedicineComponents")]
@@ -110,7 +113,7 @@ namespace Farmacy.Controllers
 
         [HttpGet]
         [ActionName("GetComponentSet")]
-        public ComponentSet GetComponentSet([FromQuery] int id)
+        public ComponentSetViewModel GetComponentSet([FromQuery] int id)
         {
             ICollection<string> allComponents = _medicineService.GetAllMedicineComponents().ToList();
             ICollection<string> currentComponents = _medicineService.GetMedicineComponents(id).ToList();
@@ -119,7 +122,7 @@ namespace Farmacy.Controllers
             {
                 if (!currentComponents.Contains(component)) availableComponents.Add(component);
             }
-            return new ComponentSet
+            return new ComponentSetViewModel
             {
                 AvailableComponents = availableComponents,
                 CurrentComponents = currentComponents

@@ -4,12 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
 
 import ComponentSet = models.ComponentSet;
+import Medicine = models.Medicine;
 import { MedicineService } from './medicine.service';
 
 @Component({
   selector: 'app-medicine',
   templateUrl: './medicine.component.html',
-  styleUrls: ['./medicine.component.css']
+  styleUrls: ['./medicine.component.css'],
+  providers: [MedicineService]
 })
 export class MedicineComponent implements OnInit {
 
@@ -27,7 +29,7 @@ export class MedicineComponent implements OnInit {
   private currentComponents: string[];
   private availableComponents: string[];
 
-  constructor(private medicineService:MedicineService){
+  constructor(private medicineService: MedicineService){
     medicineService.getParams().subscribe(params => this.id = params['id']);
   }
 
@@ -61,11 +63,11 @@ export class MedicineComponent implements OnInit {
           this.availableComponents = data.availableComponents;
         });
       this.medicineService.getMedicineById(this.id)
-        .subscribe( (data:any) =>{
+        .subscribe( (data:Medicine) =>{
           this.name = data.name;
-          this.producer = data.producer.name;
-          this.category = data.category.name;
-          this.form = data.form.name;
+          this.producer = data.producer;
+          this.category = data.category;
+          this.form = data.form;
           this.shelfTime = data.shelfTime;
           this.count = data.count;
         });

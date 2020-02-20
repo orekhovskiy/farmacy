@@ -11,7 +11,8 @@ import { MedicineListService } from './medicinelist.service';
 @Component({
   selector: 'app-medicinelist',
   templateUrl: './medicinelist.component.html',
-  styleUrls: ['./medicinelist.component.css']
+  styleUrls: ['./medicinelist.component.css'],
+  providers: [MedicineListService]
 })
 
 @Injectable()
@@ -21,9 +22,9 @@ export class MedicinelistComponent implements OnInit {
   private currentPage:number = 1;
   private viewPart:string;
   private pagesAmount:number;
-  private readonly rowsOnPage:number = 10;
+  private readonly rowsOnPage:number = 1;
 
-  constructor(private medicineListService:MedicineListService) {}
+  constructor(private medicineListService: MedicineListService) {}
 
   ngOnInit() {
     this.medicines=[];    
@@ -39,10 +40,11 @@ export class MedicinelistComponent implements OnInit {
   private getAllMedicines() {
     this.medicineListService.getAllMedicinePaged(this.currentPage, this.rowsOnPage)
       .subscribe( (data:MedicineList) => {
+        console.log(data);
         this.currentPage = data.currentPage;
         this.pagesAmount = data.pagesAmount;
         data.medicines.forEach(element => {
-          this.medicines.push(this.toMedicine(element))
+          this.medicines.push(element)
         });
         this.medicines = data.medicines;
         this.viewPart = 'all';
@@ -56,7 +58,7 @@ export class MedicinelistComponent implements OnInit {
         this.currentPage = data.currentPage;
         this.pagesAmount = data.pagesAmount;
         if (data.medicines) data.medicines.forEach(element => {
-          this.medicines.push(this.toMedicine(element));
+          this.medicines.push(element);
         });
         this.viewPart="filter";
       });
@@ -70,7 +72,7 @@ export class MedicinelistComponent implements OnInit {
       this.currentPage = data.currentPage;
       this.pagesAmount = data.pagesAmount;
       if (data.medicines) data.medicines.forEach(element => {
-        this.medicines.push(this.toMedicine(element));
+        this.medicines.push(element);
       });
       this.viewPart = 'search';
     });
@@ -110,19 +112,5 @@ export class MedicinelistComponent implements OnInit {
       obj.innerHTML = '&#x2304;';
     else
       obj.innerHTML = '>';
-  }
-
-  private toMedicine (element:any): Medicine {
-    var result = <Medicine> element;
-    result.component = [];
-    result.id = element.id
-    result.name = element.name;
-    result.producer = element.producer.name;
-    result.category = element.category.name;
-    result.form = element.form.name;
-    result.count = element.count;
-    result.shelfTime = element.shelfTime;
-    element.medicineComposition.forEach(c => result.component.splice(0,0,c.component.name));
-    return result;
   }
 }

@@ -7,10 +7,9 @@ import { LoginService } from './login.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [LoginService]
 })
-
-@Injectable()
 export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService) { }
@@ -21,10 +20,9 @@ export class LoginComponent implements OnInit {
   }
 
 
-  async login() {
+  login() {
     var login = <string > $("#login").val();
     var password = <string> $("#password").val();
-    //var isValide;
     this.loginService.validateUser(login, password)
       .subscribe( (data: boolean) => alert(data));
   }

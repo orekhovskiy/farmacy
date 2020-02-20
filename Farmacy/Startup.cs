@@ -1,5 +1,9 @@
+
+using AutoMapper;
+using Farmacy.Models;
 using Farmacy.Models.Context;
 using Farmacy.Services;
+using Farmacy.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,7 +14,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Farmacy
@@ -45,6 +51,14 @@ namespace Farmacy
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+            services.AddAutoMapper(cfg => 
+            {
+                cfg.CreateMap<Producer, string>().ConvertUsing(p => p.Name);
+                cfg.CreateMap<Category, string>().ConvertUsing(c => c.Name);
+                cfg.CreateMap<Form, string>().ConvertUsing(f => f.Name);
+                cfg.CreateMap<IEnumerable<MedicineComposition>, ICollection<string>>().ConvertUsing(mc => mc.Select(element => element.Component.Name).ToList());
+                cfg.CreateMap<Medicine, MedicineViewModel>();
+            }, typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

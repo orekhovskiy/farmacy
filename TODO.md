@@ -2,7 +2,7 @@
 * ~~Strucutre refactor~~
 * ~~Swagger~~
 * AutoMapper
-* Client side services
+* ~~Client side services~~
 * Authentification
 * ~~Paginator~~
 * PageNumber, Checked options etc. saving

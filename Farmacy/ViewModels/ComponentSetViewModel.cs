@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Farmacy.ViewModels
 {
-    public class ComponentSet
+    public class ComponentSetViewModel
     {
         public IEnumerable<string> AvailableComponents { get; set; }
 

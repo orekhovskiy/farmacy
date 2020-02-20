@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Farmacy.ViewModels
 {
-    public class MedicineList
+    public class MedicineListViewModel
     {
         public int PagesAmount { get; set; }
         public int CurrentPage { get; set; }
 
-        public virtual ICollection<Medicine> Medicines { get; set; }
+        public virtual ICollection<MedicineViewModel> Medicines { get; set; }
     }
 }

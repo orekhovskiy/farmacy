@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Farmacy.ViewModels
 {
-    public partial class Medicine
+    public partial class MedicineViewModel
     {
-        public Medicine() { }
+        public MedicineViewModel() { }
 
         public int Id { get; set; }
         public string Name { get; set; }
@@ -14,6 +14,6 @@ namespace Farmacy.ViewModels
         public string Form { get; set; }
         public int ShelfTime { get; set; }
         public int Count { get; set; }
-        public ICollection<string> Components { get; set; }
+        public ICollection<string> MedicineComposition { get; set; }
     }
 }
