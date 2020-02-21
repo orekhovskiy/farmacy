@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Farmacy.Models;
-using Farmacy.ViewModels;
+using MedicineApi.Models;
+using MedicineApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

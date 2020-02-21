@@ -43,29 +43,7 @@ namespace Farmacy
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(connection));
-
-            services.AddScoped<IMedicineService, MedicineService>();
-            services.AddScoped<IUserService, UserService>();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Farmacy", Version = "v1" });
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-            });
-
-            services.AddAutoMapper(cfg => 
-            {
-                cfg.CreateMap<Producer, string>().ConvertUsing(p => p.Name);
-                cfg.CreateMap<Category, string>().ConvertUsing(c => c.Name);
-                cfg.CreateMap<Form, string>().ConvertUsing(f => f.Name);
-                cfg.CreateMap<IEnumerable<MedicineComposition>, ICollection<string>>().ConvertUsing(mc => mc.Select(element => element.Component.Name).ToList());
-                cfg.CreateMap<Medicine, MedicineViewModel>();
-            }, typeof(Startup));
+            
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>

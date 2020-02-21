@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Farmacy.Models
+namespace MedicineApi.Models
 {
     public partial class MedicineComposition
     {

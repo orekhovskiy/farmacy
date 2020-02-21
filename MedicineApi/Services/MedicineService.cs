@@ -1,6 +1,6 @@
-﻿using Farmacy.Models;
-using Farmacy.Models.Context;
-using Farmacy.ViewModels;
+﻿using MedicineApi.Models;
+using MedicineApi.Models.Context;
+using MedicineApi.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

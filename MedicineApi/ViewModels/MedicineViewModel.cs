@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Farmacy.ViewModels
+namespace MedicineApi.ViewModels
 {
     public partial class MedicineViewModel
     {

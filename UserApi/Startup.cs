@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
-using MedicineApi.Models.Context;
-using MedicineApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,8 +15,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using UserApi.Models.Context;
+using UserApi.Services;
 
-namespace MedicineApi
+namespace UserApi
 {
     public class Startup
     {
@@ -33,11 +33,11 @@ namespace MedicineApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<IMedicineService, MedicineService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddAutoMapper(typeof(Startup));
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MedicineApiContext>(options =>
+            services.AddDbContext<UserApiContext>(options =>
                 options.UseSqlServer(connection));
 
             services.AddSwaggerGen(c =>

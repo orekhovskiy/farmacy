@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Farmacy.Models
+namespace UserApi.Models
 {
-    public partial class Producer
+    public partial class Category
     {
-        public Producer()
+        public Category()
         {
             Medicine = new HashSet<Medicine>();
         }

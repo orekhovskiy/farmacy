@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Farmacy", "Farmacy\Farmacy.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MedicineApi", "MedicineApi\MedicineApi.csproj", "{8013AC38-4F7A-49BB-8F80-E07FE2D31FFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserApi", "UserApi\UserApi.csproj", "{0BC9442B-AA64-40E8-B980-398DE0BA0D52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8013AC38-4F7A-49BB-8F80-E07FE2D31FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8013AC38-4F7A-49BB-8F80-E07FE2D31FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8013AC38-4F7A-49BB-8F80-E07FE2D31FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BC9442B-AA64-40E8-B980-398DE0BA0D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BC9442B-AA64-40E8-B980-398DE0BA0D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BC9442B-AA64-40E8-B980-398DE0BA0D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BC9442B-AA64-40E8-B980-398DE0BA0D52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

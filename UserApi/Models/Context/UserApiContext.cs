@@ -2,14 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Farmacy.Models.Context
+namespace UserApi.Models.Context
 {
-    public partial class ApplicationContext : DbContext
+    public partial class UserApiContext : DbContext
     {
-        public ApplicationContext() { }
+        public UserApiContext()
+        {
+        }
 
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
-            : base(options) { }
+        public UserApiContext(DbContextOptions<UserApiContext> options)
+            : base(options)
+        {
+        }
 
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Component> Component { get; set; }
@@ -77,7 +81,7 @@ namespace Farmacy.Models.Context
             modelBuilder.Entity<Medicine>(entity =>
             {
                 entity.HasIndex(e => e.Name)
-                    .HasName("UQ__Medicine__72E12F1BE00C0CE6")
+                    .HasName("UQ__Medicine__72E12F1B6F62BF3D")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -101,25 +105,25 @@ namespace Farmacy.Models.Context
                     .WithMany(p => p.Medicine)
                     .HasForeignKey(d => d.CategoryId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Medicine__catego__40C49C62");
+                    .HasConstraintName("FK__Medicine__catego__5006DFF2");
 
                 entity.HasOne(d => d.Form)
                     .WithMany(p => p.Medicine)
                     .HasForeignKey(d => d.FormId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Medicine__formId__41B8C09B");
+                    .HasConstraintName("FK__Medicine__formId__50FB042B");
 
                 entity.HasOne(d => d.Producer)
                     .WithMany(p => p.Medicine)
                     .HasForeignKey(d => d.ProducerId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Medicine__produc__3FD07829");
+                    .HasConstraintName("FK__Medicine__produc__4F12BBB9");
             });
 
             modelBuilder.Entity<MedicineComposition>(entity =>
             {
                 entity.HasIndex(e => new { e.MedicineId, e.ComponentId })
-                    .HasName("UQ__Medicine__CCF9C9C38C97B6D6")
+                    .HasName("UQ__Medicine__CCF9C9C3F2BE87C3")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -132,13 +136,13 @@ namespace Farmacy.Models.Context
                     .WithMany(p => p.MedicineComposition)
                     .HasForeignKey(d => d.ComponentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MedicineC__compo__477199F1");
+                    .HasConstraintName("FK__MedicineC__compo__56B3DD81");
 
                 entity.HasOne(d => d.Medicine)
                     .WithMany(p => p.MedicineComposition)
                     .HasForeignKey(d => d.MedicineId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__MedicineC__medic__467D75B8");
+                    .HasConstraintName("FK__MedicineC__medic__55BFB948");
             });
 
             modelBuilder.Entity<Position>(entity =>
@@ -187,13 +191,13 @@ namespace Farmacy.Models.Context
                     .WithMany(p => p.Purchase)
                     .HasForeignKey(d => d.MedicineId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Purchase__medici__4B422AD5");
+                    .HasConstraintName("FK__Purchase__medici__5A846E65");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Purchase)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Purchase__userId__4A4E069C");
+                    .HasConstraintName("FK__Purchase__userId__59904A2C");
             });
 
             modelBuilder.Entity<User>(entity =>
