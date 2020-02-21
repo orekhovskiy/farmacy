@@ -5,8 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Farmacy.ViewModels;
-using Farmacy.Models;
-using Farmacy.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +15,7 @@ namespace Farmacy.Controllers
     [ApiController]
     public class MedicineController : ControllerBase
     {
-        private IMedicineService _medicineService;
+        /*private IMedicineService _medicineService;
         private IMapper _mapper;
 
         public MedicineController(IMedicineService medicineService, IMapper mapper)
@@ -127,6 +125,6 @@ namespace Farmacy.Controllers
                 AvailableComponents = availableComponents,
                 CurrentComponents = currentComponents
             };
-        }
+        }*/
     }
 }

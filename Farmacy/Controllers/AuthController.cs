@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Farmacy.Commons;
-using Farmacy.Models;
-using Farmacy.Services;
+using Farmacy.Providers;
+using Farmacy.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +13,12 @@ namespace Farmacy.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class AuthController : ControllerBase
     {
-        private IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly IUserApiProvider _userApiProvider;
+        public AuthController(IUserApiProvider userApiProvider)
         {
-            _userService = userService;
+            _userApiProvider = userApiProvider;
             // New user initialization in a new DB
             /*var u = new User
             {
@@ -34,9 +34,9 @@ namespace Farmacy.Controllers
 
         [HttpGet]
         [ActionName("GetUser")]
-        public User GetUser([FromQuery] string login, [FromQuery] string password) => _userService.GetUser(login, password);
+        public Task<UserViewModel> GetUser([FromQuery] string login, [FromQuery] string password) => _userApiProvider.GetUser(login, password);
 
-        [HttpGet]
+        /*[HttpGet]
         [ActionName("ValidateUser")]
         public bool ValidateUser([FromQuery] string login, [FromQuery] string password) 
         {
@@ -59,6 +59,6 @@ namespace Farmacy.Controllers
         [ActionName("AddUser")]
         public void AddUser([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
             [FromForm] string lastname, [FromForm] int position)
-            => _userService.AddUser(login, password, firstname, lastname, position);
+            => _userService.AddUser(login, password, firstname, lastname, position);*/
     }
 }

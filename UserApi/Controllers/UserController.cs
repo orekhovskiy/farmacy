@@ -58,10 +58,9 @@ namespace UserApi.Controllers
         public IEnumerable<UserViewModel> GetAllUsers() 
             => _userService.GetAllUsers().Select(element => _mapper.Map<UserViewModel>(element));
 
-        [HttpGet]
+        [HttpPost]
         [ActionName("AddUser")]
-        public void AddUser([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
-            [FromForm] string lastname, [FromForm] int position)
-            => _userService.AddUser(login, password, firstname, lastname, position);
+        public void AddUser([FromBody] UserViewModel user)
+            => _userService.AddUser(user);
     }
 }

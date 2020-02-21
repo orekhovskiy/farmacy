@@ -2,8 +2,10 @@
 ## Параметры запуска
 * Angular + ASP - опция 1 в Startup.cs
 * Angular отдельно от ASP - опция 2 в Startup.cs
-* https://localhost:44301/
-* При необходимости поменять строку подключения ("ConnectionStrings") к БД в файле [appsettings.json](./Farmacy/appsettings.json)
+* https://localhost:5000/
+* При необходимости поменять строку подключения ("ConnectionStrings") к БД в файлах appsettings.json для каждого Api.
+* Запуск MedicineApi - Перейти в каталог MedicineApi в командной строке и выполнить команду 'dotnet run'. Данный Api доступен по ссылке: https://localhost:5201/
+* Запуск UserApi - Перейти в каталог UserApi в командной строке и выполнить команду 'dotnet run'. Данный Api доступен по ссылке: https://localhost:5101/
 ## Функциональность:
 1.  Вход с авторизацией по логину-паролю;
 1.  Просмотр списка лекарств аптеки с пагинацией;
@@ -19,4 +21,4 @@
 
 ## Модель используемой базы данных:
 <img src="./ERM/ERM.png" alt="ERM" width="66%" height="66%">
-![Entity Relational Model](./ERM/ERM.png) 
+<![Entity Relational Model](./ERM/ERM.png)>

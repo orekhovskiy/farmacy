@@ -10,7 +10,7 @@ namespace UserApi.Profiles
 {
     public class UserProfile : Profile
     {
-        UserProfile()
+        public UserProfile()
         {
             CreateMap<User, UserViewModel>()
                 .ForMember(dest => dest.Position, opt => opt.MapFrom(src => src.PositionNavigation.Name))

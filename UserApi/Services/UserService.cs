@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UserApi.Commons;
 using UserApi.Models;
 using UserApi.Models.Context;
+using UserApi.ViewModels;
 
 namespace UserApi.Services
 {
@@ -17,15 +18,15 @@ namespace UserApi.Services
             db = context;
         }
 
-        public void AddUser(string login, string password, string firstname, string lastname, int position)
+        public void AddUser(UserViewModel user)
         {
             var u = new User
             {
-                Login = login,
-                Password = Hasher.GetHash(password),
-                Firstname = firstname,
-                Lastname = lastname,
-                Position = position
+                Login = user.Login,
+                Password = Hasher.GetHash(user.Password),
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
+                Position = user.PositionId
             };
             db.User.Add(u);
             db.SaveChanges();

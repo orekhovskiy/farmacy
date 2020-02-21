@@ -35,14 +35,13 @@ namespace UserApi
             services.AddControllers();
             services.AddScoped<IUserService, UserService>();
             services.AddAutoMapper(typeof(Startup));
-
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<UserApiContext>(options =>
                 options.UseSqlServer(connection));
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MedicineApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserApi", Version = "v1" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 //c.IncludeXmlComments(xmlPath);
@@ -71,7 +70,7 @@ namespace UserApi
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("./swagger/v1/swagger.json", "MedicineApi");
+                c.SwaggerEndpoint("./swagger/v1/swagger.json", "UserApi");
                 c.RoutePrefix = string.Empty;
             });
         }
