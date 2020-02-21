@@ -40,7 +40,6 @@ export class MedicinelistComponent implements OnInit {
   private getAllMedicines() {
     this.medicineListService.getAllMedicinePaged(this.currentPage, this.rowsOnPage)
       .subscribe( (data:MedicineList) => {
-        console.log(data);
         this.currentPage = data.currentPage;
         this.pagesAmount = data.pagesAmount;
         data.medicines.forEach(element => {

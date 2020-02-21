@@ -1,9 +1,11 @@
 
 using AutoMapper;
+using Farmacy.Commons;
 using Farmacy.Models;
 using Farmacy.Models.Context;
 using Farmacy.Services;
 using Farmacy.ViewModels;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
@@ -39,11 +42,14 @@ namespace Farmacy
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(connection));
+
             services.AddScoped<IMedicineService, MedicineService>();
             services.AddScoped<IUserService, UserService>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Farmacy", Version = "v1" });
@@ -51,6 +57,7 @@ namespace Farmacy
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
             });
+
             services.AddAutoMapper(cfg => 
             {
                 cfg.CreateMap<Producer, string>().ConvertUsing(p => p.Name);
@@ -59,6 +66,22 @@ namespace Farmacy
                 cfg.CreateMap<IEnumerable<MedicineComposition>, ICollection<string>>().ConvertUsing(mc => mc.Select(element => element.Component.Name).ToList());
                 cfg.CreateMap<Medicine, MedicineViewModel>();
             }, typeof(Startup));
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = true;
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidIssuer = AuthOptions.ISSUER,
+                            ValidateAudience = true,
+                            ValidAudience = AuthOptions.AUDIENCE,
+                            ValidateLifetime = true,
+                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                            ValidateIssuerSigningKey = true,
+                        };
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,6 +107,9 @@ namespace Farmacy
 
             app.UseRouting();
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -103,13 +129,6 @@ namespace Farmacy
                     // 2. To use Angular server with ASP.NET Core server at once comment following string
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
-            });
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("./swagger/v1/swagger.json", "Farmacy");
-                c.RoutePrefix = string.Empty;
             });
         }
     }

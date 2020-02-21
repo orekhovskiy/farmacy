@@ -59,8 +59,6 @@ namespace Farmacy.Controllers
         [ActionName("AddUser")]
         public void AddUser([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
             [FromForm] string lastname, [FromForm] int position)
-        {
-            
-        }
+            => _userService.AddUser(login, password, firstname, lastname, position);
     }
 }

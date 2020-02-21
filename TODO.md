@@ -1,9 +1,9 @@
 # TO DO
-- [x] Strucutre refactor
+- [ ] Strucutre refactor
 - [x] Swagger
 - [x] AutoMapper
 - [x] ClientSideServices
 - [ ] Authentification
-- [x] Paginator
+- [ ] Paginator
 - [ ] PageNumber, Checked options etc. saving
 - [ ] Refactoring
