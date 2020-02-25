@@ -1,3 +1,20 @@
+<header>
+  <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+    <div class="navbar-brand">Аптека</div>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/medicine-list" routerLinkActive="active">Лекарства</a>
+      </li>
+      <li class="nav-tem">
+        <a class="nav-link" routerLink="/medicine/new" routerLinkActive="active">Новое лекарство</a>
+      </li>
+    </ul>
+    
+    <div class="signout-btn">
+      <button class="btn btn-outline-danger" id="signout-btn" (click)="signOut();" onclick="return false;">Выйти</button>
+    </div>
+  </nav>
+</header>
 <div class="row medicine-list">
   <div class="filter col-md-3 col-sm-12 col-xs-12">
     <div class="row">

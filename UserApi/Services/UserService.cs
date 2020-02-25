@@ -51,7 +51,7 @@ namespace UserApi.Services
             );
         }
 
-        public User GetUser(string login, string password) => GetAllUsers().Where(u => u.Login == login && Hasher.GetHash(password) == u.Password).First();
+        public User GetUser(string login, string password) =>GetAllUsers().Where(u => u.Login == login && Hasher.GetHash(password) == u.Password).FirstOrDefault();
 
         public string GetUserPosition(int id) => db.Position.Find(db.User.Find(id).Position).Name;
 

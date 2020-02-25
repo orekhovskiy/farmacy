@@ -12,7 +12,7 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
     if ($(document).height() <= $(window).height())
@@ -24,6 +24,14 @@ export class LoginComponent implements OnInit {
     var login = <string > $("#login").val();
     var password = <string> $("#password").val();
     this.loginService.validateUser(login, password)
-      .subscribe( (data: boolean) => alert(data));
+      .subscribe( (data:any) => {
+        if (data) {
+          localStorage.setItem('access-token', data.access_token);
+          localStorage.setItem('username', data.username);
+          this.router.navigateByUrl('/medicine-list');
+        } else {
+          alert('Atansion');
+        }
+      });
   }
 }

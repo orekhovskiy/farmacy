@@ -29,7 +29,7 @@ export class MedicineComponent implements OnInit {
   private currentComponents: string[];
   private availableComponents: string[];
 
-  constructor(private medicineService: MedicineService){
+  constructor(private medicineService: MedicineService, private router: Router, private activatedRoute: ActivatedRoute){
     medicineService.getParams().subscribe(params => this.id = params['id']);
   }
 
@@ -211,5 +211,10 @@ export class MedicineComponent implements OnInit {
   isName(n):boolean {
     var name = /^[a-zA-Zа-яА-Я]+(([',. -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
     return name.test(n);
+  }
+  
+  public signOut() {
+    localStorage.clear();
+    this.router.navigateByUrl('/');
   }
 }

@@ -24,7 +24,7 @@ export class MedicinelistComponent implements OnInit {
   private pagesAmount:number;
   private readonly rowsOnPage:number = 1;
 
-  constructor(private medicineListService: MedicineListService) {}
+  constructor(private medicineListService: MedicineListService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
   /*testPaginator() {
     var aspirine:models.Medicine = {
@@ -127,5 +127,10 @@ export class MedicinelistComponent implements OnInit {
       obj.innerHTML = '&#x2304;';
     else
       obj.innerHTML = '>';
+  }
+  
+  public signOut() {
+    localStorage.clear();
+    this.router.navigateByUrl('/');
   }
 }

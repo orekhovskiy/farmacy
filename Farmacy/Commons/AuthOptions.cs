@@ -11,8 +11,8 @@ namespace Farmacy.Commons
     {
         public const string ISSUER = "Farmacy";
         public const string AUDIENCE = "ClientApp";
-        const string KEY = "security key";
-        public const int LIFETIME = 30;
+        const string KEY = "security key!!!!";
+        //public const int LIFETIME = 1;
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
             return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));

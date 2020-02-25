@@ -11,6 +11,6 @@ export class LoginService {
     private apiUrl = '/api/Login/';
 
     validateUser(login:string, password:string):Observable<boolean> {
-        return this.http.get<boolean>('/api/User/ValidateUser?login=' + login + "&password=" + password)
+        return this.http.get<boolean>('/api/Auth/ValidateUser?login=' + login + "&password=" + password)
     }
 }
