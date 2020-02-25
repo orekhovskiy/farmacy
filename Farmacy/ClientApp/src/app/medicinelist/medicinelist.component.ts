@@ -145,6 +145,18 @@ export class MedicinelistComponent implements OnInit {
     localStorage.setItem('viewPart', this.viewPart);
   }
 
+  restoreOptions() {
+    this.currentPage = Number(localStorage.getItem('currentPage'));
+    this.viewPart = localStorage.getItem('viewPart');
+    this.optionSet.forEach(opt => {
+      var storedOptions = JSON.parse(localStorage.getItem(opt.key));
+      storedOptions.forEach(element => {
+        $(':checkbox[value=' + element + ']').prop("checked","true");
+      });
+    });
+    //available stuff tl;dt
+  }
+
   public signOut() {
     localStorage.clear();
     this.router.navigateByUrl('/');
