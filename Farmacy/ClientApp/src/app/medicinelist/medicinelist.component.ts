@@ -26,6 +26,21 @@ export class MedicinelistComponent implements OnInit {
 
   constructor(private medicineListService: MedicineListService) {}
 
+  /*testPaginator() {
+    var aspirine:models.Medicine = {
+      id:0,
+      name: 'Аспирин',
+      producer:'Bayer',
+      category: "Анальгетик",
+      form: "Таблетки",
+      count: 45,
+      medicineCompostion: ["Ацетилсалициловая кислота"],
+      shelfTime:18
+    }
+    this.medicines = [aspirine,aspirine,aspirine,aspirine,aspirine,aspirine];
+    this.pagesAmount = 7;
+  }*/
+  
   ngOnInit() {
     this.medicines=[];    
     if ($(document).height() <= $(window).height()) {
@@ -35,6 +50,7 @@ export class MedicinelistComponent implements OnInit {
     this.medicineListService.getOptionSet()
       .subscribe( (data:OptionSet[]) => this.optionSet = data);
     this.getAllMedicines();
+    //this.testPaginator();
   }
 
   private getAllMedicines() {
