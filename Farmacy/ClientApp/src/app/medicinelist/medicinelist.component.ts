@@ -26,20 +26,19 @@ export class MedicinelistComponent implements OnInit {
 
   constructor(private medicineListService: MedicineListService, private router: Router, private activatedRoute: ActivatedRoute) {}
 
-  /*testPaginator() {
-    var aspirine:models.Medicine = {
-      id:0,
-      name: 'Аспирин',
-      producer:'Bayer',
-      category: "Анальгетик",
-      form: "Таблетки",
-      count: 45,
-      medicineCompostion: ["Ацетилсалициловая кислота"],
-      shelfTime:18
-    }
-    this.medicines = [aspirine,aspirine,aspirine,aspirine,aspirine,aspirine];
-    this.pagesAmount = 7;
-  }*/
+  testStoring() {
+    var prod:OptionSet = {
+      key: 'producer',
+      name: 'Producer',
+      options: ['Bayer', 'Farm']
+    };
+    var cat: OptionSet = {
+      key: 'category',
+      name: 'Category',
+      options: ['Pills', 'Liquid']
+    };
+    this.optionSet = [ prod, cat];
+  }
   
   ngOnInit() {
     this.medicines=[];    
@@ -49,8 +48,8 @@ export class MedicinelistComponent implements OnInit {
     }
     this.medicineListService.getOptionSet()
       .subscribe( (data:OptionSet[]) => this.optionSet = data);
-    this.getAllMedicines();
-    //this.testPaginator();
+    //this.getAllMedicines();
+    this.testStoring();
   }
 
   private getAllMedicines() {
@@ -129,6 +128,23 @@ export class MedicinelistComponent implements OnInit {
       obj.innerHTML = '>';
   }
   
+  storeOptions() {
+    this.optionSet.forEach(opt => {
+      var selected = [];
+      $('input[name="' + opt.key + '-check"]:checked').each( function () {
+        selected.push($(this).attr('value'));
+      });
+      localStorage.setItem(opt.key, JSON.stringify(selected));
+    });
+    var selected = [];
+    $('input[name=available-check]:checked').each( function () {
+      selected.push($(this).attr('value'));
+    });
+    localStorage.setItem('available', JSON.stringify(selected));
+    localStorage.setItem('currentPage', this.currentPage.toString());
+    localStorage.setItem('viewPart', this.viewPart);
+  }
+
   public signOut() {
     localStorage.clear();
     this.router.navigateByUrl('/');
