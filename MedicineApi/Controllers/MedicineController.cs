@@ -66,7 +66,7 @@ namespace MedicineApi.Controllers
             var category = new OptionSetViewModel { Key = "category", Name = "Категория", Options = _medicineService.GetAllMedicineCategories().ToList() };
             var form = new OptionSetViewModel { Key = "form", Name = "Форма", Options = _medicineService.GetAllMedicineForms().ToList() };
             var composition = new OptionSetViewModel { Key = "component", Name = "Состав", Options = _medicineService.GetAllMedicineComponents().ToList() };
-            var shelfTime = new OptionSetViewModel { Key = "shelfTime", Name = "Срок годности", Options = _medicineService.GetAllMedicineShelfTimes().Select(s => s.ToString()).ToList() };
+            var shelfTime = new OptionSetViewModel { Key = "shelfTime", Name = "Срок годности", Options = _medicineService.GetAllMedicineShelfTimes().Select(s => s.ToString()).Distinct().ToList() };
             var result = new List<OptionSetViewModel> { producer, category, form, composition, shelfTime };
             return result;
         }

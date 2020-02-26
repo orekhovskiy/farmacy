@@ -9,7 +9,7 @@ namespace Farmacy.Providers
     public interface IMedicineApiProvider
     {
         public Task<MedicineListViewModel> GetAllMedicinesPaged(int currentPage, int rowsOnPage);
-        public Task<MedicineListViewModel> GetFilteredMedicinesPaged(int currentPage, int rowsOnPage, string[] producer, string[] category, string[] form, string[] component, int[] shelfTime, bool[] available);
+        public Task<MedicineListViewModel> GetFilteredMedicinesPaged(int currentPage, int rowsOnPage, string[] producer, string[] category, string[] form, string[] component, int[] shelfTime, string[] available);
         public Task<MedicineListViewModel> GetMedicinesByKeyPaged(int currentPage, int rowsOnPage, string key);
         public Task<ICollection<OptionSetViewModel>> GetOptionSet();
         public Task<MedicineViewModel> GetMedicineById(int id);
@@ -19,8 +19,7 @@ namespace Farmacy.Providers
         public Task<IEnumerable<string>> GetAllMedicineForms();
         public Task<IEnumerable<string>> GetAllMedicineComponents();
         public Task<ComponentSetViewModel> GetComponentSet(int id);
-        public bool NewMedicine(MedicineViewModel medicine);
-        public bool AlterMedicine(MedicineViewModel mediciene);
-        public bool SellMedicine(MedicineViewModel medicine);
+        public Task<bool> NewMedicine(MedicineViewModel medicine);
+        public Task<bool> AlterMedicine(MedicineViewModel medicine);
     }
 }

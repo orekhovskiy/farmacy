@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
@@ -32,6 +32,9 @@ export class LoginComponent implements OnInit {
         } else {
           alert('Atansion');
         }
+      }, (error: HttpErrorResponse) => {
+        $('#error-msg').text('Введённые логин и пароль неверны');
+
       });
   }
 }

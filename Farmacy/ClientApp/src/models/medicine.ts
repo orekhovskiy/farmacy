@@ -5,7 +5,7 @@ namespace models{
         producer: string;
         category: string;
         form: string;
-        medicineCompostion: string[];
+        components: string[];
         shelfTime: number;
         count: number;
     }

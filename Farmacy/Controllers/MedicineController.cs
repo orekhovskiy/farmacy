@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Farmacy.Providers;
 using Farmacy.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -15,119 +16,94 @@ namespace Farmacy.Controllers
     [ApiController]
     public class MedicineController : ControllerBase
     {
+        private IMedicineApiProvider _medicineApiProvider;
+
+        public MedicineController(IMedicineApiProvider medicineApiProvider)
+        {
+            _medicineApiProvider = medicineApiProvider;
+        }
+
+        [Authorize, HttpGet]
+        [ActionName("GetAllMedicinesPaged")]
+        public async Task<MedicineListViewModel> GetAllMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage)
+            => await _medicineApiProvider.GetAllMedicinesPaged(currentPage, rowsOnPage);
+
+        [Authorize, HttpGet]
+        [ActionName("GetFilteredMedicinesPaged")]
+        public async Task<MedicineListViewModel> GetFilteredMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string[] producer,
+            [FromQuery] string[] category, [FromQuery] string[] form, [FromQuery] string[] component, [FromQuery] int[] shelfTime, [FromQuery] string[] available)
+            => await _medicineApiProvider.GetFilteredMedicinesPaged(currentPage, rowsOnPage,producer, category, form, component, shelfTime, available);
+
+        [Authorize, HttpGet]
+        [ActionName("GetMedicinesByKeyPaged")]
+        public async Task<MedicineListViewModel> GetMedicinesByKeyPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string key)
+            => await _medicineApiProvider.GetMedicinesByKeyPaged(currentPage, rowsOnPage, key);
+
         [Authorize, HttpGet]
         [ActionName("GetOptionSet")]
-        public ICollection<OptionSetViewModel> GetOptionSet() => null;
-        /*private IMedicineService _medicineService;
-        private IMapper _mapper;
+        public async Task<ICollection<OptionSetViewModel>> GetOptionSet() => await _medicineApiProvider.GetOptionSet();
 
-        public MedicineController(IMedicineService medicineService, IMapper mapper)
-        {
-            _medicineService = medicineService;
-            _mapper = mapper;
-        }
-
-        private int GetPagesAmount(int rowsOnPage, int rowsAmount)
-        {
-            var r = (double)rowsAmount / rowsOnPage;
-            return (int) Math.Ceiling(r);
-        }
-
-        private MedicineListViewModel GetPagedMedicines(IEnumerable<Medicine> medicines, int currentPage, int rowsOnPage)
-        {
-            int pagesAmount = GetPagesAmount(rowsOnPage, medicines.Count());
-            if (currentPage > pagesAmount || currentPage < 1) return new MedicineListViewModel { };
-            return new MedicineListViewModel
-            {
-                CurrentPage = currentPage,
-                PagesAmount = pagesAmount,
-                Medicines = medicines.Skip((currentPage - 1) * rowsOnPage).Take(rowsOnPage).Select(m => _mapper.Map<MedicineViewModel>(m)).ToList(),
-            };
-        }
-
-        [HttpGet]
-        [ActionName("GetAllMedicinesPaged")]
-        public MedicineListViewModel GetAllMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage)
-            => GetPagedMedicines(_medicineService.GetAllMedicines(), currentPage, rowsOnPage);
-
-        [HttpGet]
-        [ActionName("GetFilteredMedicinesPaged")]
-        public MedicineListViewModel GetFilteredMedicinesPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string[] producer,
-            [FromQuery] string[] category, [FromQuery] string[] form, [FromQuery] string[] component, [FromQuery] int[] shelfTime, [FromQuery] bool[] available)
-            => GetPagedMedicines(_medicineService.GetFilteredMedicines(producer, category, form, component, shelfTime, available), currentPage, rowsOnPage);
-
-        [HttpGet]
-        [ActionName("GetMedicinesByKeyPaged")]
-        public  MedicineListViewModel GetMedicinesByKeyPaged([FromQuery] int currentPage, [FromQuery] int rowsOnPage, [FromQuery] string key)
-            => GetPagedMedicines(_medicineService.GetMedicinesByName(key).Concat(_medicineService.GetMedicinesByProducer(key)), currentPage, rowsOnPage);
-
-        [HttpGet]
-        [ActionName("GetOptionSet")]
-        public ICollection<OptionSetViewModel> GetOptionSet()
-        {
-            var producer = new OptionSetViewModel { Key = "producer", Name = "Производитель", Options = _medicineService.GetAllMedicineProducers().ToList() };
-            var category = new OptionSetViewModel { Key = "category", Name = "Категория", Options = _medicineService.GetAllMedicineCategories().ToList() };
-            var form = new OptionSetViewModel { Key = "form", Name = "Форма", Options = _medicineService.GetAllMedicineForms().ToList() };
-            var composition = new OptionSetViewModel { Key = "component", Name = "Состав", Options = _medicineService.GetAllMedicineComponents().ToList() };
-            var shelfTime = new OptionSetViewModel { Key = "shelfTime", Name = "Срок годности", Options = _medicineService.GetAllMedicineShelfTimes().Select(s => s.ToString()).ToList() };
-            var result = new List<OptionSetViewModel> { producer, category, form, composition, shelfTime};
-            return result;
-        }
-
-        [HttpGet]
+        [Authorize, HttpGet]
         [ActionName("NewMedicine")]
-        public void NewMedicine([FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
-             => _medicineService.NewMedicine(name, producer, category, form, component, shelfTime, count);
-
-        [HttpGet]
-        [ActionName("AlterMedicine")]
-        public void AlterMedicine([FromQuery] int id, [FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
-            => _medicineService.AlterMedicine(id, name, producer, category, form, component, shelfTime, count);
-        
-        [HttpPost]
-        [ActionName("SellMedicine")]
-        public void SellMedicine([FromQuery] int id, [FromQuery] int amount) => _medicineService.SellMedicine(id, amount);
-
-        [HttpGet]
-        [ActionName("GetMedicineById")]
-        public MedicineViewModel GetMedicineById([FromQuery] int id) => _mapper.Map<MedicineViewModel>(_medicineService.GetMedicineById(id));
-
-        [HttpGet]
-        [ActionName("GetMedicineComponents")]
-        public IEnumerable<string> GetMedicineComponents([FromQuery] int id) => _medicineService.GetMedicineComponents(id);
-
-        [HttpGet]
-        [ActionName("GetAllMedicineProducers")]
-        public IEnumerable<string> GetAllMedicineProducers() => _medicineService.GetAllMedicineProducers();
-
-        [HttpGet]
-        [ActionName("GetAllMedicineCategories")]
-        public IEnumerable<string> GetAllMedicineCategories() => _medicineService.GetAllMedicineCategories();
-
-        [HttpGet]
-        [ActionName("GetAllMedicineForms")]
-        public IEnumerable<string> GetAllMedicineForms() => _medicineService.GetAllMedicineForms();
-
-        [HttpGet]
-        [ActionName("GetAllMedicineComponents")]
-        public IEnumerable<string> GetAllMedicineComponents() => _medicineService.GetAllMedicineComponents();
-
-        [HttpGet]
-        [ActionName("GetComponentSet")]
-        public ComponentSetViewModel GetComponentSet([FromQuery] int id)
+        public async Task<bool> NewMedicine([FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
         {
-            ICollection<string> allComponents = _medicineService.GetAllMedicineComponents().ToList();
-            ICollection<string> currentComponents = _medicineService.GetMedicineComponents(id).ToList();
-            ICollection<string> availableComponents = new List<string> { };
-            foreach (string component in allComponents)
-            {
-                if (!currentComponents.Contains(component)) availableComponents.Add(component);
-            }
-            return new ComponentSetViewModel
-            {
-                AvailableComponents = availableComponents,
-                CurrentComponents = currentComponents
+            MedicineViewModel medicine = new MedicineViewModel { 
+                Name = name,
+                Producer = producer,
+                Category = category,
+                Form = form,
+                Components = component,
+                ShelfTime = shelfTime,
+                Count = count,
             };
-        }*/
+             return await _medicineApiProvider.NewMedicine(medicine);
+        }
+
+
+        [Authorize, HttpGet]
+        [ActionName("AlterMedicine")]
+        public async Task<bool> AlterMedicine([FromQuery] int id, [FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
+        {
+            MedicineViewModel medicine = new MedicineViewModel
+            {
+                Id = id,
+                Name = name,
+                Producer = producer,
+                Category = category,
+                Form = form,
+                Components = component,
+                ShelfTime = shelfTime,
+                Count = count,
+            };
+            return await _medicineApiProvider.AlterMedicine(medicine);
+        }
+
+        [Authorize, HttpGet]
+        [ActionName("GetMedicineById")]
+        public async Task<MedicineViewModel> GetMedicineById([FromQuery] int id) => await _medicineApiProvider.GetMedicineById(id);
+
+        [Authorize, HttpGet]
+        [ActionName("GetMedicineComponents")]
+        public async Task<IEnumerable<string>> GetMedicineComponents([FromQuery] int id) => await _medicineApiProvider.GetMedicineComponents(id);
+
+        [Authorize, HttpGet]
+        [ActionName("GetAllMedicineProducers")]
+        public async Task<IEnumerable<string>> GetAllMedicineProducers() => await _medicineApiProvider.GetAllMedicineProducers();
+
+        [Authorize, HttpGet]
+        [ActionName("GetAllMedicineCategories")]
+        public async Task<IEnumerable<string>> GetAllMedicineCategories() => await _medicineApiProvider.GetAllMedicineCategories();
+
+        [Authorize, HttpGet]
+        [ActionName("GetAllMedicineForms")]
+        public async Task<IEnumerable<string>> GetAllMedicineForms() => await _medicineApiProvider.GetAllMedicineForms();
+
+        [Authorize, HttpGet]
+        [ActionName("GetAllMedicineComponents")]
+        public async Task<IEnumerable<string>> GetAllMedicineComponents() => await _medicineApiProvider.GetAllMedicineComponents();
+
+        [Authorize, HttpGet]
+        [ActionName("GetComponentSet")]
+        public async Task<ComponentSetViewModel> GetComponentSet([FromQuery] int id) => await _medicineApiProvider.GetComponentSet(id);
     }
 }

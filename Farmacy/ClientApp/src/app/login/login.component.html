@@ -6,9 +6,10 @@
 <div class="login-form">
     <h1>Войдите в систему</h1>
     <div>
-            <input class="form-control" type="text" id="login" placeholder="Логин">
-            <input class="form-control" type="password" id="password" placeholder="Пароль">
-            <button class="btn btn-outline-success float-right login-btn" (click)="login()" onclick="return false;">Войти</button>
+      <input class="form-control" type="text" id="login" placeholder="Логин">
+      <input class="form-control" type="password" id="password" placeholder="Пароль">
+      <button class="btn btn-outline-success float-right login-btn" (click)="login()" onclick="return false;">Войти</button>
+      <small id="error-msg" class="text-danger"> </small>
     </div>
 </div>
 <!--<form action="/api/login/AddUser" method="POST" class="login-form">

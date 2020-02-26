@@ -20,7 +20,7 @@
     <div class="row">
         <div class="form-inline">
           <input class="form-control" type="text" id="search" placeholder="Поиск">
-          <button class="btn btn-outline-success" type="submit" (click)="search()" onclick="return false">Поиск</button>
+          <button class="btn btn-outline-success" type="submit" (click)="this.currentPage = 1; search();" onclick="return false">Поиск</button>
         </div>
     </div>
     <div>
@@ -51,7 +51,7 @@
           </div>
         </div>
       </div>-->
-      <button class="btn btn-outline-success float-right" (click)="getFilteredMedicines();" onclick="return false;">Применить</button>
+      <button class="btn btn-outline-success float-right" (click)="this.currentPage = 1; getFilteredMedicines();" onclick="return false;">Применить</button>
     </div>
   </div>
   <div class="med-container col">
@@ -78,7 +78,7 @@
           </td>
           <td>{{medicine.form}}</td>
           <td>
-            <div class="comp-table" *ngFor="let comp of medicine.medicineComposition" >
+            <div class="comp-table" *ngFor="let comp of medicine.components" >
               {{comp}}
             </div>
           </td>
@@ -94,8 +94,8 @@
         </div>
       </div>
       <div *ngIf="pagesAmount > 1" class="col-8 page-numbers">
-        <button *ngIf="pagesAmount - currentPage < 1" class="btn btn-outline-primary page-number" (click)="loadPage(currentPage - 4)" onclick="return false;">{{currentPage - 4}}</button>
-        <button *ngIf="pagesAmount - currentPage < 2" class="btn btn-outline-primary page-number" (click)="loadPage(currentPage - 3)" onclick="return false;">{{currentPage - 3}}</button>
+        <button *ngIf="pagesAmount - currentPage < 2 && pagesAmount > 4" class="btn btn-outline-primary page-number" (click)="loadPage(currentPage - 4)" onclick="return false;">{{currentPage - 4}}</button>
+        <button *ngIf="pagesAmount - currentPage < 1 && pagesAmount > 3" class="btn btn-outline-primary page-number" (click)="loadPage(currentPage - 3)" onclick="return false;">{{currentPage - 3}}</button>
         <button *ngIf="currentPage > 2"class="btn btn-outline-primary page-number" (click)="loadPage(currentPage - 2)" onclick="return false;">{{currentPage - 2}}</button>
         <button *ngIf="currentPage > 1" class="btn btn-outline-primary page-number" (click)="loadPage(currentPage - 1)" onclick="return false;">{{currentPage - 1}}</button>
         <button class="btn btn-outline-primary page-number" disabled  >{{currentPage}}</button>

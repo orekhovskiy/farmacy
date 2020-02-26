@@ -14,6 +14,6 @@ namespace Farmacy.ViewModels
         public string Form { get; set; }
         public int ShelfTime { get; set; }
         public int Count { get; set; }
-        public ICollection<string> MedicineComposition { get; set; }
+        public ICollection<string> Components { get; set; }
     }
 }

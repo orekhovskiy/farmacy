@@ -63,6 +63,7 @@
                 </div>
                 <div class="group-alter">
                     <h5>Состав</h5>
+                    <small id="composition-help" class="text-danger"></small>
                     <div class="row">
                         <div *ngFor="let comp of currentComponents">
                             <button class="btn btn-outline-danger" *ngIf="comp" (click)="removeComp(comp)" name="component" id="{{comp}}-btn" onclick="return false;">{{comp}} X</button>
@@ -77,6 +78,7 @@
                     </div>
                 </div>
                 <button class="btn btn-success float-right" (click)="saveChanges()" onclick="return false;">Сохранить</button>
+                <h3 id="status" class=""></h3>
             </div>
         </div>
     </div>

@@ -80,7 +80,7 @@ export class MedicineComponent implements OnInit {
     this.medicineService.getAllMedicineProducers()
       .subscribe( (data:string[]) => this.allProducers = data);
     this.medicineService.getAllMedicineCategories()
-      .subscribe( (data:string[]) => this.allCategories = data);
+      .subscribe( (data:string[]) =>this.allCategories = data);
     this.medicineService.getAllMedicineForms()
       .subscribe( (data:string[]) => this.allForms = data);
   }
@@ -101,10 +101,21 @@ export class MedicineComponent implements OnInit {
   }
 
   saveChanges() {
+    $('#status').text('');
     if (this.validateInputs()) {
       var query = this.getQuery();
       console.log(query);
-      this.medicineService.postMedicine(this.id, query).subscribe();
+      this.medicineService.postMedicine(this.id, query).subscribe( (data:boolean) => {
+        if (data) {
+          $('#status').text('Успешно');
+          $('#status').removeClass('text-danger');
+          $('#status').addClass('text-success');
+        } else {
+          $('#status').text('Ошибка');
+          $('#status').removeClass('text-success');
+          $('#status').addClass('text-danger');
+        }
+      });
     }
   }
 
@@ -135,10 +146,19 @@ export class MedicineComponent implements OnInit {
                       this.validateInputList('category') &
                       this.validateInputList('form') &
                       this.validateInputNumber('shelfTime') &
-                      this.validateInputNumber('count');
+                      this.validateInputNumber('count') & 
+                      this.validateComposition();
     return <boolean> inputsAreValide;
   }
 
+  validateComposition():number {
+    if (this.currentComponents.length > 0) {
+      $('#composition-help').text('');
+      return 1;
+    } else {
+      $('#composition-help').text('Состав не может отсутствовать');
+    }
+  }
   validateName():number {
     var name = <string> $('#name-input').val();
     if (!name || !this.isName(name)) {
@@ -209,7 +229,7 @@ export class MedicineComponent implements OnInit {
   }
 
   isName(n):boolean {
-    var name = /^[a-zA-Zа-яА-Я]+(([',. -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
+    var name = /^[a-zA-Zа-яА-Я]+(([,. -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
     return name.test(n);
   }
   

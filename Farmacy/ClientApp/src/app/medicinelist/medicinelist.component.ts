@@ -20,25 +20,11 @@ export class MedicinelistComponent implements OnInit {
   private optionSet:OptionSet[];
   private medicines: Medicine[];
   private currentPage:number = 1;
-  private viewPart:string;
+  private viewPart:string = 'all';
   private pagesAmount:number;
   private readonly rowsOnPage:number = 1;
 
   constructor(private medicineListService: MedicineListService, private router: Router, private activatedRoute: ActivatedRoute) {}
-
-  testStoring() {
-    var prod:OptionSet = {
-      key: 'producer',
-      name: 'Producer',
-      options: ['Bayer', 'Farm']
-    };
-    var cat: OptionSet = {
-      key: 'category',
-      name: 'Category',
-      options: ['Pills', 'Liquid']
-    };
-    this.optionSet = [ prod, cat];
-  }
   
   ngOnInit() {
     this.medicines=[];    
@@ -59,14 +45,16 @@ export class MedicinelistComponent implements OnInit {
         }
         this.loadData();
       });
-    this.testStoring();
   }
 
   loadData() {
-    if (localStorage.getItem('currentPage') != undefined) {
+    if (localStorage.getItem('currentPage')) {
       this.restoreOptions();
       this.loadPage(this.currentPage);
     } else {
+      $(document).ready(function() {
+        $(':checkbox').prop('checked', 'true');
+      });
       this.getAllMedicines();
     }
   }
@@ -82,7 +70,7 @@ export class MedicinelistComponent implements OnInit {
         this.medicines = data.medicines;
       });
     this.viewPart = 'all';
-    $(':checkbox').prop("checked","true");
+    
   }
 
   getFilteredMedicines() {
@@ -163,11 +151,22 @@ export class MedicinelistComponent implements OnInit {
   restoreOptions() {
     this.currentPage = Number(localStorage.getItem('currentPage'));
     this.viewPart = localStorage.getItem('viewPart');
-    this.optionSet.forEach(opt => {
-      var storedOptions = JSON.parse(localStorage.getItem(opt.key));
-      storedOptions.forEach(element => {
-        $(':checkbox[value=' + element + ']').prop("checked","true");
-      });
+    localStorage.removeItem('currentPage');
+    localStorage.removeItem('viewPart');
+    $(document).ready(function() {
+
+      var options=['producer', 'category', 'form', 'component', 'shelfTime', 'available'];
+      if (this.viewPart == 'all') {
+        $(':checkbox').prop('checked', 'true');
+      } else {
+        options.forEach(opt => {
+          var storedOptions = JSON.parse(localStorage.getItem(opt));
+          storedOptions.forEach(element => {
+            $(':checkbox[value="' + element + '"]').prop('checked', 'true');
+          });
+        });
+      }
+      options.forEach(opt => {localStorage.removeItem(opt.key)});
     });
   }
 
