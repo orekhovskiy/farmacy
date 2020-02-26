@@ -37,7 +37,9 @@ namespace Farmacy
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
             services.AddScoped<IUserApiProvider, UserApiProvider>();
+            services.AddScoped<IMedicineApiProvider, MedicineApiProvider>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>

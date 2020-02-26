@@ -84,19 +84,5 @@ namespace Farmacy.Controllers
             }
             return null;
         }
-
-        /*[HttpGet]
-        [ActionName("GetUserPositionId")]
-        public int GetUserPositionId([FromQuery] int id) => _userService.GetUserPositionId(id);
-
-        [HttpGet]
-        [ActionName("GetAllUsers")]
-        public IEnumerable<User> GetAllUsers() => _userService.GetAllUsers();
-
-        [HttpGet]
-        [ActionName("AddUser")]
-        public void AddUser([FromForm] string login, [FromForm] string password, [FromForm] string firstname,
-            [FromForm] string lastname, [FromForm] int position)
-            => _userService.AddUser(login, password, firstname, lastname, position);*/
     }
 }
