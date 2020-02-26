@@ -5,5 +5,5 @@
 - [x] ClientSideServices
 - [x] Authentification
 - [x] Paginator
-- [ ] PageNumber, Checked options etc. saving
+- [x] PageNumber, Checked options etc. saving
 - [ ] Refactoring

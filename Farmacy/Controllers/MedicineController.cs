@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Farmacy.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,9 @@ namespace Farmacy.Controllers
     [ApiController]
     public class MedicineController : ControllerBase
     {
+        [Authorize, HttpGet]
+        [ActionName("GetOptionSet")]
+        public ICollection<OptionSetViewModel> GetOptionSet() => null;
         /*private IMedicineService _medicineService;
         private IMapper _mapper;
 

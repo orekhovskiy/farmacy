@@ -1,5 +1,5 @@
-import { Component, OnInit, Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
 
@@ -47,12 +47,31 @@ export class MedicinelistComponent implements OnInit {
       $('.medicine').css('margin-bottom', '40px');
     }
     this.medicineListService.getOptionSet()
-      .subscribe( (data:OptionSet[]) => this.optionSet = data);
-    //this.getAllMedicines();
+      .subscribe( (data:OptionSet[]) => {
+        if (data) {
+          this.optionSet = data;
+          var available: OptionSet = {
+            key:'available',
+            name:'Доступно',
+            options:['Да', 'Нет']
+          }
+          this.optionSet.push(available);
+        }
+        this.loadData();
+      });
     this.testStoring();
   }
 
-  private getAllMedicines() {
+  loadData() {
+    if (localStorage.getItem('currentPage') != undefined) {
+      this.restoreOptions();
+      this.loadPage(this.currentPage);
+    } else {
+      this.getAllMedicines();
+    }
+  }
+
+  getAllMedicines() {
     this.medicineListService.getAllMedicinePaged(this.currentPage, this.rowsOnPage)
       .subscribe( (data:MedicineList) => {
         this.currentPage = data.currentPage;
@@ -61,8 +80,9 @@ export class MedicinelistComponent implements OnInit {
           this.medicines.push(element)
         });
         this.medicines = data.medicines;
-        this.viewPart = 'all';
       });
+    this.viewPart = 'all';
+    $(':checkbox').prop("checked","true");
   }
 
   getFilteredMedicines() {
@@ -74,22 +94,22 @@ export class MedicinelistComponent implements OnInit {
         if (data.medicines) data.medicines.forEach(element => {
           this.medicines.push(element);
         });
-        this.viewPart="filter";
       });
+    this.viewPart="filter";
   }
 
   search() {
     this.medicines=[];
     var key = $('#search').val();
     this.medicineListService.getMedicinesByKeyPaged(this.currentPage, this.rowsOnPage, key)
-      .subscribe( (data:MedicineList) => {
-      this.currentPage = data.currentPage;
-      this.pagesAmount = data.pagesAmount;
-      if (data.medicines) data.medicines.forEach(element => {
-        this.medicines.push(element);
+      .subscribe((data:MedicineList) => {
+        this.currentPage = data.currentPage;
+        this.pagesAmount = data.pagesAmount;
+        if (data.medicines) data.medicines.forEach(element => {
+          this.medicines.push(element);
+        });
       });
-      this.viewPart = 'search';
-    });
+    this.viewPart = 'search';
   }
 
   loadPage(pageNumber) {
@@ -107,7 +127,7 @@ export class MedicinelistComponent implements OnInit {
     }
   }
 
-  private getFilterOptions():string {
+  getFilterOptions():string {
     var result:string[] = [];
     $.each($('input[name="producer-check"]:checked'), function () {result.push('producer=' + $(this).val())});
     $.each($('input[name="category-check"]:checked'), function () {result.push('category=' + $(this).val())});
@@ -136,11 +156,6 @@ export class MedicinelistComponent implements OnInit {
       });
       localStorage.setItem(opt.key, JSON.stringify(selected));
     });
-    var selected = [];
-    $('input[name=available-check]:checked').each( function () {
-      selected.push($(this).attr('value'));
-    });
-    localStorage.setItem('available', JSON.stringify(selected));
     localStorage.setItem('currentPage', this.currentPage.toString());
     localStorage.setItem('viewPart', this.viewPart);
   }
@@ -154,10 +169,14 @@ export class MedicinelistComponent implements OnInit {
         $(':checkbox[value=' + element + ']').prop("checked","true");
       });
     });
-    //available stuff tl;dt
   }
 
-  public signOut() {
+  redirect(route:string) {
+    this.storeOptions();
+    this.router.navigateByUrl(route);
+  }
+
+  signOut() {
     localStorage.clear();
     this.router.navigateByUrl('/');
   }

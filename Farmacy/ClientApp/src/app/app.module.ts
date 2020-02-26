@@ -10,7 +10,7 @@ import { MedicinelistComponent } from './medicinelist/medicinelist.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
-import { AuthService } from './auth/auth.service';
+import { Router } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -28,9 +28,12 @@ import { AuthService } from './auth/auth.service';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
-      multi: true
-    },
-    AuthService
+      multi: true,
+      useFactory: function(router: Router) {
+        return new AuthInterceptor(router);
+      },
+      deps: [Router]
+    }
   ],
   bootstrap: [AppComponent]
 })
