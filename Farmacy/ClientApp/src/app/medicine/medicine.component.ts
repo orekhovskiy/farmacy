@@ -14,6 +14,10 @@ import { MedicineService } from './medicine.service';
   providers: [MedicineService]
 })
 export class MedicineComponent implements OnInit {
+  
+  constructor(private medicineService: MedicineService, private router: Router, private activatedRoute: ActivatedRoute){
+    medicineService.getParams().subscribe(params => this.id = params['id']);
+  }
 
   private id: any;
   private name = '';
@@ -28,10 +32,6 @@ export class MedicineComponent implements OnInit {
   private allForms: string[];
   private currentComponents: string[];
   private availableComponents: string[];
-
-  constructor(private medicineService: MedicineService, private router: Router, private activatedRoute: ActivatedRoute){
-    medicineService.getParams().subscribe(params => this.id = params['id']);
-  }
 
   ngOnInit() {
     if ($(document).height() <= $(window).height()) {

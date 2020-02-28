@@ -11,6 +11,7 @@ import { MedicinelistComponent } from './medicinelist/medicinelist.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { Router } from '@angular/router';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { Router } from '@angular/router';
     LoginComponent,
     MedicineComponent,
     MedicinelistComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,6 @@ namespace Farmacy.Providers
         public Task<int> GetUserPositionId(int id);
         public Task<string> GetUserPosition(int id);
         public Task<IEnumerable<UserViewModel>> GetAllUsers();
-        public bool AddUser(UserViewModel user);
+        public Task<bool> AddUser(UserViewModel user);
     }
 }

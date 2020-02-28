@@ -3,9 +3,9 @@
     <div class="navbar-brand">Аптека</div>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <button class="nav-link btn active">Лекарства</button>
+        <div class="nav-link btn active">Лекарства</div>
       </li>
-      <li class="nav-tem">
+      <li *ngIf="hasAccess(userRole, getPosition('manager'))" class="nav-tem">
         <button class="nav-link btn" (click)="redirect('/medicine/new')" onclick="return null;">Новое лекарство</button>
       </li>
     </ul>
@@ -57,7 +57,7 @@
   <div class="med-container col">
     <table class="med-table table table-striped">
       <thead class="thead-light">
-        <th></th>
+        <th *ngIf="hasAccess(userRole, getPosition('manager'))" ></th>
         <th>Название</th>
         <th>Производитель</th>
         <th>Категория</th>
@@ -68,7 +68,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let medicine of medicines">
-          <td>
+          <td *ngIf="hasAccess(userRole, getPosition('manager'))" >
             <button class="btn btn-sm btn-warning" (click)="redirect('/medicine/' + medicine.id)">Редактировать</button>
           </td>
           <td>{{medicine.name}}</td>

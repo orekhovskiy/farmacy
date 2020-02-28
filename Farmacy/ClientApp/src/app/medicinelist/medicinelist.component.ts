@@ -1,6 +1,5 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
 
 import Medicine = models.Medicine;
@@ -23,10 +22,12 @@ export class MedicinelistComponent implements OnInit {
   private viewPart:string = 'all';
   private pagesAmount:number;
   private readonly rowsOnPage:number = 1;
+  private userRole:number;
 
   constructor(private medicineListService: MedicineListService, private router: Router, private activatedRoute: ActivatedRoute) {}
   
   ngOnInit() {
+    this.setUserRole();
     this.medicines=[];    
     if ($(document).height() <= $(window).height()) {
       $('#footer').addClass('fixed-bottom');
@@ -45,6 +46,28 @@ export class MedicinelistComponent implements OnInit {
         }
         this.loadData();
       });
+  }
+
+  setUserRole() {
+    switch (localStorage.getItem('role')) {
+      case 'admin':
+        this.userRole = Position.admin;
+        break;
+      case 'manager':
+        this.userRole = Position.manager;
+        break;
+      case 'seller':
+        this.userRole = Position.seller;
+        break;
+    }
+  }
+
+  hasAccess(userRole: number, minAccess: number) {
+    return userRole <= minAccess ? true : false;
+  }
+
+  getPosition(level: string) {
+    return Position[level];
   }
 
   loadData() {
@@ -70,7 +93,6 @@ export class MedicinelistComponent implements OnInit {
         this.medicines = data.medicines;
       });
     this.viewPart = 'all';
-    
   }
 
   getFilteredMedicines() {
@@ -166,7 +188,7 @@ export class MedicinelistComponent implements OnInit {
           });
         });
       }
-      options.forEach(opt => {localStorage.removeItem(opt.key)});
+      options.forEach(opt => {localStorage.removeItem(opt)});
     });
   }
 
@@ -179,4 +201,10 @@ export class MedicinelistComponent implements OnInit {
     localStorage.clear();
     this.router.navigateByUrl('/');
   }
+}
+
+enum Position{
+  admin,
+  manager,
+  seller
 }

@@ -43,7 +43,7 @@ namespace Farmacy.Controllers
         [ActionName("GetOptionSet")]
         public async Task<ICollection<OptionSetViewModel>> GetOptionSet() => await _medicineApiProvider.GetOptionSet();
 
-        [Authorize, HttpGet]
+        [Authorize(Roles ="admin, manager"), HttpGet]
         [ActionName("NewMedicine")]
         public async Task<bool> NewMedicine([FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
         {
@@ -60,7 +60,7 @@ namespace Farmacy.Controllers
         }
 
 
-        [Authorize, HttpGet]
+        [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("AlterMedicine")]
         public async Task<bool> AlterMedicine([FromQuery] int id, [FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
         {
@@ -78,31 +78,31 @@ namespace Farmacy.Controllers
             return await _medicineApiProvider.AlterMedicine(medicine);
         }
 
-        [Authorize, HttpGet]
+        [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetMedicineById")]
         public async Task<MedicineViewModel> GetMedicineById([FromQuery] int id) => await _medicineApiProvider.GetMedicineById(id);
 
-        [Authorize, HttpGet]
+        [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetMedicineComponents")]
         public async Task<IEnumerable<string>> GetMedicineComponents([FromQuery] int id) => await _medicineApiProvider.GetMedicineComponents(id);
 
-        [Authorize, HttpGet]
+        [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetAllMedicineProducers")]
         public async Task<IEnumerable<string>> GetAllMedicineProducers() => await _medicineApiProvider.GetAllMedicineProducers();
 
-        [Authorize, HttpGet]
+        [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetAllMedicineCategories")]
         public async Task<IEnumerable<string>> GetAllMedicineCategories() => await _medicineApiProvider.GetAllMedicineCategories();
 
-        [Authorize, HttpGet]
+        [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetAllMedicineForms")]
         public async Task<IEnumerable<string>> GetAllMedicineForms() => await _medicineApiProvider.GetAllMedicineForms();
 
-        [Authorize, HttpGet]
+        [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetAllMedicineComponents")]
         public async Task<IEnumerable<string>> GetAllMedicineComponents() => await _medicineApiProvider.GetAllMedicineComponents();
 
-        [Authorize, HttpGet]
+        [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetComponentSet")]
         public async Task<ComponentSetViewModel> GetComponentSet([FromQuery] int id) => await _medicineApiProvider.GetComponentSet(id);
     }

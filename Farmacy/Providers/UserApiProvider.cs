@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
+using System.Text;
 
 namespace Farmacy.Providers
 {
@@ -26,9 +27,10 @@ namespace Farmacy.Providers
             }
             return default;
         }
-        private bool PostRequest(string requestString, HttpContent content)
+        private async Task<bool> PostRequest(string requestString, HttpContent content)
         {
-            return client.PostAsync(URL + requestString, content).IsCompleted;
+            var responce = await client.PostAsync(URL + requestString, content);
+            return responce.IsSuccessStatusCode;
         }
 
         public async Task<UserViewModel> GetUser(string login, string password) 
@@ -46,9 +48,10 @@ namespace Farmacy.Providers
         public async Task<IEnumerable<UserViewModel>> GetAllUsers()
             => await GetRequest<IEnumerable<UserViewModel>>($"");
 
-
-        // ?
-        public bool AddUser(UserViewModel user)
-            => PostRequest("AddUser", new StringContent(user.ToString()));
+        public async Task<bool> AddUser(UserViewModel user)
+        {
+            var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json");
+            return await PostRequest("AddUser", content);
+        }
     }
 }

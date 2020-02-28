@@ -23,17 +23,6 @@ namespace Farmacy.Controllers
         public AuthController(IUserApiProvider userApiProvider)
         {
             _userApiProvider = userApiProvider;
-            // New user initialization in a new DB
-            /*var u = new User
-            {
-                Login ="admin",
-                Password = Hasher.GetHash("admin"),
-                Firstname = "admin",
-                Lastname = "admin",
-                Position = 1
-            };
-            db.User.Add(u);
-            db.SaveChanges();*/
         }
 
         [HttpGet]
@@ -57,13 +46,14 @@ namespace Farmacy.Controllers
                 {
                     access_token = encodedJwt,
                     username = identity.Name,
+                    role = identity.Claims.Where(claim => claim.Type == ClaimsIdentity.DefaultRoleClaimType).FirstOrDefault().Value
                 };
 
                 return response;
             }
             else
             {
-                return BadRequest(new { errorText = "Invalid username or password." });
+                return BadRequest();
             }
         }
 

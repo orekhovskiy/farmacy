@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
         if (data) {
           localStorage.setItem('access-token', data.access_token);
           localStorage.setItem('username', data.username);
+          localStorage.setItem('role', data.role);
           this.router.navigateByUrl('/medicine-list');
         } else {
           alert('Atansion');

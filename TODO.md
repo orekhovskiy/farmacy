@@ -6,5 +6,5 @@
 - [x] Authentification
 - [x] Paginator
 - [x] PageNumber, Checked options etc. saving
-- [ ] Providers
+- [x] Providers
 - [ ] Refactoring

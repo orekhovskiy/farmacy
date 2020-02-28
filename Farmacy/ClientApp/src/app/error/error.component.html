@@ -1,0 +1,11 @@
+<header>
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+      <div class="navbar-brand">Аптека</div>
+      </nav>
+  </header>
+<div  class="error container alert alert-danger" role="alert">
+    <h1>Ошибка {{status}}</h1>
+    <h3>{{message}}</h3>
+    <a *ngIf="isAuthorized" class="nav-link" routerLink="/medicine-list" routerLinkActive="active">Вернуться назад</a>
+    <a *ngIf="!isAuthorized" class="nav-link" routerLink="/" routerLinkActive="active">Вернуться назад</a>
+</div>
