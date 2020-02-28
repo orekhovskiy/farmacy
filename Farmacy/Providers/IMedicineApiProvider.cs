@@ -13,14 +13,15 @@ namespace Farmacy.Providers
         public Task<MedicineListViewModel> GetMedicinesByKeyPaged(int currentPage, int rowsOnPage, string key);
         public Task<ICollection<OptionSetViewModel>> GetOptionSet();
         public Task<MedicineViewModel> GetMedicineById(int id);
+        public Task<IEnumerable<string>> GetAllMedicineNames();
         public Task<IEnumerable<string>> GetMedicineComponents(int id);
         public Task<IEnumerable<string>> GetAllMedicineProducers();
         public Task<IEnumerable<string>> GetAllMedicineCategories();
         public Task<IEnumerable<string>> GetAllMedicineForms();
         public Task<IEnumerable<string>> GetAllMedicineComponents();
         public Task<ComponentSetViewModel> GetComponentSet(int id);
-        public Task<bool> NewMedicine(MedicineViewModel medicine);
-        public Task<bool> AlterMedicine(MedicineViewModel medicine);
+        public Task<bool> NewMedicine(MedicineViewModel medicine, string login);
+        public Task<bool> AlterMedicine(MedicineViewModel medicine, string login);
         public Task<bool> SellMedicine(int id, int count, string login);
     }
 }

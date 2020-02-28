@@ -65,7 +65,8 @@ namespace Farmacy.Controllers
                 ShelfTime = shelfTime,
                 Count = count,
             };
-            return await _medicineApiProvider.NewMedicine(medicine);
+            var login = GetLogin(Request.Headers["Authorization"].First());
+            return await _medicineApiProvider.NewMedicine(medicine, login);
         }
 
 
@@ -84,7 +85,8 @@ namespace Farmacy.Controllers
                 ShelfTime = shelfTime,
                 Count = count,
             };
-            return await _medicineApiProvider.AlterMedicine(medicine);
+            var login = GetLogin(Request.Headers["Authorization"].First());
+            return await _medicineApiProvider.AlterMedicine(medicine, login);
         }
 
         [Authorize(Roles = "seller"), HttpGet]
@@ -102,6 +104,10 @@ namespace Farmacy.Controllers
         [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetMedicineComponents")]
         public async Task<IEnumerable<string>> GetMedicineComponents([FromQuery] int id) => await _medicineApiProvider.GetMedicineComponents(id);
+
+        [Authorize(Roles = "admin, manager"), HttpGet]
+        [ActionName("GetAllmedicineNames")]
+        public async Task<IEnumerable<string>> GetAllMedicineNames() => await _medicineApiProvider.GetAllMedicineNames();
 
         [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetAllMedicineProducers")]

@@ -16,7 +16,6 @@ import { MedicineService } from './medicine.service';
 export class MedicineComponent implements OnInit {
   
   constructor(private medicineService: MedicineService, private router: Router, private activatedRoute: ActivatedRoute){
-    medicineService.getParams().subscribe(params => this.id = params['id']);
   }
 
   private id: any;
@@ -27,6 +26,7 @@ export class MedicineComponent implements OnInit {
   private shelfTime = 1;
   private count = 1;
 
+  private allNames:string[];
   private allProducers: string[];
   private allCategories: string[];
   private allForms: string[];
@@ -37,7 +37,10 @@ export class MedicineComponent implements OnInit {
     if ($(document).height() <= $(window).height()) {
       $('#footer').addClass('fixed-bottom');
     }
-    this.loadData();
+    this.medicineService.getParams().subscribe(params => {
+      this.id = params['id'];
+      this.loadData();
+    });
   }
 
   resetData() {
@@ -47,6 +50,7 @@ export class MedicineComponent implements OnInit {
     this.form = ''
     this.shelfTime = 1;
     this.count = 1;
+    this.allNames = [];
     this.allProducers = [];
     this.allCategories = [];
     this.allForms = [];
@@ -77,12 +81,14 @@ export class MedicineComponent implements OnInit {
           this.availableComponents = data.availableComponents;
         });
     }
+    this.medicineService.getAllMedicineNames()
+      .subscribe( (data: string[]) => this.allNames = data);
     this.medicineService.getAllMedicineProducers()
-      .subscribe( (data:string[]) => this.allProducers = data);
+      .subscribe( (data: string[]) => this.allProducers = data);
     this.medicineService.getAllMedicineCategories()
-      .subscribe( (data:string[]) =>this.allCategories = data);
+      .subscribe( (data: string[]) =>this.allCategories = data);
     this.medicineService.getAllMedicineForms()
-      .subscribe( (data:string[]) => this.allForms = data);
+      .subscribe( (data: string[]) => this.allForms = data);
   }
 
   addComp(comp:string) {
@@ -161,6 +167,12 @@ export class MedicineComponent implements OnInit {
   }
   validateName():number {
     var name = <string> $('#name-input').val();
+    if (this.allNames.includes(name) && this.name != name) {
+      $('#name-help').text('Данное название уже занято');
+      $('#name-input').removeClass('is-valid');
+      $('#name-input').addClass('is-invalid');
+      return 0;
+    }
     if (!name || !this.isName(name)) {
       $('#name-help').text('Введите корректное название');
       $('#name-input').removeClass('is-valid');

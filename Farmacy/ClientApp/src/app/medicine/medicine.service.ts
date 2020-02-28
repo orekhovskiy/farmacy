@@ -41,6 +41,10 @@ export class MedicineService {
         return this.http.get<string[]>(this.apiUrl + 'GetAllMedicineForms');
     }
 
+    getAllMedicineNames():Observable<string[]> {
+        return this.http.get<string[]>(this.apiUrl + 'GetAllMedicineNames');
+    }
+
     postMedicine(id:any, params:string):Observable<Object> {
         if (id == 'new') {
             return this.http.get(this.apiUrl + 'NewMedicine?' + params);

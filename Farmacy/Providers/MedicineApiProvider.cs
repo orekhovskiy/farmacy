@@ -35,10 +35,10 @@ namespace Farmacy.Providers
             return responce.IsSuccessStatusCode;
         }
 
-        public Task<bool> AlterMedicine(MedicineViewModel medicine)
+        public Task<bool> AlterMedicine(MedicineViewModel medicine, string login)
         {
             var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(medicine), Encoding.UTF8, "application/json");
-            return PostRequest("AlterMedicine", content);
+            return PostRequest($"AlterMedicine?login={login}", content);
         }
 
         public async Task<IEnumerable<string>> GetAllMedicineCategories() => await GetRequest<IEnumerable<string>>($"GetAllMedicineCategories");
@@ -85,10 +85,10 @@ namespace Farmacy.Providers
         public async Task<ICollection<OptionSetViewModel>> GetOptionSet()
             => await GetRequest<ICollection<OptionSetViewModel>>($"GetOptionSet");
 
-        public Task<bool> NewMedicine(MedicineViewModel medicine)
+        public Task<bool> NewMedicine(MedicineViewModel medicine, string login)
         {
             var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(medicine), Encoding.UTF8, "application/json");
-            return PostRequest("NewMedicine", content);
+            return PostRequest($"NewMedicine?login={login}", content);
         }
 
         public Task<bool> SellMedicine(int id, int count, string login)
@@ -101,5 +101,8 @@ namespace Farmacy.Providers
             var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(medicine), Encoding.UTF8, "application/json");
             return PostRequest($"SellMedicine?login={login}", content);
         }
+
+        public async Task<IEnumerable<string>> GetAllMedicineNames()
+            => await GetRequest<IEnumerable<string>>($"GetAllMedicineNames");
     }
 }

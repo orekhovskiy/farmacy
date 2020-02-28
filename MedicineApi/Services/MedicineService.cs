@@ -17,9 +17,10 @@ namespace MedicineApi.Services
             db = context;
         }
 
-        public void AlterMedicine(MedicineViewModel medicine)
+        public void AlterMedicine(string login, MedicineViewModel medicine)
         {
             var m = db.Medicine.Find(medicine.Id);
+            var prevCount = m.Count;
             m.Name = medicine.Name;
             m.Producer = db.Producer.Where(p => p.Name == medicine.Producer).First();
             m.Category = db.Category.Where(c => c.Name == medicine.Category).First();
@@ -37,6 +38,13 @@ namespace MedicineApi.Services
                         Component = db.Component.Where(c => c.Name == comp).First(),
                         Medicine = db.Medicine.Find(medicine.Id)
                     });
+            db.Purchase.Add(new Purchase
+            {
+                UserId = db.User.Where(u => u.Login == login).FirstOrDefault().Id,
+                MedicineId = medicine.Id,
+                Operation = medicine.Count - prevCount,
+                PurchaseDate = DateTime.UtcNow
+            });
             db.SaveChanges();
         }
 
@@ -98,7 +106,7 @@ namespace MedicineApi.Services
 
         public IEnumerable<Medicine> GetMedicinesByProducer(string producer) => GetAllMedicines().Where(m => m.Producer.Name == producer);
 
-        public void NewMedicine(MedicineViewModel medicine)
+        public void NewMedicine(string login, MedicineViewModel medicine)
         {
             var m = new Medicine
             {
@@ -117,6 +125,14 @@ namespace MedicineApi.Services
                         Medicine = m,
                         Component = db.Component.Where(a => a.Name == c).First()
                     });
+            db.SaveChanges();
+            db.Purchase.Add(new Purchase
+            {
+                UserId = db.User.Where(u => u.Login == login).FirstOrDefault().Id,
+                MedicineId = db.Medicine.Where(m => m.Name == medicine.Name).FirstOrDefault().Id,
+                Operation = medicine.Count,
+                PurchaseDate = DateTime.UtcNow
+            });
             db.SaveChanges();
         }
 
@@ -142,5 +158,7 @@ namespace MedicineApi.Services
         public IEnumerable<string> GetMedicineComponents(int id) => db.MedicineComposition.Where(mc => mc.MedicineId == id).Select(mc => mc.Component.Name);
 
         public Medicine GetMedicineById(int id) => GetAllMedicines().Where(m => m.Id == id).First();
+
+        public IEnumerable<string> GetAllMedicineNames() => db.Medicine.Select(m => m.Name);
     }
 }

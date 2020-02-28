@@ -21,15 +21,15 @@ export class MedicinelistComponent implements OnInit {
   private currentPage:number = 1;
   private viewPart:string = 'all';
   private pagesAmount:number;
-  private rowsOnPage:number;
+  private readonly rowsOnPage:number = 7;
   private userRole:number;
 
   constructor(private medicineListService: MedicineListService, private router: Router, private activatedRoute: ActivatedRoute) {}
   
   ngOnInit() {
-    var paginatorHeight =  48 + 20;
+    /*var paginatorHeight =  48 + 20;
     var tdHeight = 65;
-    this.rowsOnPage = Math.floor(($(window).height() - $('#footer').height() - $('header').height() - $('thead').height() - paginatorHeight) / (tdHeight));
+    this.rowsOnPage = Math.floor(($(window).height() - $('#footer').height() - $('header').height() - $('thead').height() - paginatorHeight) / (tdHeight));*/
     this.setUserRole();
     this.medicines=[];
     $('#footer').addClass('fixed-bottom');

@@ -73,13 +73,13 @@ namespace MedicineApi.Controllers
 
         [HttpPost]
         [ActionName("NewMedicine")]
-        public void NewMedicine([FromBody] MedicineViewModel medicine)
-             => _medicineService.NewMedicine(medicine);
+        public void NewMedicine([FromQuery] string login, [FromBody] MedicineViewModel medicine)
+             => _medicineService.NewMedicine(login, medicine);
 
         [HttpPost]
         [ActionName("AlterMedicine")]
-        public void AlterMedicine([FromBody]  MedicineViewModel medicine)
-            => _medicineService.AlterMedicine(medicine);
+        public void AlterMedicine([FromQuery] string login, [FromBody]  MedicineViewModel medicine)
+            => _medicineService.AlterMedicine(login, medicine);
 
         [HttpPost]
         [ActionName("SellMedicine")]
@@ -108,6 +108,10 @@ namespace MedicineApi.Controllers
         [HttpGet]
         [ActionName("GetAllMedicineComponents")]
         public IEnumerable<string> GetAllMedicineComponents() => _medicineService.GetAllMedicineComponents();
+
+        [HttpGet]
+        [ActionName("GetAllMedicineNames")]
+        public IEnumerable<string> GetAllMedicineNames() => _medicineService.GetAllMedicineNames();
 
         [HttpGet]
         [ActionName("GetComponentSet")]
