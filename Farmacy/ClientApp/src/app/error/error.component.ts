@@ -16,7 +16,6 @@ export class ErrorComponent implements OnInit {
 
   ngOnInit() {
     this.isAuthorized = localStorage.getItem('access-token') ? true : false;
-    alert(this.isAuthorized);
     if ($(document).height() <= $(window).height())
       $("#footer").addClass("fixed-bottom");
     this.activatedRoute.queryParamMap.subscribe(params => {

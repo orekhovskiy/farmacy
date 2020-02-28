@@ -21,18 +21,16 @@ export class MedicinelistComponent implements OnInit {
   private currentPage:number = 1;
   private viewPart:string = 'all';
   private pagesAmount:number;
-  private readonly rowsOnPage:number = 1;
+  private readonly rowsOnPage:number = 10;
   private userRole:number;
 
   constructor(private medicineListService: MedicineListService, private router: Router, private activatedRoute: ActivatedRoute) {}
   
   ngOnInit() {
     this.setUserRole();
-    this.medicines=[];    
-    if ($(document).height() <= $(window).height()) {
-      $('#footer').addClass('fixed-bottom');
-      $('.medicine').css('margin-bottom', '40px');
-    }
+    this.medicines=[];
+    $('#footer').addClass('fixed-bottom');
+    $('.medicine').css('margin-bottom', '40px');
     this.medicineListService.getOptionSet()
       .subscribe( (data:OptionSet[]) => {
         if (data) {
@@ -46,6 +44,11 @@ export class MedicinelistComponent implements OnInit {
         }
         this.loadData();
       });
+  }
+
+  sellMedicine(id: number) {
+    this.medicineListService.sellMedicine(id, 1).subscribe();
+    this.loadPage(this.currentPage);
   }
 
   setUserRole() {

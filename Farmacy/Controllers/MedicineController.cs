@@ -78,6 +78,10 @@ namespace Farmacy.Controllers
             return await _medicineApiProvider.AlterMedicine(medicine);
         }
 
+        [Authorize(Roles = "seller"), HttpGet]
+        [ActionName("SellMedicine")]
+        public async Task<bool> AlterMedicine([FromQuery] int id, [FromQuery] int count) => await _medicineApiProvider.SellMedicine(id, count);
+
         [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetMedicineById")]
         public async Task<MedicineViewModel> GetMedicineById([FromQuery] int id) => await _medicineApiProvider.GetMedicineById(id);

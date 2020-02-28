@@ -15,6 +15,7 @@
     </div>
   </nav>
 </header>
+
 <div class="row medicine-list">
   <div class="filter col-md-3 col-sm-12 col-xs-12">
     <div class="row">
@@ -57,7 +58,7 @@
   <div class="med-container col">
     <table class="med-table table table-striped">
       <thead class="thead-light">
-        <th *ngIf="hasAccess(userRole, getPosition('manager'))" ></th>
+        <th></th>
         <th>Название</th>
         <th>Производитель</th>
         <th>Категория</th>
@@ -70,6 +71,9 @@
         <tr *ngFor="let medicine of medicines">
           <td *ngIf="hasAccess(userRole, getPosition('manager'))" >
             <button class="btn btn-sm btn-warning" (click)="redirect('/medicine/' + medicine.id)">Редактировать</button>
+          </td>
+          <td *ngIf="hasAccess(userRole, getPosition('seller'))" >
+            <button class="btn btn-sm btn-warning" (click)="sellMedicine(medicine.id)">Продать</button>
           </td>
           <td>{{medicine.name}}</td>
           <td>{{medicine.producer}}</td>

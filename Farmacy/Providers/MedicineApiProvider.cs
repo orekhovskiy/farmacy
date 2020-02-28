@@ -90,5 +90,16 @@ namespace Farmacy.Providers
             var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(medicine), Encoding.UTF8, "application/json");
             return PostRequest("NewMedicine", content);
         }
+
+        public Task<bool> SellMedicine(int id, int count)
+        {
+            var medicine = new MedicineViewModel 
+            { 
+                Id = id,
+                Count = count
+            };
+            var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(medicine), Encoding.UTF8, "application/json");
+            return PostRequest("SellMedicine", content);
+        }
     }
 }

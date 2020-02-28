@@ -18,17 +18,22 @@ export class MedicineListService {
     }
 
     getAllMedicinePaged(currentPage:number, rowsOnPage:number):Observable<MedicineList> {
-        return this.http.get<MedicineList>(this.apiUrl + 'GetAllMedicinesPaged?currentPage=' + 
-            currentPage + '&rowsOnPage=' + rowsOnPage);
+        return this.http.get<MedicineList>(this.apiUrl + 'GetAllMedicinesPaged?' + 
+            'currentPage=' + currentPage + '&rowsOnPage=' + rowsOnPage);
     }
 
     getFilteredMedicinesPaged(currentPage, rowsOnPage, filterOptions):Observable<MedicineList> {
-        return this.http.get<MedicineList>(this.apiUrl + 'GetFilteredMedicinesPaged?currentPage=' + 
-            currentPage + '&rowsOnPage=' + rowsOnPage + '&' + filterOptions);
+        return this.http.get<MedicineList>(this.apiUrl + 'GetFilteredMedicinesPaged?' + 
+            'currentPage=' + currentPage + '&rowsOnPage=' + rowsOnPage + '&' + filterOptions);
     }
 
     getMedicinesByKeyPaged(currentPage, rowsOnPage, key):Observable<MedicineList> {
-        return this.http.get<MedicineList>(this.apiUrl + 'GetMedicinesByKeyPaged?currentPage=' + 
-            currentPage + '&rowsOnPage=' + rowsOnPage + '&key=' + key);
+        return this.http.get<MedicineList>(this.apiUrl + 'GetMedicinesByKeyPaged?' +
+            'currentPage=' + currentPage + '&rowsOnPage=' + rowsOnPage + '&key=' + key);
+    }
+
+    sellMedicine(id:number, count:number):Observable<boolean> {
+        return this.http.get<boolean>(this.apiUrl + 'SellMedicine?' +
+        'id=' + id + '&count=' + count);
     }
 }
