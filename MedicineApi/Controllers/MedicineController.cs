@@ -83,7 +83,7 @@ namespace MedicineApi.Controllers
 
         [HttpPost]
         [ActionName("SellMedicine")]
-        public void SellMedicine([FromBody] MedicineViewModel medicine) => _medicineService.SellMedicine(medicine);
+        public void SellMedicine([FromQuery] string login, [FromBody] MedicineViewModel medicine) => _medicineService.SellMedicine(login, medicine);
 
         [HttpGet]
         [ActionName("GetMedicineById")]

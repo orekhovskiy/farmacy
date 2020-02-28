@@ -91,7 +91,7 @@ namespace Farmacy.Providers
             return PostRequest("NewMedicine", content);
         }
 
-        public Task<bool> SellMedicine(int id, int count)
+        public Task<bool> SellMedicine(int id, int count, string login)
         {
             var medicine = new MedicineViewModel 
             { 
@@ -99,7 +99,7 @@ namespace Farmacy.Providers
                 Count = count
             };
             var content = new StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(medicine), Encoding.UTF8, "application/json");
-            return PostRequest("SellMedicine", content);
+            return PostRequest($"SellMedicine?login={login}", content);
         }
     }
 }

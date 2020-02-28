@@ -21,7 +21,7 @@ namespace MedicineApi.Services
         public IEnumerable<int> GetAllMedicineShelfTimes();
         public void NewMedicine(MedicineViewModel medicine);
         public void AlterMedicine(MedicineViewModel medicine);
-        public void SellMedicine(MedicineViewModel medicine);
+        public void SellMedicine(string login, MedicineViewModel medicine);
         public Medicine GetMedicineById(int id);
     }
 }

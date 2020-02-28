@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Farmacy.Providers;
 using Farmacy.ViewModels;
@@ -21,6 +23,13 @@ namespace Farmacy.Controllers
         public MedicineController(IMedicineApiProvider medicineApiProvider)
         {
             _medicineApiProvider = medicineApiProvider;
+        }
+
+        private string GetLogin(string token)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var tokenS = handler.ReadToken(token.Substring(7)) as JwtSecurityToken;
+            return tokenS.Claims.Where(claim => claim.Type == ClaimsIdentity.DefaultNameClaimType).First().Value;
         }
 
         [Authorize, HttpGet]
@@ -56,7 +65,7 @@ namespace Farmacy.Controllers
                 ShelfTime = shelfTime,
                 Count = count,
             };
-             return await _medicineApiProvider.NewMedicine(medicine);
+            return await _medicineApiProvider.NewMedicine(medicine);
         }
 
 
@@ -80,7 +89,11 @@ namespace Farmacy.Controllers
 
         [Authorize(Roles = "seller"), HttpGet]
         [ActionName("SellMedicine")]
-        public async Task<bool> AlterMedicine([FromQuery] int id, [FromQuery] int count) => await _medicineApiProvider.SellMedicine(id, count);
+        public async Task<bool> AlterMedicine([FromQuery] int id, [FromQuery] int count)
+        {
+            var login = GetLogin(Request.Headers["Authorization"].First());
+            return await _medicineApiProvider.SellMedicine(id, count, login);
+        }
 
         [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("GetMedicineById")]

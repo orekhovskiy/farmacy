@@ -120,12 +120,21 @@ namespace MedicineApi.Services
             db.SaveChanges();
         }
 
-        public void SellMedicine(MedicineViewModel medicine)
+        public void SellMedicine(string login, MedicineViewModel medicine)
         {
             var m = db.Medicine.Find(medicine.Id);
-            if (m.Count - medicine.Count>= 0)
+            if (m.Count - medicine.Count >= 0)
             {
+                db.Purchase.Add(new Purchase
+                {
+                    UserId = db.User.Where(u => u.Login == login).FirstOrDefault().Id,
+                    MedicineId = medicine.Id,
+                    Operation = -medicine.Count,
+                    PurchaseDate = DateTime.UtcNow
+                });
+
                 m.Count -= medicine.Count;
+            
                 db.SaveChanges();
             }
         }

@@ -21,6 +21,6 @@ namespace Farmacy.Providers
         public Task<ComponentSetViewModel> GetComponentSet(int id);
         public Task<bool> NewMedicine(MedicineViewModel medicine);
         public Task<bool> AlterMedicine(MedicineViewModel medicine);
-        public Task<bool> SellMedicine(int id, int count);
+        public Task<bool> SellMedicine(int id, int count, string login);
     }
 }
