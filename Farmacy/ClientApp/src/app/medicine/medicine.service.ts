@@ -11,7 +11,7 @@ import Medicine = models.Medicine;
 export class MedicineService {
     constructor(private http:HttpClient, private router: Router, private activatedRoute: ActivatedRoute) { }
 
-    private apiUrl = '/api/Medicine/';
+    apiUrl = '/api/Medicine/';
 
     getParams() {
         return  this.activatedRoute.params;

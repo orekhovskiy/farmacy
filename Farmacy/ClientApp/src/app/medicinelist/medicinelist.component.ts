@@ -16,13 +16,13 @@ import { MedicineListService } from './medicinelist.service';
 
 @Injectable()
 export class MedicinelistComponent implements OnInit {
-  private optionSet:OptionSet[];
-  private medicines: Medicine[];
-  private currentPage:number = 1;
-  private viewPart:string = 'all';
-  private pagesAmount:number;
-  private readonly rowsOnPage:number = 7;
-  private userRole:number;
+  optionSet:OptionSet[];
+  medicines: Medicine[];
+  currentPage:number = 1;
+  viewPart:string = 'all';
+  pagesAmount:number;
+  rowsOnPage:number = 7;
+  userRole:number;
 
   constructor(private medicineListService: MedicineListService, private router: Router, private activatedRoute: ActivatedRoute) {}
   

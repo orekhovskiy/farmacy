@@ -11,7 +11,7 @@ import OptionSet = models.OptionSet;
 export class MedicineListService {
     constructor(private http:HttpClient, private router: Router, private activatedRoute: ActivatedRoute) { }
 
-    private apiUrl = '/api/Medicine/';
+    apiUrl = '/api/Medicine/';
 
     getOptionSet():Observable<OptionSet[]> {
         return this.http.get<OptionSet[]>(this.apiUrl + 'GetOptionSet');

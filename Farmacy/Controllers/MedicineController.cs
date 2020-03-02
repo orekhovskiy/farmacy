@@ -72,7 +72,8 @@ namespace Farmacy.Controllers
 
         [Authorize(Roles = "admin, manager"), HttpGet]
         [ActionName("AlterMedicine")]
-        public async Task<bool> AlterMedicine([FromQuery] int id, [FromQuery] string name, [FromQuery] string producer, [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
+        public async Task<bool> AlterMedicine([FromQuery] int id, [FromQuery] string name, [FromQuery] string producer, 
+            [FromQuery] string category, [FromQuery] string form, [FromQuery] string[] component, [FromQuery] int shelfTime, [FromQuery] int count)
         {
             MedicineViewModel medicine = new MedicineViewModel
             {
@@ -83,7 +84,7 @@ namespace Farmacy.Controllers
                 Form = form,
                 Components = component,
                 ShelfTime = shelfTime,
-                Count = count,
+                Count = count
             };
             var login = GetLogin(Request.Headers["Authorization"].First());
             return await _medicineApiProvider.AlterMedicine(medicine, login);

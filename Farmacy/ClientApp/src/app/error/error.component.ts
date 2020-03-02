@@ -10,9 +10,9 @@ export class ErrorComponent implements OnInit {
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) { }
 
-  private status:string;
-  private message:string="Произошла непредвиденная ошибка";
-  private isAuthorized:boolean;
+  status:string;
+  message:string="Произошла непредвиденная ошибка";
+  isAuthorized:boolean;
 
   ngOnInit() {
     this.isAuthorized = localStorage.getItem('access-token') ? true : false;

@@ -18,20 +18,20 @@ export class MedicineComponent implements OnInit {
   constructor(private medicineService: MedicineService, private router: Router, private activatedRoute: ActivatedRoute){
   }
 
-  private id: any;
-  private name = '';
-  private producer= '';
-  private category = '';
-  private form = ''
-  private shelfTime = 1;
-  private count = 1;
+  id: any;
+  name = '';
+  producer= '';
+  category = '';
+  form = ''
+  shelfTime = 1;
+  count = 1;
 
-  private allNames:string[];
-  private allProducers: string[];
-  private allCategories: string[];
-  private allForms: string[];
-  private currentComponents: string[];
-  private availableComponents: string[];
+  allNames:string[];
+  allProducers: string[];
+  allCategories: string[];
+  allForms: string[];
+  currentComponents: string[];
+  availableComponents: string[];
 
   ngOnInit() {
     if ($(document).height() <= $(window).height()) {
@@ -91,7 +91,7 @@ export class MedicineComponent implements OnInit {
       .subscribe( (data: string[]) => this.allForms = data);
   }
 
-  addComp(comp:string) {
+  addComp() {
     var comp = $('select#availableComponents').children('option:selected').text();
     var index = this.availableComponents.indexOf(comp);
     this.availableComponents.splice(index, 1);
