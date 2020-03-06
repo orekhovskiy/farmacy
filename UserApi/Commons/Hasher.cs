@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 
 namespace UserApi.Commons
 {
+    /// <summary>
+    /// Crypto class
+    /// </summary>
     public class Hasher
     {
+        /// <summary>
+        /// Returns security hash of a string
+        /// </summary>
         public static string GetHash(string input)
         {
             using (MD5 md5Hash = MD5.Create())
@@ -23,6 +29,9 @@ namespace UserApi.Commons
             }
         }
 
+        /// <summary>
+        /// Verifies the input string with the given hash
+        /// </summary>
         public static bool VerifyHash(string input, string hash)
         {
             string hashOfInput = GetHash(input);

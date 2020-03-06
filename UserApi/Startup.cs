@@ -44,7 +44,7 @@ namespace UserApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserApi", Version = "v1" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                //c.IncludeXmlComments(xmlPath);
+                c.IncludeXmlComments(xmlPath);
             });
 
             services.Configure<IISServerOptions>(options =>

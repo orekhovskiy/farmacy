@@ -8,20 +8,31 @@ using MedicineApi.ViewModels;
 using MedicineApi.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace MedicineApi.Controllers
 {
+    /// <summary>
+    /// MedicineApi main controller
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+
     public class MedicineController : ControllerBase
     {
         private readonly IMedicineService _medicineService;
         private readonly IMapper _mapper;
+        private readonly ILogger<MedicineController> _logger;
 
-        public MedicineController(IMedicineService medicineService, IMapper mapper)
+        /// <summary>
+        /// Medicine controller constructor
+        /// </summary>
+        public MedicineController(IMedicineService medicineService, IMapper mapper, ILogger<MedicineController> logger)
         {
             _medicineService = medicineService;
             _mapper = mapper;
+            _logger = logger;
+            _logger.LogDebug(1, "NLog injected into MedicineController");
         }
 
         private int GetPagesAmount(int rowsOnPage, int rowsAmount)
@@ -74,16 +85,49 @@ namespace MedicineApi.Controllers
         [HttpPost]
         [ActionName("NewMedicine")]
         public void NewMedicine([FromQuery] string login, [FromBody] MedicineViewModel medicine)
-             => _medicineService.NewMedicine(login, medicine);
+        {
+            try
+            {
+                _medicineService.NewMedicine(login, medicine);
+                _logger.LogInformation($"New medicine with \"{medicine.Name}\" name added by \"{login}\" user.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Attempt of adding new medicine with \"{medicine.Name}\" name has been failed with following exception: {e}");
+            }
+            
+        }
 
         [HttpPost]
         [ActionName("AlterMedicine")]
         public void AlterMedicine([FromQuery] string login, [FromBody]  MedicineViewModel medicine)
-            => _medicineService.AlterMedicine(login, medicine);
+        {
+            try
+            {
+                _medicineService.AlterMedicine(login, medicine);
+                _logger.LogInformation($"Medicine with \"{medicine.Name}\" name has been altered by \"{login}\" user.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Attempt of altering medicine with \"{medicine.Name}\" name has been failed with following exception: {e}");
+            }
+        }
 
         [HttpPost]
         [ActionName("SellMedicine")]
-        public void SellMedicine([FromQuery] string login, [FromBody] MedicineViewModel medicine) => _medicineService.SellMedicine(login, medicine);
+        public void SellMedicine([FromQuery] string login, [FromBody] MedicineViewModel medicine) 
+        {
+            try
+            {
+                _medicineService.SellMedicine(login, medicine);
+                _logger.LogInformation($"Medicine with \"{medicine.Id}\" id has been selled in amount of \"{medicine.Count}\" by \"{login}\" seller.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Attempt of selling the medicine with \"{medicine.Id}\" id has been failed with following exception: {e}");
+            }
+            
+        }
 
         [HttpGet]
         [ActionName("GetMedicineById")]

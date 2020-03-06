@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UserApi</name>
+    </assembly>
+    <members>
+        <member name="T:UserApi.Commons.Hasher">
+            <summary>
+            Crypto class
+            </summary>
+        </member>
+        <member name="M:UserApi.Commons.Hasher.GetHash(System.String)">
+            <summary>
+            Returns security hash of a string
+            </summary>
+        </member>
+        <member name="M:UserApi.Commons.Hasher.VerifyHash(System.String,System.String)">
+            <summary>
+            Verifies the input string with the given hash
+            </summary>
+        </member>
+        <member name="T:UserApi.Controllers.UserController">
+            <summary>
+            UserApi main controller
+            </summary>
+        </member>
+        <member name="M:UserApi.Controllers.UserController.#ctor(UserApi.Services.IUserService,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{UserApi.Controllers.UserController})">
+            <summary>
+            UserController constructor
+            </summary>
+        </member>
+        <member name="M:UserApi.Controllers.UserController.GetUser(System.String,System.String)">
+            <summary>
+            Returns UserViewModel by login and password
+            </summary>
+        </member>
+        <member name="M:UserApi.Controllers.UserController.ValidateUser(System.String,System.String)">
+            <summary>
+            Validates if user with specific login and password exists
+            </summary>
+        </member>
+        <member name="M:UserApi.Controllers.UserController.GetUserPosition(System.Int32)">
+            <summary>
+            Returns name of User's position
+            </summary>
+        </member>
+        <member name="M:UserApi.Controllers.UserController.GetUserPositionId(System.Int32)">
+            <summary>
+            Returns id of User's position
+            </summary>
+        </member>
+        <member name="M:UserApi.Controllers.UserController.GetAllUsers">
+            <summary>
+            Returns all Users
+            </summary>
+        </member>
+        <member name="M:UserApi.Controllers.UserController.AddUser(UserApi.ViewModels.UserViewModel)">
+            <summary>
+            Adds new user
+            </summary>
+        </member>
+    </members>
+</doc>

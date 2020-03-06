@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MedicineApi</name>
+    </assembly>
+    <members>
+        <member name="T:MedicineApi.Controllers.MedicineController">
+            <summary>
+            MedicineApi main controller
+            </summary>
+        </member>
+        <member name="M:MedicineApi.Controllers.MedicineController.#ctor(MedicineApi.Services.IMedicineService,AutoMapper.IMapper,Microsoft.Extensions.Logging.ILogger{MedicineApi.Controllers.MedicineController})">
+            <summary>
+            Medicine controller constructor
+            </summary>
+        </member>
+    </members>
+</doc>
