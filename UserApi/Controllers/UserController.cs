@@ -50,7 +50,21 @@ namespace UserApi.Controllers
         /// </summary>
         [HttpGet]
         [ActionName("GetUser")]
-        public UserViewModel GetUser([FromQuery] string login, [FromQuery] string password) => _mapper.Map<UserViewModel>(_userService.GetUser(login, password));
+        public UserViewModel GetUser([FromQuery] string login, [FromQuery] string password)
+        {
+            UserViewModel result = default;
+            try
+            {
+                result = _mapper.Map<UserViewModel>(_userService.GetUser(login, password));
+                _logger.LogInformation($"User with \"{login}\" login has been given");
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Attempt of giving user with \"{login}\" login   has been failed with following exception: {e}");
+            }
+            return result;
+        }
 
         /// <summary>
         /// Validates if user with specific login and password exists
@@ -63,7 +77,7 @@ namespace UserApi.Controllers
             try
             {
                 result = (_userService.GetUser(login, password) != null);
-                _logger.LogInformation($"User validation with \"{login}\" login accomplished with \"{result}\" result.");
+                _logger.LogInformation($"User validation with \"{login}\" login accomplished with \"{result}\" result");
             }
             catch (Exception e)
             {

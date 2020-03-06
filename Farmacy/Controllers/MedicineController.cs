@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Farmacy.Controllers
 {
@@ -19,10 +20,13 @@ namespace Farmacy.Controllers
     public class MedicineController : ControllerBase
     {
         private IMedicineApiProvider _medicineApiProvider;
+        private readonly ILogger<MedicineController> _logger;
 
-        public MedicineController(IMedicineApiProvider medicineApiProvider)
+        public MedicineController(IMedicineApiProvider medicineApiProvider, ILogger<MedicineController> logger)
         {
             _medicineApiProvider = medicineApiProvider;
+            _logger = logger;
+            _logger.LogDebug(1, "NLog injected into MedicineController");
         }
 
         private string GetLogin(string token)
@@ -65,8 +69,18 @@ namespace Farmacy.Controllers
                 ShelfTime = shelfTime,
                 Count = count,
             };
-            var login = GetLogin(Request.Headers["Authorization"].First());
-            return await _medicineApiProvider.NewMedicine(medicine, login);
+            string login = GetLogin(Request.Headers["Authorization"].First());
+            bool result = default;
+            try
+            {
+                result = await _medicineApiProvider.NewMedicine(medicine, login);
+                _logger.LogInformation($"New medicine with \"{medicine.Name}\" name has been added by \"{login}\" user"); 
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Attempt of adding new medicine with \"{medicine.Name}\" name failed with following exception: {e}");
+            }
+            return result;
         }
 
 
@@ -86,16 +100,36 @@ namespace Farmacy.Controllers
                 ShelfTime = shelfTime,
                 Count = count
             };
-            var login = GetLogin(Request.Headers["Authorization"].First());
-            return await _medicineApiProvider.AlterMedicine(medicine, login);
+            string login = GetLogin(Request.Headers["Authorization"].First());
+            bool result = default;
+            try
+            {
+                result = await _medicineApiProvider.AlterMedicine(medicine, login);
+                _logger.LogInformation($"Medicine with \"{medicine.Name}\" name has been altered by \"{login}\" user");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Attempt of altering medicine with \"{medicine.Name}\" name has been failed with following exception: {e}");
+            }
+            return result;
         }
 
         [Authorize(Roles = "seller"), HttpGet]
         [ActionName("SellMedicine")]
-        public async Task<bool> AlterMedicine([FromQuery] int id, [FromQuery] int count)
+        public async Task<bool> SellMedicine([FromQuery] int id, [FromQuery] int count)
         {
-            var login = GetLogin(Request.Headers["Authorization"].First());
-            return await _medicineApiProvider.SellMedicine(id, count, login);
+            string login = GetLogin(Request.Headers["Authorization"].First());
+            bool result = default;
+            try
+            {
+                result = await _medicineApiProvider.SellMedicine(id, count, login);
+                _logger.LogInformation($"Medicine with \"{id}\" id has been selled in amount of \"{count}\" by \"{login}\" user.");
+            }
+            catch (Exception e)
+            {
+                _logger.LogWarning($"Attempt of selling medicine with \"{id}\" id failed with following exception: {e}");
+            }
+            return result;
         }
 
         [Authorize(Roles = "admin, manager"), HttpGet]

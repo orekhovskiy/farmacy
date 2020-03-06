@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Farmacy.Controllers
 {
@@ -20,9 +21,12 @@ namespace Farmacy.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUserApiProvider _userApiProvider;
-        public AuthController(IUserApiProvider userApiProvider)
+        private readonly ILogger<AuthController> _logger;
+        public AuthController(IUserApiProvider userApiProvider, ILogger<AuthController> logger)
         {
             _userApiProvider = userApiProvider;
+            _logger = logger;
+            _logger.LogDebug(1, "NLog injected into AuthController");
         }
 
         [HttpGet]
@@ -48,7 +52,7 @@ namespace Farmacy.Controllers
                     username = identity.Name,
                     role = identity.Claims.Where(claim => claim.Type == ClaimsIdentity.DefaultRoleClaimType).FirstOrDefault().Value
                 };
-
+                _logger.LogInformation($"User with \"{login}\" login has signed in");
                 return response;
             }
             else
