@@ -31,7 +31,7 @@ namespace UserApi.Controllers
             _userService = userService;
             _mapper = mapper;
             _logger = logger;
-            _logger.LogDebug(1, "NLog injected into UserController");
+            _logger.LogDebug("NLog injected into UserController");
             // New user initialization in a new DB
             /*var u = new User
             {

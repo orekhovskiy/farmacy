@@ -24,18 +24,24 @@ export class LoginComponent implements OnInit {
     var login = <string > $("#login").val();
     var password = <string> $("#password").val();
     this.loginService.validateUser(login, password)
-      .subscribe( (data:any) => {
+      .subscribe( (data:ValidateUserResponce) => {
         if (data) {
           localStorage.setItem('access-token', data.access_token);
           localStorage.setItem('username', data.username);
           localStorage.setItem('role', data.role);
           this.router.navigateByUrl('/medicine-list');
         } else {
-          alert('Atansion');
+          this.router.navigateByUrl('/error?status=503&message=Сервер временно недоступен');
         }
       }, (error: HttpErrorResponse) => {
+        console.log(error);
         $('#error-msg').text('Введённые логин и пароль неверны');
-
       });
   }
+}
+
+interface ValidateUserResponce {
+  access_token:string;
+  username:string;
+  role:string;
 }

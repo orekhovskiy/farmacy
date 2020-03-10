@@ -26,7 +26,7 @@ namespace Farmacy.Controllers
         {
             _medicineApiProvider = medicineApiProvider;
             _logger = logger;
-            _logger.LogDebug(1, "NLog injected into MedicineController");
+            _logger.LogDebug("NLog injected into MedicineController");
         }
 
         private string GetLogin(string token)

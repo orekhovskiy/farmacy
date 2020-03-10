@@ -26,7 +26,7 @@ namespace Farmacy.Controllers
         {
             _userApiProvider = userApiProvider;
             _logger = logger;
-            _logger.LogDebug(1, "NLog injected into AuthController");
+            _logger.LogDebug("NLog injected into AuthController");
         }
 
         [HttpGet]

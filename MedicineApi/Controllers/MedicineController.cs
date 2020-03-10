@@ -32,7 +32,7 @@ namespace MedicineApi.Controllers
             _medicineService = medicineService;
             _mapper = mapper;
             _logger = logger;
-            _logger.LogDebug(1, "NLog injected into MedicineController");
+            _logger.LogDebug("NLog injected into MedicineController");
         }
 
         private int GetPagesAmount(int rowsOnPage, int rowsAmount)

@@ -17,33 +17,42 @@ import { MedicineListService } from './medicinelist.service';
 @Injectable()
 export class MedicinelistComponent implements OnInit {
   optionSet:OptionSet[];
+  selectedOptionSet:OptionSet[];
   medicines: Medicine[];
   currentPage:number = 1;
   viewPart:string = 'all';
   pagesAmount:number;
   rowsOnPage:number = 7;
   userRole:number;
+  isRestore: boolean = false;
 
   constructor(private medicineListService: MedicineListService, private router: Router, private activatedRoute: ActivatedRoute) {}
   
   ngOnInit() {
-    /*var paginatorHeight =  48 + 20;
-    var tdHeight = 65;
-    this.rowsOnPage = Math.floor(($(window).height() - $('#footer').height() - $('header').height() - $('thead').height() - paginatorHeight) / (tdHeight));*/
     this.setUserRole();
     this.medicines=[];
+    this.selectedOptionSet = [];
     $('#footer').addClass('fixed-bottom');
-    $('.medicine').css('margin-bottom', '40px');
+    $('.paginator').css('padding-bottom', '40px');
     this.medicineListService.getOptionSet()
       .subscribe( (data:OptionSet[]) => {
         if (data) {
           this.optionSet = data;
+          
           var available: OptionSet = {
             key:'available',
             name:'Доступно',
             options:['Да', 'Нет']
           }
           this.optionSet.push(available);
+          this.optionSet.forEach(element => {
+            var opt:OptionSet = {
+              key: element.key,
+              name: element.name,
+              options: []
+            };
+            this.selectedOptionSet.push(opt);
+          });
         }
         this.loadData();
       });
@@ -78,6 +87,7 @@ export class MedicinelistComponent implements OnInit {
 
   loadData() {
     if (localStorage.getItem('currentPage')) {
+      this.isRestore = true;
       this.restoreOptions();
       this.loadPage(this.currentPage);
     } else {
@@ -137,20 +147,38 @@ export class MedicinelistComponent implements OnInit {
       case 'filter':
         this.getFilteredMedicines();
         break;
-      case 'filter':
+      case 'search':
         this.search();
         break;
     }
   }
 
+  setSelectedOptionSet():void {
+    if (!this.isRestore) {
+      this.selectedOptionSet.forEach(element => {
+        element.options = [];
+        $('input[name="' + element.key + '-check"]:checked').each( function () {
+          element.options.push($(this).attr('value'));
+        });
+      });
+    } else {
+      this.isRestore = false;
+      this.selectedOptionSet.forEach(element => {
+        element.options = [];
+        var storedOptions = JSON.parse(localStorage.getItem(element.key));
+        storedOptions.forEach(opt => {
+          element.options.push(opt);
+        });
+      });
+    }
+  }
+
   getFilterOptions():string {
+    this.setSelectedOptionSet();
     var result:string[] = [];
-    $.each($('input[name="producer-check"]:checked'), function () {result.push('producer=' + $(this).val())});
-    $.each($('input[name="category-check"]:checked'), function () {result.push('category=' + $(this).val())});
-    $.each($('input[name="form-check"]:checked'), function () {result.push('form=' + $(this).val())});
-    $.each($('input[name="component-check"]:checked'), function () {result.push('component=' + $(this).val())});
-    $.each($('input[name="shelfTime-check"]:checked'), function () {result.push('shelfTime=' + $(this).val())});
-    $.each($('input[name="available-check"]:checked'), function () {result.push('available=' + $(this).val())});
+    this.selectedOptionSet.forEach(element => {
+      element.options.forEach(option => result.push(element.key + '=' + option));
+    });
     return result.join('&');
   }
 
@@ -174,15 +202,19 @@ export class MedicinelistComponent implements OnInit {
     });
     localStorage.setItem('currentPage', this.currentPage.toString());
     localStorage.setItem('viewPart', this.viewPart);
+    localStorage.setItem('searchKey', $('#search').val().toString());
   }
 
   restoreOptions() {
     this.currentPage = Number(localStorage.getItem('currentPage'));
     this.viewPart = localStorage.getItem('viewPart');
+    $('#search').val(localStorage.getItem('searchKey'));
     localStorage.removeItem('currentPage');
     localStorage.removeItem('viewPart');
-    $(document).ready(function() {
+    localStorage.removeItem('searchKey');
 
+    // FIXME: Jquery is anable to know the values of viewpart options;
+    $(document).ready(function() {
       var options=['producer', 'category', 'form', 'component', 'shelfTime', 'available'];
       if (this.viewPart == 'all') {
         $(':checkbox').prop('checked', 'true');
