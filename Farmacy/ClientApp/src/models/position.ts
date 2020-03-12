@@ -1,3 +1,5 @@
-namespace models {
-
+export enum Position {
+    admin,
+    manager,
+    seller
 }

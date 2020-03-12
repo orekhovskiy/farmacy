@@ -102,9 +102,9 @@ namespace Farmacy
                 {
                     // Keep uncomented only one of these
                     // 1. To use Angular server separatly comment following line
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
                     // 2. To use Angular server with ASP.NET Core server at once comment following string
-                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
         }

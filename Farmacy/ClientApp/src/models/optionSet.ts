@@ -1,7 +1,5 @@
-namespace models {
-    export interface OptionSet {
-        key: string,
-        name: string,
-        options: string[]
-    }
+export interface OptionSet {
+    key: string,
+    name: string,
+    options: string[]
 }

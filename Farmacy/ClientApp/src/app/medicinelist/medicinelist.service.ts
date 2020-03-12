@@ -4,8 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import MedicineList = models.MedicineList;
-import OptionSet = models.OptionSet;
+import { OptionSet } from './../../models/optionSet';
+import { MedicineList } from './../../models/medicineList';
 
 @Injectable()
 export class MedicineListService {

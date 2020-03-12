@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import * as $ from 'jquery';
 
-import ComponentSet = models.ComponentSet;
-import Medicine = models.Medicine;
+import { ComponentSet } from './../../models/componentSet';
+import { Medicine } from './../../models/medicine';
 import { MedicineService } from './medicine.service';
 
 @Component({
@@ -243,10 +242,5 @@ export class MedicineComponent implements OnInit {
   isName(n):boolean {
     var name = /^[a-zA-Zа-яА-Я]+(([,. -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
     return name.test(n);
-  }
-  
-  public signOut() {
-    localStorage.clear();
-    this.router.navigateByUrl('/');
   }
 }

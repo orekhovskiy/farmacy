@@ -1,6 +1,4 @@
-namespace models {
-    export interface ComponentSet {
+export interface ComponentSet {
     currentComponents: string[],
     availableComponents: string[]
-    }
 }

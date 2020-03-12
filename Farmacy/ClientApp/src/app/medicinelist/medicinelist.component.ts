@@ -1,11 +1,13 @@
-import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, NavigationStart } from '@angular/router';
+import { Component, OnInit, Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as $ from 'jquery';
 
-import Medicine = models.Medicine;
-import MedicineList = models.MedicineList;
-import OptionSet = models.OptionSet;
+import { Medicine } from './../../models/medicine';
+import { MedicineList } from './../../models/medicineList';
+import { OptionSet } from './../../models/optionSet';
 import { MedicineListService } from './medicinelist.service';
+import { Position } from './../../models/position';
+//import Position = models.Position;
 
 @Component({
   selector: 'app-medicinelist',
@@ -213,7 +215,6 @@ export class MedicinelistComponent implements OnInit {
     localStorage.removeItem('viewPart');
     localStorage.removeItem('searchKey');
 
-    // FIXME: Jquery is anable to know the values of viewpart options;
     $(document).ready(function() {
       var options=['producer', 'category', 'form', 'component', 'shelfTime', 'available'];
       if (this.viewPart == 'all') {
@@ -234,15 +235,4 @@ export class MedicinelistComponent implements OnInit {
     this.storeOptions();
     this.router.navigateByUrl(route);
   }
-
-  signOut() {
-    localStorage.clear();
-    this.router.navigateByUrl('/');
-  }
-}
-
-enum Position{
-  admin,
-  manager,
-  seller
 }

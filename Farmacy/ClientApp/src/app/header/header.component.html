@@ -1,0 +1,13 @@
+<header>
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+      <div class="navbar-brand">Аптека</div>
+      <ul class="navbar-nav mr-auto">
+        <li *ngFor="let item of menuItems">
+            <a class="nav-link" routerLink="item.route" routerLinkActive="active">{{item.name}}</a>
+        </li>
+        </ul>
+        <div class="signout-btn">
+            <button class="btn btn-outline-danger" id="signout-btn" (click)="signOut();" onclick="return false;">Выйти</button>
+        </div>
+    </nav>
+</header>

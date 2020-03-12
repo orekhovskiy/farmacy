@@ -1,21 +1,3 @@
-<header>
-  <nav class="navbar navbar-dark navbar-expand-md bg-dark">
-    <div class="navbar-brand">Аптека</div>
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <div class="nav-link btn active">Лекарства</div>
-      </li>
-      <li *ngIf="hasAccess(userRole, getPosition('manager'))" class="nav-tem">
-        <button class="nav-link btn" (click)="redirect('/medicine/new')" onclick="return null;">Новое лекарство</button>
-      </li>
-    </ul>
-    
-    <div class="signout-btn">
-      <button class="btn btn-outline-danger" id="signout-btn" (click)="signOut();" onclick="return false;">Выйти</button>
-    </div>
-  </nav>
-</header>
-
 <div class="row medicine-list">
   <div class="filter col-md-3 col-sm-12 col-xs-12">
     <div class="row">

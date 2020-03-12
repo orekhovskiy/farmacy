@@ -129,7 +129,7 @@ namespace MedicineApi.Services
             db.Purchase.Add(new Purchase
             {
                 UserId = db.User.Where(u => u.Login == login).FirstOrDefault().Id,
-                MedicineId = db.Medicine.Where(m => m.Name == medicine.Name).FirstOrDefault().Id,
+                Medicine = m,
                 Operation = medicine.Count,
                 PurchaseDate = DateTime.UtcNow
             });

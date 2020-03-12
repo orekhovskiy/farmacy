@@ -12,6 +12,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { Router } from '@angular/router';
 import { ErrorComponent } from './error/error.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ErrorComponent } from './error/error.component';
     MedicineComponent,
     MedicinelistComponent,
     ErrorComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
