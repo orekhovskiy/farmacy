@@ -1,10 +1,9 @@
 # TO DO
-- [x] Strucutre refactor
-- [x] Swagger
-- [x] AutoMapper
-- [x] ClientSideServices
-- [x] Authentification
-- [x] Paginator
-- [x] PageNumber, Checked options etc. saving
-- [x] Providers
-- [ ] Refactoring
+- [x] Header component
+- [ ] Filter component (g? angular using multiple router outlets)
+- [ ] NgModel instead of jquery input
+- [ ] Paging
+- [ ] Remove jquery
+- [ ] Reomve commented code
+- [ ] Purchase page
+- [ ] Client user service
