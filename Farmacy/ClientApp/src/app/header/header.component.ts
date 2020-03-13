@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MenuItem } from './../../models/menuItem';
-import { Position } from './../../models/position';
+import { MenuItem } from 'src/models/menuItem';
+import { Position } from 'src/models/position';
 
 @Component({
   selector: 'app-header',
@@ -58,7 +58,6 @@ export class HeaderComponent implements OnInit {
   }
 
   isSignedIn():boolean {
-    console.log(this.userPosition);
     if (this.userPosition === null) {
       return false;
     }

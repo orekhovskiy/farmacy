@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
-import { ValidateUserResponce } from './../../models/validateUserResponce';
+import { ValidateUserResponce } from 'src/models/validateUserResponce';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +15,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private loginService: LoginService, private router: Router) { }
 
-  ngOnInit() {
-    if ($(document).height() <= $(window).height())
-      $("#footer").addClass("fixed-bottom");
-  }
+  ngOnInit() { }
 
 
   login() {

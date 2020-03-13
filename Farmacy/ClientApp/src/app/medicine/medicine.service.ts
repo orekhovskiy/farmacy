@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { ComponentSet } from './../../models/componentSet';
-import { Medicine } from './../../models/medicine';
+import { ComponentSet } from 'src/models/componentSet';
+import { Medicine } from 'src/models/medicine';
 
 @Injectable()
 export class MedicineService {

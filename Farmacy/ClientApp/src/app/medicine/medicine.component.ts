@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as $ from 'jquery';
 
-import { ComponentSet } from './../../models/componentSet';
-import { Medicine } from './../../models/medicine';
+import { ComponentSet } from 'src/models/componentSet';
+import { Medicine } from 'src/models/medicine';
 import { MedicineService } from './medicine.service';
 
 @Component({
@@ -33,9 +33,6 @@ export class MedicineComponent implements OnInit {
   availableComponents: string[];
 
   ngOnInit() {
-    if ($(document).height() <= $(window).height()) {
-      $('#footer').addClass('fixed-bottom');
-    }
     this.medicineService.getParams().subscribe(params => {
       this.id = params['id'];
       this.loadData();

@@ -1,1 +1,22 @@
-<p>filter works!</p>
+<div >
+    <div class="row">
+        <div class="form-inline">
+            <input class="form-control" type="text" id="search" placeholder="Поиск">
+            <button class="btn btn-outline-success" type="submit" (click)="this.currentPage = 1; search();" onclick="return false">Поиск</button>
+        </div>
+    </div>
+    <div>
+        <div *ngFor="let opt of optionSet">
+        <div class="row">
+            <button data-toggle="collapse" [attr.data-target]="'#' + opt.key + '-check'" class="btn arrow" id="{{opt.key}}-arrow" (click)="changeArrow(opt.key + '-arrow')" onclick="return false;">></button>
+            <h5>{{opt.name}}</h5>
+        </div>
+        <div class="collapse" id="{{opt.key}}-check">
+            <div *ngFor="let o of opt.options" class="form-check check">
+                <input class="form-check-input" type="checkbox" name="{{opt.key}}-check" value="{{o}}"> {{o}}
+            </div>
+        </div>
+        </div>
+        <button class="btn btn-outline-success float-right" (click)="this.currentPage = 1; getFilteredMedicines();" onclick="return false;">Применить</button>
+    </div>
+</div>

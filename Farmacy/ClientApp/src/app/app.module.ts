@@ -24,9 +24,9 @@ import { HeaderComponent } from './header/header.component';
   ],
   imports: [
     BrowserModule,
+    MedicineListModule,
     AppRoutingModule,
-    HttpClientModule,
-    MedicineListModule
+    HttpClientModule    
   ],
   providers: [
     {

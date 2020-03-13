@@ -8,7 +8,6 @@ import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
   { path:'', component: LoginComponent },
-  { path:'medicine-list', component: MedicineListComponent },
   { path:'medicine/:id', component: MedicineComponent},
   { path:'error', component: ErrorComponent},
   { path:'**', redirectTo: '/error?status=404&message=Страница не найдена'}

@@ -1,0 +1,35 @@
+.medicine-list {
+    height: 88vh;
+}
+
+.medicine {
+    margin: 10px;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.paginator {
+    margin-top: 20px;
+}
+ 
+.page-numbers {
+     text-align: center;
+}
+
+.btn {
+    margin:5px;
+}
+
+.page-number {
+    box-shadow: none;
+}
+
+.table {
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.type-table, .comp-table {
+    margin-left: 5px;
+}
