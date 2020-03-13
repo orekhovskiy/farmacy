@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
+import { ValidateUserResponce } from './../../models/validateUserResponce';
 
 @Component({
   selector: 'app-login',
@@ -38,10 +39,4 @@ export class LoginComponent implements OnInit {
         $('#error-msg').text('Введённые логин и пароль неверны');
       });
   }
-}
-
-interface ValidateUserResponce {
-  access_token:string;
-  username:string;
-  role:string;
 }

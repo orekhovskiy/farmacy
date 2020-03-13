@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { MedicineComponent } from './medicine/medicine.component';
-import { MedicinelistComponent } from './medicinelist/medicinelist.component';
+import { MedicineListModule } from './medicine-list/medicine-list.module';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
@@ -19,14 +19,14 @@ import { HeaderComponent } from './header/header.component';
     AppComponent,
     LoginComponent,
     MedicineComponent,
-    MedicinelistComponent,
     ErrorComponent,
     HeaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MedicineListModule
   ],
   providers: [
     {
